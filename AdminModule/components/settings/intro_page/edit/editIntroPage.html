@@ -1,0 +1,215 @@
+<div layout="column" flex ng-cloak>
+    <main flex>
+        <div layout="column" layout-padding>
+            <div layout="column" layout-align="start start">
+                <a ui-sref="Settings.IntroPage" tabindex="14" style="display:table;">
+                    <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_left" md-menu-align-target>
+                    </ng-md-icon>
+                    <span style="font-size:12px;color:#1b2c3c">Intro Pages</span>
+                </a>
+            </div>
+            <div layout="row" layout-padding>
+                <form name="intro_pages_form" style="margin-top:-25px">
+                    <md-input-container style="width:200px !important;">
+                        <label class="input-fields">Select Client</label>
+                        <md-select name="clientName" tabindex="1" ng-model="vm.clientId" style="max-width:3in;text-transform:none" ng-change="vm.getSelectedClientDetails(vm.clientId)"
+                            required md-container-class="mySelect">
+                            <md-optgroup label="Clients">
+                                <md-option ng-repeat="objClients in vm.clientsListWOIntroPage" style="text-transform:none" ng-value="{{objClients.clientId}}">
+                                    {{objClients.clientName}}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                        <div ng-messages="intro_pages_form.clientName.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG063}}</div>
+                        </div>
+                    </md-input-container>
+                </form>
+            </div>
+            <div layout="row" layout-padding style="padding-left: 20px;margin-top: -15px;">
+                <md-checkbox tabindex="2" ng-model="vm.clientIntroPage.setAsDefault">Set as default Intro Page</md-checkbox>
+            </div>
+        </div>
+        <div id="editIntroPage" name="intro_page" layout="column" class="edit-intro-page-container" style="padding:10px 20px 10px 20px;"
+            layout-padding flex>
+            <h1 style="font-size:18px;color:#555555">{{vm.selectedClientIntroId ? 'Edit Intro Page':'Create Intro Page'}}</h1>
+            <!-- <div id="editLogoSection" name="logo_section" layout="row" layout-xs="column" style="width:100%" class="edit-section-border"
+                layout-padding>
+                <div layout="row" layout-align="start start">
+                    <img ng-if="vm.logoImage" ng-src="{{vm.logoImage.url}}" class="logo-size" />
+                    <img ng-if="!vm.logoImage && vm.files.logoURL" ng-src="{{vm.files.logoURL}}" class="logo-size" />
+                    <span ng-if="!vm.logoImage && !vm.files.logoURL" style="font-size:18px;color:#A1A6B0">Logo * (upto size 500kB)</span>
+                </div>
+                <div layout="column" layout-align="center center" flex ng-style="{'margin-left': vm.marginForLogo}">
+                    <div layout="column" layout-align="start center">
+                       <choose-file >
+                            <md-button for="fileInput"
+                             class="md-icon-button"
+                              tabindex="3" ng-disabled="!intro_pages_form.$valid">
+                              <md-icon class="pencilIconSvg cust-icons-color" md-svg-icon="images/icons/edit_icon.svg">
+                            </md-icon></md-button>
+                            <input id="fileInput"
+                             name="file_document"
+                              class="model-popup-file-upload ng-hide"
+                               type="file" required
+                               image="vm.logoImage"
+                                file-model="vm.LogoImage"
+                                accept="image/*" />
+                        </choose-file>
+                    </div>
+                </div>
+            </div> -->
+            <div id="editHeaderSection" name="header_setion" layout="column" class="edit-section-border" style="width:100%" ng-style="{'background-color': '#ffffff','padding-bottom': vm.heroImgPaddingBottom }">
+                <div layout="row" layout-align="space-between start" style="padding-right: 50px;">
+                    <div layout="row" layout-align="start start" style="margin-top:5px">
+                        <h1 class="heroImgCls" style="font-size:18px;color:#A1A6B0;">Hero Image *</h1>
+                    </div>
+                    <div layout="column" layout-align="center center" flex style="margin-top:10px;margin-bottom:10px;">
+                        <div layout="column" layout-align="start center" style="margin-left: -100px;">
+                            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="pencilIconSvg" class="cust-icons-color" tabindex="5" ng-hide="!intro_pages_form.$valid" ng-click="vm.openEditModal(false,true,false,false)"></md-icon>
+                        </div>
+                    </div>
+                    <!-- <div layout="row" layout-align="end center">
+                        <md-switch ng-model="vm.clientIntroPage.herourlflag" ng-disabled="!intro_pages_form.$valid" tabindex="4" aria-label="enableHeader"></md-switch>
+                    </div> -->
+                </div>
+
+                <!-- <div layout="column">
+                    <img ng-if="!vm.heroImageUrl" ng-src="{{vm.logoUrl}}" alt="Hero Image"
+                    />
+                    <img ng-if="vm.heroImageUrl" ng-src="{{vm.heroImageUrl}}" />
+                </div> -->
+                <div layout="row" layout-fill>
+                    <img ng-if="!vm.heroImageUrl" ng-src="{{vm.files.heroURL ? vm.files.heroURL:vm.bannerUrl}}" class="banner-size" />
+                    <img ng-if="vm.heroImageUrl" ng-src="{{vm.heroImageUrl}}" class="banner-size">
+                    <!-- <ng-md-icon ng-if="vm.files.heroURL || vm.heroImageUrl " ng-hide="!vm.clientIntroPage.herourlflag" class="md-mini" icon="clear"
+                        md-menu-align-target style="margin-top:-15px;margin-left:-2px;" ng-click="vm.deleteUploadedBanner()">
+                        <md-tooltip>Remove</md-tooltip>
+                    </ng-md-icon> -->
+                    <md-button ng-if="vm.files.heroURL || vm.heroImageUrl" ng-click="vm.deleteUploadedBanner()"
+                        class="addPageBtn primary" style="color: white;margin-top:-12px;margin-left:-6px;float:right;height:20px;width:20px;min-height:20px;padding:4px;"
+                        aria-label="Add Intro Page">
+                        <ng-md-icon icon="clear" style="fill: white;margin: -2px 0 0 -6px;" size="16"></ng-md-icon>
+                        <md-tooltip>Remove</md-tooltip>
+                    </md-button>
+                    <!-- <img ng-if="!vm.heroImageUrl" ng-src="{{vm.files.heroURL && vm.selectedClientIntroId? vm.files.heroURL:vm.logoUrl}}" alt="Hero Image"
+                        class="banner-size" />
+                    <img ng-if="vm.heroImageUrl" ng-src="{{vm.heroImageUrl}}" class="banner-size" /> -->
+                </div>
+            </div>
+            <div id="editHeadingSection" name="heading_setion" layout="column" class="edit-section-border" style="width:100%" ng-style="{'background-color':vm.clientIntroPage.headflag ? '#ffffff' : '#f4f4f4' }">
+                <div layout="column">
+                    <div layout="row" layout-align="space-between start">
+                        <div layout="row" layout-align="start center" flex style="margin-top:20px;">
+                            <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-hide="!vm.clientIntroPage.headflag" class="pencilIconSvg" class="cust-icons-color"
+                                tabindex="7" ng-click="vm.openEditModal(false,false,true,false)"></md-icon>
+                        </div>
+                        <div layout="row" layout-align="end center">
+                            <md-switch ng-model="vm.clientIntroPage.headflag" ng-disabled="!intro_pages_form.$valid" tabindex="6" aria-label="enableHeading">
+                            </md-switch>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div ng-if="vm.clientIntroPage.headTitle " layout="column" layout-align="start center" style="margin-top: -15px;margin-left: -15px;">
+                    <p style="font-size: 26px;font-weight:bold;margin-left: 15px;word-wrap: break-word;margin-right: -20px;">{{vm.clientIntroPage.headTitle}}</p>
+                </div>
+                <div ng-if="!vm.clientIntroPage.headTitle " layout="column" layout-align="start center" style="margin-top: -30px;margin-left: -15px;">
+                    <p style="font-size: 26px;font-weight:bold">{{vm.defHeadTitle}}</p>
+                </div> -->
+
+                <div ng-if="vm.clientIntroPage.headText" layout="column" style="margin-top: -15px;padding:0px 10px">
+                    <p class="headTextCls" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px;" ng-bind-html="trustAsHtml(vm.clientIntroPage.headText)"></p>
+                </div>
+                <div layout-align="start center" ng-if="!vm.clientIntroPage.headText" layout="column" style="margin-top: -15px">
+                    <p style="text-align: justify;font-size: 26px;font-weight:bold">{{vm.defHeadText}}</p>
+                </div>
+            </div>
+            <div id="editArticleSection" name="article_section" layout="column" layout-xs="column" class="edit-section-border" style="width:100%;padding-left:10px"
+                ng-style="{'background-color':vm.clientIntroPage.articleflag ? '#ffffff' : '#f4f4f4' }" >
+                <div layout="row" layout-align="space-between start">
+                    <div layout="row" layout-align="start center" flex style="margin-top:20px;">
+                        <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-hide="!vm.clientIntroPage.articleflag" class="pencilIconSvg" class="cust-icons-color"
+                            tabindex="9" ng-click="vm.openEditModal(false,false,false,true)"></md-icon>
+                    </div>
+                    <div layout="row" layout-align="end center" style="margin-right: -7px;">
+                        <md-switch ng-model="vm.clientIntroPage.articleflag" ng-disabled="!intro_pages_form.$valid" tabindex="8" aria-label="enabledArticle">
+                        </md-switch>
+                    </div>
+                </div>
+                <div layout="column" style="margin-top: -15px;">
+                    <div >
+                        <p class="articleTextCls" style="text-align: justify;padding-left: 10px;">
+                            <!-- <ng-md-icon ng-if="vm.articleVideoUrl || vm.files.articleURL " ng-hide="!vm.clientIntroPage.articleflag" class="md-mini"
+                                icon="clear" md-menu-align-target style="margin-top:-12px;margin-left:-6px;float:right" ng-click="vm.deleteUploadedVideo()">
+                                <md-tooltip>Remove</md-tooltip>
+                            </ng-md-icon> -->
+                            <md-button ng-if="vm.articleVideoUrl || vm.files.articleURL" ng-hide="!vm.clientIntroPage.articleflag" ng-click="vm.deleteUploadedVideo()"
+                                class="addPageBtn primary" style="color: white;margin-top:-12px;margin-left:-6px;float:right;height:20px;width:20px;min-height:20px;padding:4px;"
+                                aria-label="Add Intro Page">
+                                <ng-md-icon icon="clear" style="fill: white;margin: -2px 0 0 -6px;" size="16"></ng-md-icon>
+                                <md-tooltip>Remove</md-tooltip>
+                            </md-button>
+                            <video style="float:right;margin: 0px 0px 35px 50px;" ng-if="vm.articleVideoUrl" controls="true" ng-src="{{vm.articleVideoUrl}}"
+                                width="340" height="190" type="video/*">
+                            </video>
+                            <video style="float:right;margin: 0px 0px 35px 50px;" ng-if="!vm.articleVideoUrl && vm.files.articleURL" controls="true"
+                                ng-src="{{vm.files.articleURL}}" width="340" height="190" type="video/*">
+                            </video>
+                            <image style="float:right;margin: 0px 0px 35px 50px;" ng-if="!vm.articleVideoUrl && !vm.files.articleURL" ng-src="{{vm.articleUrl}}"
+                                width="340" height="190"></image>
+
+                            <span ng-if="vm.clientIntroPage.articleText" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px" ng-bind-html="trustAsHtmlForArticle(vm.clientIntroPage.articleText)"></span>
+                        </p>
+                        <p ng-if="!vm.clientIntroPage.articleText" style="font-size: 26px;font-weight:bold">{{vm.defArticleText}}</p>
+
+
+                        <!-- <video ng-if="vm.articleVideoUrl" controls="true" ng-src="{{vm.articleVideoUrl}}" width="340" height="190" type="video/*">
+                        </video>
+                        <video ng-if="!vm.articleVideoUrl && vm.files.articleURL" controls="true" ng-src="{{vm.files.articleURL}}" width="340" height="190"
+                            type="video/*">
+                        </video>
+                        <image style="float:right" ng-if="!vm.articleVideoUrl && !vm.files.articleURL" ng-src="{{vm.articleUrl}}" width="340" height="190"></image>
+                        <ng-md-icon ng-if="vm.articleVideoUrl || vm.files.articleURL " ng-hide="!vm.clientIntroPage.articleflag" class="md-mini"
+                            icon="clear" md-menu-align-target style="margin-top:-12px;margin-left:-19px;" ng-click="vm.deleteUploadedVideo()">
+                            <md-tooltip>Remove</md-tooltip>
+                        </ng-md-icon> -->
+
+                        <!-- <p ng-if="vm.clientIntroPage.articleTitle" style="font-size: 26px;font-weight:bold;word-wrap: break-word;">{{vm.clientIntroPage.articleTitle}}</p>
+                        <p ng-if="!vm.clientIntroPage.articleTitle" style="font-size: 26px;font-weight:bold">{{vm.defArticleTitle}}</p> -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div ng-if="!vm.articleVideoUrl && !vm.files.articleURL" name="article_setion" layout="column" class="edit-section-border"
+                style="width:100%">
+                <div layout="column" layout-align="start center">
+                    <div layout="column">
+                        <md-icon md-svg-icon="images/icons/edit_icon.svg" class="pencilIconSvg" class="cust-icons-color" tabindex="6" ng-click="vm.openEditModal(false,false,false,true)"></md-icon>
+                        <md-switch ng-model="vm.enabledArticle" aria-label="enabledArticle">
+                        </md-switch>
+                    </div>
+                    <div layout="column"></div>
+                    <div layout="column">
+                        <p style="font-size: 26px;font-weight:bold">{{vm.clientIntroPage.articleTitle}}</p>
+                    </div>
+                </div>
+                <div layout="column">
+                    <p align="center">{{vm.clientIntroPage.articleText}}</p>
+                </div>
+            </div> -->
+
+    </main>
+    </div>
+    <md-divider></md-divider>
+    <div layout="row" layout-align="start center" layout-wrap>
+        <md-button class="md-primary md-raised" tabindex="11" ng-click="vm.previewIntroPage()">Preview</md-button>
+        <div layout="row" layout-align="end center" flex>
+            <md-button type="submit" class="md-primary md-raised" tabindex="12" ng-click="vm.updatePage()">Save</md-button>
+            <md-button class="md-secondary" tabindex="13" ui-sref="Settings.IntroPage">Cancel</md-button>
+        </div>
+    </div>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>

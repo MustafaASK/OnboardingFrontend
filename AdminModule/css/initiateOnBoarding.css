@@ -1,0 +1,27 @@
+.initiate-onboarding {
+  color: #555; }
+  .initiate-onboarding .left-panel-info .userProfileSvg {
+    height: 65px;
+    width: 80px;
+    padding: 0px 5px 0 0; }
+  .initiate-onboarding .left-panel-info .profile-info .profile-text {
+    margin: 0;
+    font-weight: 100;
+    color: #555; }
+  .initiate-onboarding .left-panel-info .profile-info .profile-tab {
+    padding: 10px 0; }
+    .initiate-onboarding .left-panel-info .profile-info .profile-tab span {
+      padding: 2px 10px;
+      background: #00ccff;
+      color: #fff;
+      font-size: 12px; }
+  .initiate-onboarding .left-panel-info .profile-info .pencilIconSvg {
+    right: 0;
+    position: absolute;
+    top: 20px; }
+  .initiate-onboarding .left-panel-info .pers-info-head {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555; }
+  .initiate-onboarding .left-panel-info md-input-container {
+    margin: 0; }

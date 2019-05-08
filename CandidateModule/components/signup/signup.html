@@ -1,0 +1,116 @@
+<div flex layout="row">
+    <div flex="60" class="public-page-left-container" ng-style="{'background-image': 'url(' + bgImagesURL + ')'}" layout="row" layout-align="center center">
+        <div flex="75" class="welcome-message-container" layout="column" layout-align="center center" layout-padding>
+            <!-- <md-icon md-svg-src="images/trophy-shape.svg" style="width:72px;height:72px;color:white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="200%" width="200%"/>
+            </md-icon>
+
+            <h2 flex class="md-title" style="font-weight:bold;margin-top:-10px;">ONBOARDING</h2> -->
+            <!-- <img ng-src="{{LogoImagesURL}}" style="width:100px;height:100px;" />
+            <div flex align="center" style="width:80%">
+                <h3 class="welcome-message-header">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor
+                    sit amet lacus accumsan et viverra justo commodo
+                </h3>
+            </div> -->
+        </div>
+    </div>
+    <div flex="40" layout="row" class="public-page-right-container" layout-align="center center">
+        <div flex="80" layout-align="center center">
+            <form name="signup_form" novalidate>
+                <p class="public-page-header">Sign up for your free trial</p>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>First Name</label>
+                        <input ng-model="vm.Signup.firstName" type="text" name="firstName" tabindex="1" ng-pattern="/^$|^[A-Za-z0-9 ]+$/" required maxlength="100"
+                        />
+                        <div ng-messages="signup_form.firstName.$error" role="alert">
+                            <div ng-message="required">Please enter First Name. It can't be blank.</div>
+                            <div ng-message-exp="['pattern']">
+                                Please enter the valid First Name.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Last Name</label>
+                        <input ng-model="vm.Signup.lastName" type="text" name="lastName" tabindex="2" ng-pattern="/^$|^[A-Za-z0-9 ]+$/" required maxlength="100"
+                        />
+                        <div ng-messages="signup_form.lastName.$error" role="alert">
+                            <div ng-message="required">Please enter Last Name. It can't be blank.</div>
+                            <div ng-message-exp="['pattern']">
+                                Please enter the valid Last Name.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Email Id</label>
+                    <!-- chanded from ng-pattern="/^[^[\]:;|=+*?<>/\\,]+$/" 
+                    ng-pattern="/^\w.+@[a-zA-Z_.]+?\.[a-zA-Z.]{2,3}$/"  -->
+                    <input type="email" ng-model="vm.Signup.email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                        name="email" tabindex="3" required maxlength="70" />
+                    <div ng-messages="signup_form.email.$error" role="alert">
+                        <div ng-message="required">Please enter E-Mail ID. It can't be blank.</div>
+                        <div ng-message-exp="['minlength', 'maxlength', 'email', 'pattern']">
+                            Format of the E-mail ID is incorrect. Please enter the valid E-mail ID.
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Phone</label>
+                    <!-- ng-pattern="/^[0-9()-\s]*$/" ^(\d)(?!1+)\d*$ -->
+                    <input type="tel" name="phone" ng-model="vm.Signup.phone" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999" ui-mask-placeholder
+                        ui-options={addDefaultPlaceholder:false} required tabindex="4">
+                    <div ng-messages="signup_form.phone.$error" md-auto-hide="true">
+                        <div ng-message="required">Please enter Phone #. It can't be blank.</div>
+                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                            Format of the Phone # is incorrect. Please enter the valid Phone #.
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Company Name</label>
+                    <input type="text" ng-model="vm.Signup.companyName" name="companyName" tabindex="5" required maxlength="150">
+                    <div ng-messages="signup_form.companyName.$error" md-auto-hide="true">
+                        <div ng-message="required">Please enter Company name. It can't be blank.</div>
+                    </div>
+                </md-input-container>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Company Size</label>
+                        <md-select ng-model="vm.Signup.companySize" tabindex="6" required>
+                            <md-option ng-repeat="companySize in vm.CompanySizes" value="{{companySize.Value}}" ng-selected="companySize.Value == 100 ? companySize.Title : ''">
+                                {{companySize.Title}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="signup_form.companySize.$error" role="alert">
+                            <div ng-message="required">Please select Company size. It can't be blank.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <!-- <label>Location</label>
+                        <input ng-model="vm.Signup.location" type="text" name="location" tabindex="7" required maxlength="100" /> -->
+                        <label>Country</label>
+                        <md-select class="signup-select-uppercase" name="location" ng-model="vm.Signup.location" tabindex="7" required>
+                            <md-option class="signup-select-uppercase" ng-repeat="country in vm.allCountries" value="{{country.code}}" ng-selected="country.code == 'USA' ? country.name : ''">
+                                {{country.name}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="signup_form.location.$error" role="alert">
+                            <div ng-message="required">Please select Company location. It can't be blank.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <md-button type="submit" class="md-raised md-primary" ng-click="vm.submit()" style="margin-left: 0px;" tabindex="8">Submit
+                </md-button>
+                <a ng-click="vm.gotoLogin()" ui-sref="Login" class="hyperlink" style="cursor:pointer;padding-left:20px;" tabindex="9">Return to Sign in</a>
+            </form>
+            <div loader="" class="LoaderDiv" ng-show="loading">
+                <div class="spinner">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

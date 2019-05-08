@@ -1,0 +1,17 @@
+<md-dialog aria-label="Delete" style="width:400px;">
+    <div layout="column" layout-align="start end" style="padding:10px;">
+        <ng-md-icon icon="clear" size="14" tabindex="3" style="margin:8px 0 -23px 0;cursor:pointer" ng-click="closeDeleteModal()">
+        </ng-md-icon>
+    </div>
+    <md-content style="background-color:white;overflow:hidden;">
+        <div layout="column" layout-align="center center">
+            <img src="images/que_icon.png" width="70px" height="70px" />
+        </div>
+        <p align=center style="padding:10px 10px 20px 20px;font-size:13px;word-break:break-all;">Are you sure you want to {{itemType != 'User' ? 'delete' : 'deactivate' }} the {{itemType}} - <br>{{itemName}}&nbsp?</p>
+        <md-divider></md-divider>
+        <div layout="row" layout-align="end center" style="background-color:rgb(250,250,250);height:60px;padding:10px" flex>
+            <md-button class="md-raised md-primary" tabindex="1" ng-click="deleteItem(id)" md-autofocus>OK</md-button>
+            <md-button class="md-secondary" tabindex="2" ng-click="closeDeleteModal()">Cancel</md-button>
+        </div>
+    </md-content>
+</md-dialog>

@@ -1,0 +1,106 @@
+.dyn-webform-dropzone-area-body {
+  background: #fff;
+  font-size: 14px; }
+  .dyn-webform-dropzone-area-body .input-contain {
+    float: left; }
+    .dyn-webform-dropzone-area-body .input-contain .form-group {
+      width: 95%;
+      margin: 7px 0 7px 0; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .md-button:hover > md-icon {
+        fill: #9e9e9e !important; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .form-control {
+        width: 95%; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .md-errors-spacer {
+        /* width: 100%;*/
+        /*display: none !important;*/
+        margin-right: 10px; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .md-input-message-animation {
+        width: 100%;
+        transition: opacity 600ms, visibility 600ms;
+        opacity: 1;
+        display: block;
+        visibility: visible; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .md-input-message-animation.ng-hide {
+        display: block !important;
+        visibility: hidden;
+        opacity: 0; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .md-datepicker-input-container {
+        width: 150px;
+        margin-left: 0px; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .header-div {
+        margin-top: 0;
+        margin-bottom: 0; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .input-as-label {
+        font-size: 13px;
+        text-transform: capitalize; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group label {
+        font-size: 14px;
+        text-transform: capitalize; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .gplace::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        opacity: 0; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .gplace::-moz-placeholder {
+        /* Firefox 19+ */
+        opacity: 0; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group .gplace:-moz-placeholder {
+        /* Firefox 18- */
+        opacity: 0; }
+      .dyn-webform-dropzone-area-body .input-contain .form-group md-radio-group {
+        padding-top: 7px; }
+        .dyn-webform-dropzone-area-body .input-contain .form-group md-radio-group md-radio-button .md-off,
+        .dyn-webform-dropzone-area-body .input-contain .form-group md-radio-group md-radio-button .md-on {
+          width: 17px;
+          height: 17px;
+          top: 4px; }
+        .dyn-webform-dropzone-area-body .input-contain .form-group md-radio-group md-radio-button .md-label {
+          font-size: 13px; }
+    .dyn-webform-dropzone-area-body .input-contain .form-group._md-datepicker-floating-label label {
+      width: calc(100% - 74px); }
+    .dyn-webform-dropzone-area-body .input-contain md-input-container {
+      padding-right: 12px; }
+  .dyn-webform-dropzone-area-body .flex-100 {
+    width: 100%;
+    max-height: inherit; }
+    .dyn-webform-dropzone-area-body .flex-100 .form-group {
+      width: 100%; }
+      .dyn-webform-dropzone-area-body .flex-100 .form-group .form-control {
+        width: 98%; }
+      .dyn-webform-dropzone-area-body .flex-100 .form-group .md-errors-spacer {
+        margin-right: 20px; }
+  .dyn-webform-dropzone-area-body .flex-50 {
+    width: 50%;
+    max-height: inherit; }
+    .dyn-webform-dropzone-area-body .flex-50 .form-group {
+      width: 97%; }
+      .dyn-webform-dropzone-area-body .flex-50 .form-group .form-control {
+        width: 98%; }
+  .dyn-webform-dropzone-area-body .flex-33 {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 100%;
+    flex: 1 1 100%;
+    width: 33.33%;
+    max-width: 33.33%;
+    max-height: inherit;
+    box-sizing: border-box; }
+    .dyn-webform-dropzone-area-body .flex-33 .form-group .form-control {
+      width: 98%; }
+  .dyn-webform-dropzone-area-body .flex-25 {
+    width: 25%;
+    max-height: inherit; }
+  .dyn-webform-dropzone-area-body .flex-20 {
+    width: 20%;
+    max-height: inherit; }
+  .dyn-webform-dropzone-area-body .input-contain.devider {
+    width: 100%; }
+    .dyn-webform-dropzone-area-body .input-contain.devider .form-group {
+      padding: 10px; }
+      .dyn-webform-dropzone-area-body .input-contain.devider .form-group .divider-div-line {
+        border: 1px solid #ecf0f1;
+        width: 100%; }
+  .dyn-webform-dropzone-area-body .input-contain.emptyspace {
+    width: 100%; }
+    .dyn-webform-dropzone-area-body .input-contain.emptyspace .form-group {
+      padding: 10px; }
+      .dyn-webform-dropzone-area-body .input-contain.emptyspace .form-group .divider-div-line {
+        border: none;
+        width: 100%; }

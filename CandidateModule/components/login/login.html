@@ -1,0 +1,57 @@
+<div flex layout="row" ng-style="{'height': vm.heightForCandidate}">
+    <div flex="60" class="public-page-left-container" ng-style="{'background-image': 'url(' + bgImagesURL + ')'}" layout="row" layout-align="center center">
+    </div>
+    <div flex="40" layout="row" class="public-page-right-container" layout-align="center center">
+        <div flex="80" layout-align="center center">
+            <!-- <md-icon class="cls-2"></md-icon> -->
+            <form name="login_form" novalidate>
+                <p class="public-page-header">Candidate Sign in</p>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Email Id</label>
+                    <input type="email" ng-model="vm.Login.emailId" ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                        name="email" tabindex="1" minlength="10" maxlength="250" ob-autofocus required />
+                    <div ng-messages="login_form.email.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG011}}</div>
+                        <div ng-message-exp="['minlength', 'maxlength', 'email', 'pattern']">
+                            {{errorMsgs.MSG012}}
+                        </div>
+                    </div>
+                </md-input-container>
+                <div flex layout="row" layout-sm="column" layout-wrap>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Password</label>
+                        <input type="password" ng-model="vm.Login.password" name="password" tabindex="2"  maxlength="20"
+                        required>
+                        <div ng-messages="login_form.password.$error" md-auto-hide="true">
+                            <div ng-message-exp="['minlength', 'maxlength', 'password']">
+                                {{errorMsgs.MSG014}}
+                            </div>
+                            <div ng-message="required">{{errorMsgs.MSG013}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div flex layout="row" layout-sm="column" layout-align="space-between center" md-force-height="'40px'">
+                    <md-button type="submit" class="md-raised md-primary large-width" tabindex="3" ng-click="vm.submit(false)">
+                        Sign in
+                    </md-button>
+                    <div layout="column" layout-align="start start">
+                        <div>
+                            <a ui-sref="forgotpassword" class="hyperlink" tabindex="4">Forgot Password?</a>
+                        </div>
+                        <!-- <div style="margin-top:5px;">
+                            <span>Not Registered? <a ui-sref="Signup" class="hyperlink" tabindex="4">Sign up</a></span>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- <div ng-show="loading"><img src="images/loading_spinner.gif" /></div>                 -->
+                <div loader="" class="LoaderDiv" ng-show="loading">
+                    <div class="spinner" layout-align="space-around">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

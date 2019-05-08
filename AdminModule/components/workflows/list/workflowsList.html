@@ -1,0 +1,118 @@
+<div flex ng-cloak style="overflow:hidden;" ng-init="vm.getWorkflowList(true)">
+    <div layout="row" 
+        layout-align="start start" 
+        style="height: 92%;padding:18px;overflow-y:auto;" ng-style="{'height': vm.heightForChromeLowVersion}"
+        ng-if="vm.workflows.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)"
+        ng-class="{'removeEmptyListContainer': (vm.workflows | filter: {'workflowName': vm.getSearchFilter()}).length == 0 && vm.searchby }" 
+        layout-wrap flex>
+        <md-card class="wf-card" 
+            style="height:1.1in;background:white;" 
+            ng-style="{'width': cardWidth}"
+            ng-repeat="wf in filteredWfs = (vm.workflows | filter: {'workflowName': vm.getSearchFilter()}) | limitTo: workFlowsPerPage : workFlowsPerPage*(vm.currentPage-1)">
+        <div id="wf{{wf.workflowId}}" style="height:65%;padding:0px 0px 10px 10px;" layout="row" layout-align="space-between center">
+            <h3 class="md-body-1 itemName" style="font-size:16px;color:#d75a5a;height: 25px; width: 230px;" title="{{ wf.workflowName }}">{{ wf.workflowName }}</h3>
+            <md-menu ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag || vm.rolesData.edit">
+                <md-button class="md-icon-button" style="margin: -10px -5px 0 0;" ng-click="$mdMenu.open()">
+                    <md-icon md-svg-icon="images/icons/more_menu_icon.svg" 
+                        md-menu-origin class="moreMenuBtnSvg" 
+                        style="fill:#44b3c2;cursor:pointer;">
+                    </md-icon>
+                </md-button>
+                <md-menu-content width="2.5" ng-mouseleave="$mdMenu.close()">
+                    <md-menu-item ng-if="UserInfo.isAdmin || vm.rolesData.edit">
+                        <md-button class="edit-button" 
+                            ng-click="$state.go('EditWorkflow', {id: wf.workflowId}, {reload: true})">
+                            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                            Edit</md-button>
+                    </md-menu-item>
+                    <md-divider ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag"></md-divider>
+                    <md-menu-item ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag">
+                        <md-button class="delete-button" 
+                            ng-click="vm.showDeleteConfirm($event, wf.workflowId,wf.workflowName)">
+                            <!-- <ng-md-icon icon="delete" class="cust-button-color"></ng-md-icon> -->
+                            <md-icon md-svg-icon="images/icons/delete_icon.svg" 
+                                class="deleteBtnSvg"></md-icon>
+                            Delete</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+        <md-divider></md-divider>
+        <div layout="row" style="width:100%;padding:0px;height:35%;background-color:#f5f5f5" flex>
+            <div layout="row" layout-align="start center" flex>
+                <span layout="row" style="padding: 10px;
+                    font-size: 12px;
+                    color: #f1a94e;" flex>{{wf.numberOfStepFields + 1}} {{step_or_steps(wf.numberOfStepFields + 1)}}</span> 
+                <div layout="row" layout-align="end center" >
+                    <!-- <md-icon md-svg-icon="images/icons/time_icon.svg" 
+                        class="timerIconSvg"></md-icon> -->
+                    <span style="padding-right:10px;font-size:12px;color:#9e9e9e">{{ wf.modifyDateFormat | date: "EEE, MMM dd',' yyyy',' hh:mm a" }}</span>
+                </div>
+            </div>
+        </div>
+        </md-card>
+    </div>
+    <div ng-if="vm.workflows.length == 0 && (UserInfo.isAdmin || vm.rolesData.viewflag) && !loading" style="height:78.6%" flex>
+        <div layout="column" layout-align="center center" layout-padding flex>
+            <img src="images/workflow_img.png"/>
+            <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+            <div flex="5"></div>
+            <div align="center" ng-if="vm.workflows.length == 0">
+                <md-button class="md-primary md-raised" ui-sref="AddWorkflow" style="min-width:150px;" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">Create Workflow
+                </md-button>
+            </div>
+            <div flex="5"></div>
+        
+            <div class="no-workflows">
+                <p class="pbold">No Workflows created</p>
+                <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo
+                </p> -->
+            </div>
+        </div>
+    </div>
+    <div ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)" style="height:78.6%" flex>
+        <div layout="column" layout-align="center center" layout-padding flex>
+            <img src="images/workflow_img.png" style="padding-top: 70px;"/>
+            <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+            <div flex="5"></div>
+            <div align="center" ng-if="vm.workflows.length == 0">
+                <md-button class="md-primary md-raised" ui-sref="AddWorkflow" style="min-width:150px;" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">Create Workflow
+                </md-button>
+            </div>
+            <div flex="5"></div>
+        
+            <div class="no-workflows">
+                <p class="pbold">You dont have permissions to view workflows</p>
+                <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo
+                </p> -->
+            </div>
+        </div>
+    </div>
+    <div ng-if="(vm.workflows | filter: {'workflowName': vm.getSearchFilter()}).length == 0 && vm.searchby" class="filter-message">
+        <img src="images/no_results_img.png" style="padding-top: 70px;"/>
+    </div>
+    <div ng-if="totalPages((vm.workflows | filter: {'workflowName': vm.getSearchFilter()}).length) > 1 && (UserInfo.isAdmin || vm.rolesData.viewflag)" 
+        align=right
+        layout="row" 
+        layout-xs="column"
+        layout-align="end start" 
+        style="height:8%;" ng-style="{'height': vm.heightPagingForChromeLowVersion}">
+        <cl-paging flex 
+            cl-pages="vm.paging.total" 
+            cl-steps="6" 
+            cl-page-changed="vm.paging.onPageChanged()" 
+            cl-align="end center"
+            cl-current-page="vm.paging.current">
+        </cl-paging>
+    </div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>
+
+</div>

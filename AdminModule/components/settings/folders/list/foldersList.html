@@ -1,0 +1,127 @@
+<!-- <div flex ng-cloak> -->
+    <div layout="column" layout-xs="column" ui-view flex>
+        <md-content layout="column" style="overflow-y:hidden;" layout-padding flex>
+            <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+                <span class="child-page-header">Folders</span>
+                <md-button class="addPageBtn primary"  ng-if="UserInfo.isAdmin || vm.rolesData.addflag"
+                    ui-sref="Settings.AddFolder" 
+                    style="color: white;" 
+                    aria-label="Add Folder">
+                    <ng-md-icon icon="add" 
+                        style="fill: white;margin: -2px 0 0 -5px;"
+                        size="18"></ng-md-icon>
+                </md-button>
+                <!-- Search and Filter elements -->
+                <div layout="row" layout-align="end center" flex ng-if="(UserInfo.isAdmin || vm.rolesData.viewflag && totalPages(vm.foldersList.length) > 0)">
+                    <md-button class="md-icon-button" aria-label="Search" ng-click="vm.folderSearchBoxDisplay()">
+                        <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <form name="searchForm" ng-show="vm.folderSearch" ng-submit="search()">
+                <md-input-container style="margin:-20px 0 -20px 5px;min-width:97%;">
+                    <label class="input-fields"></label>
+                    <input name="searchby"
+                        id="search-box" 
+                        type="search" 
+                        style="border: 1px solid #44b3c2;border-radius: 2px;"
+                        class="md-no-underline" 
+                        ng-pattern="/^[a-zA-Z0-9-_ @]+$/" 
+                        ng-model="vm.query" 
+                        placeholder="Search folders by their name" />
+                </md-input-container>
+                <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                    <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+                </div>                
+            </form>
+    
+            <!-- Folders Display -->
+            <md-content layout="row" 
+                layout-xs="column" 
+                layout-align="{{layoutAlign}}" 
+                class="folders-display-area" 
+                layout-wrap flex  ng-if="vm.foldersList.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)">
+                <md-card style="height:.9in;width:2.5in"
+                    ng-repeat="folder in pagedItems[currentPage? currentPage-1 : 0]"
+                    >
+                    <div id="dir{{folder.folderid}}" layout="row" layout-align="space-between start">
+                        <div layout="row" layout-align="start center" style="padding-left:14px;">
+                            <md-icon md-svg-icon="images/icons/folder_icon.svg" style="fill:#f1a94e;"></md-icon>
+                            <p class="folderName" style="padding-left:8px;">{{ folder.foldername }}</p>
+                            <md-tooltip ng-if="folder.foldername.length > 13">{{folder.foldername}}</md-tooltip>
+                        </div>
+    
+                        <md-menu ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag || vm.rolesData.edit">
+                            <md-button class="md-icon-button" style="margin: 0 -5px 0 0;" ng-click="$mdMenu.open()">
+                                <md-icon md-svg-icon="images/icons/more_menu_icon.svg" 
+                                    md-menu-origin class="moreMenuBtnSvg" 
+                                    style="fill:#44b3c2;cursor:pointer;">
+                                </md-icon>
+                            </md-button>
+                            <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
+                                <md-menu-item  ng-if="UserInfo.isAdmin || vm.rolesData.edit">
+                                    <md-button class="edit-button" ui-sref="Settings.EditFolder({id: {{folder.folderid}}})">
+                                        <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                                        Edit</md-button>
+                                </md-menu-item>
+                                <md-divider ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag"></md-divider>
+                                <md-menu-item  ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag">
+                                    <md-button class="delete-button" ng-click="vm.showDeleteConfirm($event, folder.folderid,folder.foldername)">
+                                        <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                                        Delete</md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+    
+                    <div layout="column" class="{{vm.folderDocsTxtClass}}">
+                        <md-card-content>
+                            <!-- margin-top is placed to adjust the text properly in firefox -->
+                            <p align="left">
+                                ({{ !folder.documents ?  0 : folder.documents.length }}) {{one_or_more(folder.documents.length)}}
+                            </p>                       
+                        </md-card-content>
+                    </div>
+                </md-card>
+                
+                <div layout="row" layout-align="center center" style="width:100%" ng-if="!filteredItems.length && (vm.query || vm.query == '' )" class="filter-message" flex>
+                    <img src="images/no_results_img.png" style="padding-top: 50px;" />
+                </div>
+                
+            </md-content>
+            <md-content layout="row" layout-align="start center" style="padding:10px;" ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)" layout-wrap flex>
+                <div layout="column" layout-align="center center" layout-padding flex>
+                    <img src="images/workflow_img.png"/>
+                
+                    <div class="no-workflows">
+                        <p class="pbold">You dont have permissions to view Folders</p>
+                        <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo
+                        </p> -->
+                    </div>
+                </div>
+            </md-content>
+            <div ng-if="vm.foldersList.length == 0 && !vm.searchby && (UserInfo.isAdmin || vm.rolesData.viewflag)" ui-view="NoFolders"></div>
+            <div  ng-if="totalPages(vm.foldersList.length) > 1" 
+                align=right 
+                layout="row" 
+                layout-xs="column"
+                layout-align="end center">
+                <cl-paging flex 
+                    cl-pages="vm.paging.total" 
+                    cl-steps="6" 
+                    cl-page-changed="vm.paging.onPageChanged()"
+                    cl-align="end center"
+                    cl-current-page="vm.paging.current">
+                </cl-paging>
+            </div>
+    
+        </md-content>
+    </div>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>  
+<!-- </div> -->

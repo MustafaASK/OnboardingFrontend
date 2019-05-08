@@ -1,0 +1,41 @@
+<md-dialog class="candidate-letter-modal web-preview-modal" style="height:95%;min-height:95%;width:68%;">
+
+    <form name="dynWebForm" id="dynWebForm" novalidate style="    display: contents;">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+                layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+                <h2>
+                    <span class="comments-modal-title">{{ isDisabledControl ? 'View NewHire' : 'Validate Web form'}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="closeDeleteModal()">
+                    <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                    </ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-divider></md-divider>
+
+        <md-content class="letter-body-start" layout-padding>
+
+            <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-body" id="dropZone" layout="row" style="padding: 0 15px;">
+                <div flex class="sortable-stdFields-body" id="sortable-formbuilder-ul">
+                    <div ng-include="'/components/shared/controlsView.html'"></div>
+                </div>
+            </div>
+        </md-content>
+        <!-- <div class="LoaderDiv"  id="loader123" ng-show="loadingLoader">
+                <div class="spinner">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div> 
+            <div class="hideadoblogo" style="position: absolute;top: 0;width:30%; height: 100px;"> -->
+
+        <md-divider></md-divider>
+        <footer class="edit-intro-footer">
+            <div layout="row" layout-align="end center" flex>
+                <md-button class="md-primary md-raised md-ink-ripple" ng-click="validateForm(dynWebForm)">Submit</md-button>
+                <md-button class="md-secondary md-raised" ng-click="closeDeleteModal()">Close</md-button>
+            </div>
+        </footer>
+    </form>
+</md-dialog>

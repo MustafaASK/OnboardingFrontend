@@ -1,0 +1,38 @@
+<md-dialog class="myaccount-modal comments-modal candidate-letter-modal">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;" layout="row" layout-align="space-between center"
+                layout-padding layout-wrap flex>
+                <h2><span class="comments-modal-title">Preview</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="cancel()">
+                        <ng-md-icon icon="clear" 
+                            style="cursor:pointer;" 
+                            size="14"
+                            >
+                        </ng-md-icon>
+                    </md-button>
+            </div>
+        </md-toolbar>
+        <md-divider></md-divider>
+        <md-content layout-padding class="letter-body-start" style="color: black;">
+                <!-- <div ng-bind-html="trustAsHtml()"> </div> -->
+                <iframe class="maxhigh" ng-src="{{trustSrc(pdfpath)}}"  frameborder="0" id="iframOffer"></iframe>
+    
+                <div class="LoaderDiv"  id="loader123" ng-show="loading">
+                    <div class="spinner">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div> 
+            </md-content>
+        <md-divider></md-divider>
+        <footer class="edit-intro-footer">
+            <div layout="row" layout-align="end center" flex>
+                <md-button class="md-primary md-raised" ng-click="cancel()">Close</md-button>
+            </div>
+        </footer>
+    </md-dialog>
+    <style>
+    a{
+        color:#0000ee;
+    }
+    </style>

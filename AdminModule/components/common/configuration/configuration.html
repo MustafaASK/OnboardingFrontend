@@ -1,0 +1,101 @@
+<md-dialog aria-label="Preview Page" style="width:45%" class="dyn-web-form-setting-modal">
+    <form name="settingform">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+                layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+                <!-- - {{current_field_setting.name}} -->
+                <h2><span class="comments-modal-title">Dashboard Display Controls</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="cancel()">
+                    <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                    </ng-md-icon>
+                </md-button>
+            </div>
+            <md-divider style="background-color: #f4f4f4"></md-divider>
+        </md-toolbar>
+        <md-content id="controlSettings"
+            style="height:80%;overflow-x:hidden;overflow-y:hidden;text-align:justify;padding: 40px 10px 20px 30px">
+            <div class="simpleDemo" layout="row" style="height:380px;margin-top: -10px;">
+                <div layout="row" style="width:100%;">
+                    <div flex="50">
+                        <div class="panel panel-info" style="margin: 15px 20px 0px 0px;border-radius: 6px;">
+                            <div class="panel-heading"
+                                style=" height: 40px;background-color: #a9a9a9;color: white;border-radius:6px 6px 0px 0px;">
+                                <h3 class="panel-title" style="padding:10px 0px 0px 10px;border-radius: 6px 6px 0px 0px;margin-top: -16px;font-size: 16px;
+                                font-weight: 300;">Input Controls</h3>
+                            </div>
+                            <div class="panel-body"
+                                style="overflow-y:auto;height: 340px;border-radius: 0px 0px 6px 6px;border: 1px solid #a9a9a9;">
+                                <ul dnd-list="models.lists.InputControls" dnd-dragover="dragoverCallbackAllControls(models.lists.SelectedControls.length)" >
+                                    <li ng-repeat="item in models.lists.InputControls" dnd-draggable="item"
+                                        dnd-moved="models.lists.InputControls.splice($index, 1)"
+                                        dnd-effect-allowed="move" dnd-selected="models.selected = item"
+                                        ng-class="{'selected': models.selected === item}">
+                                        {{item.labelName}}
+                                    </li>
+                                </ul>
+                                <!--  <li--- dnd-draggable="models.lists.SelectedControls.length >= 5 ? angular.noop() : item " -->
+                                    <!-- <ul ---  dnd-disable-if="models.lists.SelectedControls.length >= 5" -->
+                            </div>
+                        </div>
+                    </div>
+                    <div flex="50">
+                        <div class="panel panel-info" style="margin: 15px 20px 0px 0px;border-radius: 6px;">
+                            <div class="panel-heading"
+                                style=" height: 40px;background-color: #ba3535;color: white;border-radius:6px 6px 0px 0px;">
+                                <h3 class="panel-title" style="padding:10px 0px 0px 10px;border-radius: 6px 6px 0px 0px;margin-top: -16px;font-size: 16px;
+                                font-weight: 300;">Selected Controls</h3>
+                            </div>
+                            <div class="panel-body" ng-mouseover="mouseover(disable)" ng-mouseleave="mouseleave(models.lists.SelectedControls.length)" style="overflow-y:auto;height: 340px;border-radius: 0px 0px 6px 6px;border: 1px solid #ba3535;">
+                                <ul dnd-list="models.lists.SelectedControls"  dnd-disable-if="disable" dnd-dragover="dragoverCallbackSelectedControls(models.lists.SelectedControls.length)">
+                                    <li class="selectedControls" ng-repeat="item in models.lists.SelectedControls"
+                                        dnd-draggable="item" dnd-moved="models.lists.SelectedControls.splice($index, 1)"
+                                        dnd-effect-allowed="move" dnd-selected="models.selected = item" 
+                                        ng-class="{'selected': models.selected === item}">
+                                            {{item.labelName}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div view-source="simple"></div> -->
+
+                <!-- <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Generated Model</h3>
+                        </div>
+                        <div class="panel-body">
+                            <pre class="code">{{modelAsJson}}</pre>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+            <!-- <div ng-repeat="(listName, list) in models.lists" class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">List {{listName}}</h3>
+                    </div>
+                    <ul dnd-list="lists">
+                        <li ng-repeat="item in list" dnd-draggable="item" dnd-moved="list.splice($index, 1)"
+                            dnd-effect-allowed="move" dnd-selected="models.selected = item"
+                            ng-class="{'selected': models.selected === item}">
+                            {{item.label}}
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+        </md-content>
+        <footer class="edit-intro-footer">
+            <md-divider></md-divider>
+            <div layout="row" layout-align="end center" flex style="background-color:white">
+                <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+                <md-button class="md-primary md-raised" ng-click="saveNewHireDashboardConfig()" ng-disabled="settingform.$invalid">
+                    Save</md-button>
+                <md-button class="md-secondary" ng-click="cancel($event)">Cancel</md-button>
+            </div>
+        </footer>
+    </form>
+</md-dialog>

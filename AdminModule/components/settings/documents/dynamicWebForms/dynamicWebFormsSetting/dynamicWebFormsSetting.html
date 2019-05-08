@@ -1,0 +1,417 @@
+<md-dialog aria-label="Preview Page" ng-style="{'width': (current_field_setting.Type == (  'radio'  || 'dropdown' ) ? '60%' : '45%') }"
+    class="dyn-web-form-setting-modal">
+    <form name="settingform">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+                layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+                <!-- - {{current_field_setting.name}} -->
+                <h2><span class="comments-modal-title">Settings</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="cancel()">
+                    <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                    </ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-divider style="background-color: #f4f4f4"></md-divider>
+        <md-content id="controlSettings" style="height:80%;overflow-x:hidden;overflow-y:auto;text-align:justify;padding: 10px 10px 20px 30px">
+            <div ng-if="current_field_setting.Type=='attachment'" style="color:rgb(215,90,90); font-size:12px;font-weight:bold;    padding: 5px 0 15px 0;">*Maximum
+                Of three files with total of 30MB</div>
+            <div ng-repeat="set in current_field_setting.Settings" ng-switch on="set.Type" class="setting-repet"
+                ng-class="{'full-width' : set.width == 100}" style="width:{{set.width ? set.width - 2 : 100}}%">
+                <div class="gen-option pale" ng-switch-when="label" ng-show="set.name">{{set.name}}</div>
+                <div class="form-group" ng-switch-when="headervalue" style="height:100px; overflow:auto;">
+                    <p style="margin:0;text-align: center;position: relative;top: 40%;" ng-style="{'font-size':getFieldSetting('Font Size').value, 'font-family':getFieldSetting('Font-Family').value}">{{set.value}}</p>
+                </div>
+                <md-input-container class="form-group" ng-switch-when="readonly">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <input type="text" ng-model="set.value" class="form-control disabled" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" disabled>
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="text">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <input type="text" ng-model="set.value" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" ng-change="changeFieldSetting(set.value,set.name)"
+                        ng-disabled="set.disabled">
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="labelText">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <input type="text" ng-model="current_field_setting.labelName" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" ng-disabled="set.disabled"
+                        check-duplicate-names="allFormFields" currntfield="current_field_setting" md-autofocus ng-focus="selectAllContent($event)"
+                        required>
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="number">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <input type="number" ng-model="set.value" max="{{set.length}}" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" ng-change="changeFieldSetting(set.value,set.name)"
+                        ng-disabled="set.disabled">
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="string">
+                    <label>{{set.name}}</label>
+                    <br>
+                    <span>{{set.value}}</span>
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="headervalue">
+                    <label for="{{set.name.replace(' ','_')}}">Title</label>
+                    <!-- <input type="text" ng-model="set.value" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" ng-change="changeFieldSetting(set.value,'Field Label')"
+                        md-autofocus ng-focus="selectAllContent($event)"> -->
+
+                    <input type="text" ng-model="current_field_setting.labelName" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" ng-disabled="set.disabled"
+                        check-duplicate-names="allFormFields" currntfield="current_field_setting" md-autofocus ng-focus="selectAllContent($event)"
+                        required>
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="font-size">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <input type="number" ng-model="set.value" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}">
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="font-family">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <md-select class="form-control" ng-model="set.value">
+                        <md-option ng-repeat="op in set.Possiblevalue" ng-value="op" style="font-family:{{op}}">
+                            {{op}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="button">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <input type="text" ng-model="set.value" class="form-control" id="{{set.name.replace(' ','_')}}"
+                        value="{{set.value}}" placeholder="{{set.name}}" ng-change="changeFieldSetting(set.value,'Field Label')">
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="widthdropdown">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <md-select class="form-control" ng-model="set.value">
+                        <md-option ng-repeat="op in set.Possiblevalue" ng-value="op" style="font-family:{{op}}">
+                            {{op}}%
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="form-group" ng-switch-when="patterndropdown">
+                    <label for="{{set.name.replace(' ','_')}}">{{set.name}}</label>
+                    <md-select class="form-control" ng-model="set.value" ng-change="changeType(set.value);">
+                        <md-option ng-repeat="op in set.Possiblevalue| orderBy:value" ng-value="op">
+                            {{op}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <div class="gen-option pale" ng-switch-when="commonfieldlabel" ng-if="!isnewhireform">{{set.name}}</div>
+                <!-- <div class="gen-option pale" ng-switch-when="commondropdown" ng-if="!isnewhireform" style="width:100%">Assign Common Field</div> -->
+                <md-input-container class="form-group" ng-switch-when="commondropdown" ng-if="!isnewhireform">
+                    <label for="{{set.name.replace(' ','_')}}" class="input-fields">{{set.name}}</label>
+                    <!-- This is mandatory dont delete it -->
+                    <!-- ng-change ="setReadOnly(set.Possiblevalue, current_field_setting.mappingId, current_field_setting)" ng-init="setReadOnly(set.Possiblevalue, current_field_setting.mappingId, current_field_setting)" -->
+                    <md-select name="commonFieldSelect" aria-label="commonfieldAriaLabel" data-md-container-class="selectdemoSelectHeader"
+                        ng-model="current_field_setting.mappingId">
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="searchTerm" type="search" placeholder="Search for a common field.." class="demo-header-searchbox md-text"
+                                ng-keydown="$event.stopPropagation()">
+                        </md-select-header>
+                        <md-optgroup label="item.NewhireFieldid">
+                            <md-option ng-value="mdoptiondefaultval" ng-init="mdoptiondefaultval = 0">
+                                <em>None</em>
+                            </md-option>
+                            <md-option ng-value="item.NewhireFieldid" ng-repeat="item in set.Possiblevalue |
+                                  filter:{fieldname: searchTerm}">{{item.fieldname}}</md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+                <div class="form-group " ng-switch-when="dropdown_increment">
+
+                    <div class="gen-option pale">Data Source (These values should be same as PDF values)</div>
+                    <div class="form-group radioBoxZone" style="margin-left:-10px;">
+                        <md-radio-group ng-model="set.sourceTypeValue">
+                            <md-radio-button class="my-radio" ng-repeat="op in set.sourceType" style="transform:scale(.8);outline:none;"
+                                value="{{op.name}}">
+                                <span> {{op.name}} </span>
+                            </md-radio-button>
+                        </md-radio-group>
+                    </div>
+                    <div layout="row" style="padding:5px 0 0 0;margin-bottom:10px;" ng-show="set.sourceTypeValue == 'Custom List'">
+                        <div flex="30">
+                            <b>Label</b>
+                        </div>
+                        <div flex="30" >
+                            <b>Value</b>
+                        </div>
+                        <div flex="33" >
+                            <b>Show Controls</b>
+                        </div>
+                        <div flex="5">
+
+                        </div>
+                    </div>
+                    <div layout="row" ng-repeat="op in set.Possiblevalue" class="radio-lable-box" style="padding:2px;margin-left:-25px;"
+                        ng-show="set.sourceTypeValue == 'Custom List'">
+                        <md-icon style="margin-top:15px;" md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg"
+                            ng-click="deleteRadio(set.Possiblevalue, $index);"></md-icon>
+                        <md-input-container flex="30" class="form-group option-input-box" style="margin:9px 0;">
+                                <!-- ng-change=" op.value = op.name;changeradiolabel(op.name,set, $index);" -->
+                            <input type="text" ng-model="op.name" class="form-control"
+                                required ng-focus="selectAllContent($event)">
+                        </md-input-container>
+                        <md-input-container flex="30" class="form-group option-input-box" style="margin:9px 0;">
+                            <input type="text" ng-model="op.value" class="form-control" minlength="0" maxlength="125" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="33" style="margin-top: 7px;min-width:33.33%;" ng-disabled="!drpShowControls">
+                            <label class="input-fields">Controls</label>
+                            <md-select id="controlName" name="controlName" ng-model="op.showControls"
+                                md-container-class="mySelect" multiple ng-init="allControls = setAllInputControls()">
+                                <md-optgroup label="Controls">
+                                    <md-option ng-repeat="control in allControls" tabindex="vm.tabOrder++" ng-value="control.name">
+                                        {{ control.labelName }}
+                                    </md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <!-- <div flex="5" style="margin-top: 15px;">
+                            <md-icon md-svg-icon="images/icons/add_icon.svg" class="delete-ico editBtnSvg" ng-click="addRadio(set.Possiblevalue, current_field_setting.Type)"
+                                ng-show="$index == (set.Possiblevalue.length - 1)" style="transform: scale(0.75);"></md-icon>
+                        </div> -->
+                    </div>
+                    <div layout="row" ng-show="set.sourceTypeValue != 'Database'">
+                        <div flex="90"></div>
+                            <div flex >
+                                <md-icon md-svg-icon="images/icons/add_icon.svg" class="delete-ico editBtnSvg" ng-click="addRadio(set.Possiblevalue, current_field_setting.Type)"
+                                     style="transform: scale(0.75);" title="add"></md-icon>
+                            </div>
+                    </div>
+                    <div layout="row" class="radio-lable-box" style="padding:2px;" ng-show="set.sourceTypeValue == 'Database'"
+                        ng-init="set.sourceTypeUrl = (set.sourceTypeUrl ? set.sourceTypeUrl : (clientExist ? sourceData[1].apiUrl : sourceData[0].apiUrl))">
+                        <md-input-container flex="50" class="form-group">
+                            <label>Select List</label>
+                            <md-select class="form-control" ng-model="set.sourceTypeUrl" style="width:90%;" required>
+                                <md-option ng-repeat="obj in sourceData" ng-value="obj.apiUrl" ng-disabled="($index == 0 && clientExist)">
+                                    {{obj.apiName}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+                <!-- ng-if="isCommonWebForm" -->
+                <div class="form-group" ng-switch-when="radio_increment">
+                    <div class="gen-option pale">Data Source (These values should be same as PDF values)</div>
+                    <div layout="row" style="padding:5px 0 0 0;margin-bottom:10px;">
+                        <div flex="30">
+                            <b>Label</b>
+                        </div>
+                        <div flex="30" >
+                            <b>Value</b>
+                        </div>
+                        <div flex="33" >
+                            <b>Show Controls</b>
+                        </div>
+                        <div flex="5">
+
+                        </div>
+                    </div>
+                    <div layout="row" ng-repeat="op in set.Possiblevalue" class="radio-lable-box" style="padding:2px;margin-left:-25px;">
+                        <md-icon style="margin-top:15px;" md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg"
+                            ng-click="deleteRadio(set.Possiblevalue, $index);"></md-icon>
+                        <md-input-container flex="30" class="form-group option-input-box" style="margin:9px 0;">
+                                <!-- ng-change=" op.value = op.name;changeradiolabel(op.name,set, $index);" -->
+                            <input type="text" ng-model="op.name" class="form-control"
+                                required ng-focus="selectAllContent($event)">
+                        </md-input-container>
+                        <md-input-container flex="30" class="form-group option-input-box" style="margin:9px 0;">
+                            <input type="text" ng-model="op.value" class="form-control" minlength="0" maxlength="125" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="33" style="margin-top: 7px;min-width:33.33%;">
+                            <label class="input-fields">Controls</label>
+                            <md-select id="controlName" name="controlName" ng-model="op.showControls"
+                                md-container-class="mySelect" multiple ng-init="allControls = setAllInputControls()">
+                                <md-optgroup label="Controls">
+                                    <md-option ng-repeat="control in allControls" tabindex="vm.tabOrder++" ng-value="control.name">
+                                        {{ control.labelName }}
+                                    </md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <!-- <div flex="5" style="margin-top: 15px;">
+                            <md-icon md-svg-icon="images/icons/add_icon.svg" class="delete-ico editBtnSvg" ng-click="addRadio(set.Possiblevalue, current_field_setting.Type)"
+                                ng-if="$index == (set.Possiblevalue.length - 1)" style="transform: scale(0.75);"></md-icon>
+                        </div> -->
+                    </div>
+                    <div layout="row" ng-show="set.sourceTypeValue != 'Database'">
+                        <div flex="90"></div>
+                            <div flex >
+                                <md-icon md-svg-icon="images/icons/add_icon.svg" class="delete-ico editBtnSvg" ng-click="addRadio(set.Possiblevalue, current_field_setting.Type)"
+                                     style="transform: scale(0.75);" title="add"></md-icon>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-switch-when="radio">
+                    <div ng-repeat="val in set.Possiblevalue" class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="{{val.Checked}}" ng-checked="val.Checked">
+                            {{val.Text}}
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <div ng-switch-when="checkBoxZone" class="chk-box-zone">
+                    <div class="gen-option pale" ng-if="set.name">{{set.name}}</div>
+                    <div class="collapse in" id="chkBoxZone">
+                        <div class="form-group" ng-repeat="op in set.Options" ng-init="changeMaskAndGooglemapsViceversa(op,set.Options)">
+                            <md-checkbox class="checkbox" ng-model="op.value" ng-disabled=" (op.name == 'Readonly'  && isDefReadOnly) || (isDisableValidations && op.name == 'Required') 
+                            || (op.name == 'Enable Google Maps' && isMaskDate) || (op.name == 'Mask Data' && isGoogleMaps)"
+                                aria-label="{{op.value}}" ng-change="changeMaskAndGooglemapsViceversa(op,set.Options)">
+                                {{ op.name }}
+                            </md-checkbox>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div ng-switch-when="radioBoxZone">
+                    <div class="form-group radioBoxZone">
+                        <md-radio-group ng-model="set.value">
+                            <md-radio-button class="my-radio" ng-repeat="op in set.Options" style="transform:scale(.8);outline:none;"
+                                value="{{op.name}}">
+                                <span> {{op.name}} </span>
+                            </md-radio-button>
+                        </md-radio-group>
+
+                    </div>
+                </div>
+                <div class="gen-option pale" ng-switch-when="maplabel" ng-if="getFieldSettingPar('Enable Google Maps').value">{{set.name}}</div>
+
+                <div ng-switch-when="gmapradio" ng-if="getFieldSettingPar('Enable Google Maps').value">
+                    <!-- <label >Country Restriction</label> -->
+                    <div class="form-group radioBoxZone">
+                        <md-radio-group ng-model="set.value">
+                            <md-radio-button class="my-radio" ng-repeat="op in set.Options" style="transform:scale(.8);outline:none;"
+                                value="{{op.value}}">
+                                <span> {{op.name}} </span>
+                            </md-radio-button>
+                        </md-radio-group>
+
+                    </div>
+                </div>
+                <div ng-switch-when="autocompletetype" ng-if="getFieldSettingPar('Enable Google Maps').value">
+                    <div class="gen-option pale" style="display:inline-block;width:49%" ng-if="set.name">{{set.name}}</div>
+
+                    <div class="collapse" style="width: 50%; display:inline-block;">
+                        <md-input-container class="form-group" style="margin: 0;padding: 0;">
+                            <!-- changeAutofillType(set.value); -->
+                            <md-select class="form-control" ng-model="set.value" ng-change="changeAutofillType(set.value)"
+                                ng-init="set.value=(set.value ? set.value : addresstype);changeAutofillType(set.value);">
+                                <md-option ng-repeat="(key, obj) in addressTypeSource" ng-value="key">
+                                    {{addressDetailsList[key].name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+                <div ng-switch-when="autocompletedependency" class="dependency" ng-if="getFieldSettingPar('Enable Google Maps').value">
+                    <md-input-container class="form-group" style="width:100%">
+                        <md-checkbox class="checkbox" ng-model="set.isDependent.value" ng-change="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            ng-init="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            aria-label="{{set.isDependent.value}}">
+                            <span class="gen-option pale">{{set.name}}</span>
+                        </md-checkbox>
+                    </md-input-container>
+                    <!-- <div class="collapse" ng-show="set.isDependent.value" style="width: 100%;display: inline-block;">
+                        <md-input-container class="form-group" ng-repeat="op in set.dependencyObjs">
+                            <label for="{{op.name.replace(' ','_')}}">{{op.name}}</label>
+                            <md-select class="form-control" ng-model="op.value" ng-change="setCurrentDateReadonly(op.name , op.value, current_field_setting)" ng-init="setCurrentDateReadonly(op.name , op.value , current_field_setting)">
+                                <md-option ng-repeat="obj in op.Possiblevalue" ng-value="obj.value">
+                                    {{obj.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div> -->
+                    <md-input-container class="form-group" ng-show="set.isDependent.value" ng-repeat="obj in set.dependencyObjsData">
+                        <label for="{{obj.name.replace(' ','_')}}">{{obj.name}}</label>
+                        <md-select class="form-control" ng-model="obj.value" ng-change="setCurrentDateReadonly(op.name , op.value, current_field_setting)">
+                            <md-option ng-repeat="allflds in textAndAreaList" ng-value="allflds.name">
+                                {{allflds.labelName}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div ng-switch-when="dependency" class="dependency">
+                    <md-input-container class="form-group">
+                        <md-checkbox class="checkbox" ng-model="set.isDependent.value" ng-change="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            ng-init="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            aria-label="{{set.isDependent.value}}">
+                            <span class="gen-option pale">Dependency Validation</span>
+                        </md-checkbox>
+                    </md-input-container>
+                    <div class="collapse" ng-show="set.isDependent.value" style="width: 100%;display: inline-block;">
+                        <md-input-container class="form-group" ng-repeat="op in set.dependencyObjs">
+                            <label for="{{op.name.replace(' ','_')}}">{{op.name}}</label>
+                            <md-select class="form-control" ng-model="op.value" ng-change="setCurrentDateReadonly(op.name , op.value, current_field_setting)"
+                                ng-init="setCurrentDateReadonly(op.name , op.value , current_field_setting)">
+                                <md-option ng-repeat="obj in op.Possiblevalue" ng-value="obj.value">
+                                    {{obj.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+                <div ng-switch-when="dependencyMask" class="dependency" ng-if="getFieldSettingPar('Mask Data').value && isDependentForMask">
+                    <md-input-container class="form-group">
+                        <md-checkbox class="checkbox" ng-model="set.isDependent.value" ng-change="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            ng-init="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            aria-label="{{set.isDependent.value}}">
+                            <span class="gen-option pale">Dependency Validation</span>
+                        </md-checkbox>
+                    </md-input-container>
+                    <div class="collapse" ng-show="set.isDependent.value" style="width: 100%;display: inline-block;">
+                        <md-input-container class="form-group" ng-repeat="op in set.dependencyObjs">
+                            <label for="{{op.name.replace(' ','_')}}">{{op.name}}</label>
+                            <md-select class="form-control" ng-model="op.value" ng-change="setCurrentDateReadonly(op.name , op.value, current_field_setting)"
+                                ng-init="setCurrentDateReadonly(op.name , op.value , current_field_setting)">
+                                <md-option ng-repeat="obj in op.Possiblevalue" ng-value="obj.value">
+                                    {{obj.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+                <div ng-switch-when="showcontrols" class="dependency">
+                    <md-input-container class="form-group" ng-hide="true">
+                        <md-checkbox class="checkbox" ng-model="set.isDependent.value" ng-init="setCurrentDateReadonly('Dependency Validation', set.isDependent.value , current_field_setting)"
+                            aria-label="{{set.isDependent.value}}" >
+                        </md-checkbox>
+                        <span class="gen-option pale">Show Controls</span>
+                    </md-input-container>
+                    <md-input-container ng-show="set.isDependent.value" class="form-group">
+                        <label class="input-fields">Show Controls</label>
+                        <md-select id="controlName" name="controlName" ng-model="set.showControls" md-container-class="mySelect"
+                            multiple ng-init="allControls = setAllInputControls()">
+                            <md-optgroup label="Controls">
+                                <md-option ng-repeat="control in allControls" tabindex="vm.tabOrder++" ng-value="control.name">
+                                    {{ control.labelName }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+
+
+
+            </div>
+        </md-content>
+        <footer class="edit-intro-footer">
+            <md-divider></md-divider>
+            <div layout="row" layout-align="end center" flex style="background-color:white">
+                <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+                <md-button class="md-primary md-raised" ng-click="answer($event)" ng-disabled="settingform.$invalid || !lengthForPossbleVlues">Save</md-button>
+                <md-button class="md-secondary" ng-click="cancel($event)">Cancel</md-button>
+            </div>
+        </footer>
+    </form>
+</md-dialog>

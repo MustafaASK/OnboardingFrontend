@@ -1,0 +1,42 @@
+<md-dialog aria-label="Preview Page" style="width:1000px;height:auto;overflow:hidden;display:inline-block">
+    <header>
+        <div class="md-toolbar-tools" style="background-color:white;color:#555555;" layout="row" layout-align="space-between center"
+            layout-padding>
+            <div class="div-half">
+                <h2>Preview (Candidate Dashboard View)</h2>
+            </div>
+            <div class="div-half" layout="row" layout-align="end center">
+                <ng-md-icon class="md-mini" icon="close" ng-click="closeDeleteModal()" style="cursor:pointer;transform: scale(.8);"></ng-md-icon>
+            </div>
+        </div>
+    </header>
+    <md-divider style="background-color: #f4f4f4"></md-divider>
+    <md-content layout="row" style="background-color: #f4f4f4;overflow-y:auto" flex>
+        <div class="documents-card-preview" style="display:inline-block;overflow-y:auto;max-height:380px;min-height:100px;" flex>
+            <!-- <div layout="row" flex style="margin-top:10px;">
+                <div class="labelStyle-preview" flex="85" title="{{stepDetails.stepName}}" style="text-overflow: ellipsis;overflow: hidden;">{{stepDetails.stepName}}</div>
+            </div> -->
+            <div layout="row" style="padding:10px">
+                <span class="previewstep" style="word-wrap:break-word;width:100%;text-align: justify;" ng-bind-html="trustAsHtml(stepDetails.stepDesc)"></span>
+            </div>
+            <!-- <div layout="row" flex class="table-headers-preview" ng-if="stepDetails.documents.length > 0" style="width:100%">
+                <div flex>Document Name</div>
+            </div> -->
+            <!-- <div layout="row" ng-repeat="docs in stepDetails.documents" class="customer-doc-preview" style="display:block" flex>
+                <div layout="column" class="customer-doc-preview" flex style="display:block">
+                    <div layout="row" flex class="doc-row">
+                        <div layout="row">
+                            <span class="tablerow-preview" flex="55">{{docs.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <br>
+            <br> -->
+        </div>
+    </md-content>
+    <md-divider style="background-color: #f4f4f4"></md-divider>
+    <footer layout="row" layout-align="end center" style="background-color:white;height:60px;padding:10px" >
+        <md-button class="md-raised md-primary" tabindex="2" ng-click="closeDeleteModal()">Close</md-button>
+    </footer>
+</md-dialog>

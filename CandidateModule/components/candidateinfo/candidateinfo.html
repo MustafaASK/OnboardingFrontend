@@ -1,0 +1,108 @@
+
+<div flex layout="column" id="candidateInfo" ng-style="{'height':vm.heightForCandidateIntro}">
+    
+    <md-content class="md-padding" style="height:100%;">
+            <!-- ng-disabled="!candidateInfo.newhireworkflowwebforms[0].isSaved" -->
+        <md-tabs md-selected="selectedIndexTab" md-border-bottom md-autoselect  style="position:initial;">
+            <md-tab ng-repeat="tab in candidateInfo.newhireworkflowwebforms" label="{{tab.WebFormName}}">
+                <div class="demo-tab tab{{$index%4}}" style="height:100%;">
+
+                    <form name="dynWebForm" style="display:contents" class="web-preview-modal " novalidate>
+                        
+                        <md-content class="letter-body-start new-hire-personal-info-container new-hire-personal-info-area" layout-padding ng-style="{'height': vm.heightforNewHireMdContent}" style="margin:15px;padding:10px;" ng-if="!hasWebForms">
+                            <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-body" id="dropZone" layout="row" style="overflow-y:auto;overflow-x:hidden;">
+                                <div flex class="sortable-stdFields-body" id="sortable-formbuilder-ul">
+
+                                    <div ng-include="'/components/shared/controlsView.html'"></div>
+                                </div>
+
+                            </div>
+                        </md-content>
+                        <md-content style="overflow-y:auto;overflow-x:hidden;height:91%;" class="templatearea_bgv" ng-if="hasWebForms">
+                            <div layout="column" class="new-hire-personal-info-div" style="display:block" ng-repeat="webform in subWebForms" ng-init="outerIndex=$index; getSubWebFormData($index, webform)"  flex>
+                                <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                                    <div class="new-hire-personal-info-area" style="padding:10px">
+                                        <span class="cust-heading" ng-bind="webform.WebFormName"></span>
+                                        <span class="cust-heading" style="float:right;    padding-right: 5px;"></span>
+                                        <md-button class="addPageBtn primary" ng-click="vm.openAddForm(subWebFormsData[outerIndex],noOfInstancesSaved[$index],webform.WebFormId,outerIndex,webform.WebFormName);" title="Add Employer" style="color: white;float:right; margin:0px 5px 15px 0;" aria-label="Add Report" ng-if="subWebFormsData[outerIndex].length != noOfInstancesSaved[outerIndex]">
+                                            <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                                        </md-button>
+                                        <table class="tg" style="margin-top:10px;">
+                                            <thead>
+                                                <tr ng-if="subWebFormsData[$index].length">
+                                                    <th class="tg-qmme" align="left" ng-repeat="formdata in subWebFormsData[$index][0] | limitTo:6" title="{{formdata.labelName.split('_')[0]}}">{{formdata.labelName.split('_')[0]}}</th>
+                                                   <th class="tg-qmme" align="left"></th> 
+                                                </tr>
+                
+                                            </thead>
+                                            <tbody>
+                                                    <!-- ng-if="subWebFormsData[$index].length"  ng-if="noOfInstancesSaved == ($index + 1)"-->
+                                                <tr ng-repeat="formRow in subWebFormsData[$index]" ng-init="innerIndex=$index" ng-if="noOfInstancesSaved[outerIndex] >= ($index+1)">
+                                                    <td class="tg-yw4l tdbgv empcell1" ng-repeat="formdata in formRow | limitTo:6" title="{{formdata.labelName.split('_')[0]}}" style="width:12vw; max-width: 12vw;">{{formdata.value}}</td>
+                                                    <td class="tg-yw4l" style="width:5vw; max-width:5vw;text-align: right; padding-right: 10px;">
+                                                        <a href>
+                                                            <span>
+                                                                     <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-click="vm.openEmpForm(subWebFormsData[outerIndex],$index,webform.WebFormId,outerIndex,webform.WebFormName)" class="editBtnSvgBgv"></md-icon>
+                                                                </span> |
+                                                            <span>
+                                                                    <md-icon md-svg-icon="images/icons/delete_icon.svg" ng-click="vm.deleteObj(subWebFormsData[outerIndex],$index,webform.WebFormId,outerIndex)" class="deleteBtnSvgBgv"></md-icon>
+                                                                </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <!-- !subWebFormsData[$index].length &&  -->
+                                                <tr ng-if="!noOfInstancesSaved[$index]">
+                                                    <td class="tg-yw4l" colspan="6" align="center">No {{webform.WebFormName}} are added</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                        <md-divider></md-divider>
+                        <div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:0 20px;height: 50px;" >
+                            <div layout="row" layout-align="{{($index !== 0) ? 'space-between' : 'end' }} center" flex>
+                                <div ng-if="$index !== 0">
+                                        <!-- ng-disabled="vm.disablePrevious" -->
+                                    <md-button class="addPageBtn primary" ng-click="vm.navigatePrevious()" style="color: white;" aria-label="Previous">
+                                        <ng-md-icon icon="arrow_back" tabindex="5" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+                                    </md-button>
+                                    <span>&nbsp; Previous</span>
+                                </div>
+                                <div ng-if="$index !== 0">
+                                    <span>Skip &nbsp;</span>
+                                    <md-button class="addPageBtn primary" ng-click="vm.navigateNext()" style="color: white;" aria-label="Next">
+                                        <ng-md-icon icon="skip_next" tabindex="6" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+                                    </md-button>
+                                </div>
+                                <div ng-if="vm.checkCandidateSign">
+                                    <span>Submit & Sign &nbsp;</span>
+                                    <md-button class="addPageBtn primary" ng-click="vm.submitAndSign(dynWebForm, tab.WebFormId)" style="color: white;" aria-label="Skip">
+                                        <md-icon md-svg-icon="images/icons/signature_icon.svg" style="fill: white !important;margin: -5px 0 0 -6px;" class="signatureIconSvg"></md-icon>
+                                        <!-- <ng-md-icon icon="subdirectory_arrow_right" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon> -->
+                                    </md-button>
+                                </div>
+                                <div>
+                                    <span>Next &nbsp;</span>
+                                    <md-button class="addPageBtn primary" ng-click="vm.saveWebForm(dynWebForm, tab.WebFormId)" style="color: white;" aria-label="Next">
+                                        <ng-md-icon icon="arrow_forward" tabindex="7" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+                                    </md-button>
+                        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="LoaderDiv"  id="loader" ng-show="loading">
+                            <div class="spinner">
+                                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                            </div>
+                        </div> 
+
+                    </form>
+
+
+                </div>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

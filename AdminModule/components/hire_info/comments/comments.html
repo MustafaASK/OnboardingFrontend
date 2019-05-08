@@ -1,0 +1,49 @@
+<md-dialog class="myaccount-modal comments-modal">
+    <md-toolbar>
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;" layout="row"
+            layout-align="space-between center" layout-padding layout-wrap flex>
+            <!-- <h2 flex="90" style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;" title="{{vm.capitalize(vm.commentType)}} for {{vm.commentLevel === 'doc' ? vm.docData.documentname: vm.docData.stepname}}">
+                    <span class="comments-modal-title">
+                        {{vm.capitalize(vm.commentType)}}
+                    </span> for 
+                    <span>
+                        {{vm.commentLevel === 'doc' ? vm.docData.documentname: vm.docData.stepname}}
+                    </span>
+                </h2> -->
+            <h2 flex="90">
+                Reason for Rejection
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button close" aria-label="CancelPopUp" ng-click="vm.cancel()">
+                <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                </ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content layout-padding>
+        <form name="myAccountForm" id="myAccountForm">
+            <div layout="row" layout-align="start start" class="desc-block">
+                <md-input-container class="md-block" flex>
+                    <label class="input-fields">Please add your comments</label>
+                    <textarea rows="4" ng-model="vm.comments" ng-pattern="/^\b.+$/m" required maxlength="1000"
+                        md-maxlength="1000" id="comments" name="comments" md-autofocus></textarea>
+                    <div ng-messages="myAccountForm.comments.$error" role="alert">
+                        <div ng-message="required">Please enter the comments, it
+                            can’t be blank</div>
+                        <div ng-message-exp="['pattern']">Please enter valid comments</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </form>
+    </md-content>
+    <md-divider></md-divider>
+    <footer class="edit-intro-footer">
+        <div layout="row" layout-align="end center" flex>
+            <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+            <md-button class="md-primary md-raised" ng-click="vm.commentLevel === 'doc' ? vm.saveComments(): vm.saveStepComments()"
+                ng-disabled="myAccountForm.$invalid">Submit</md-button>
+            <md-button class="md-secondary" ng-click="vm.cancel()">Cancel</md-button>
+        </div>
+    </footer>
+</md-dialog>

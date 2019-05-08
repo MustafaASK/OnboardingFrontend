@@ -1,0 +1,93 @@
+<div flex layout="column" style="height:100%;overflow:hidden;" ng-cloak>
+    <!-- <div flex layout="row" layout-xs="column" style="height:100%;overflow:hidden;" layout-align="start top" layout-wrap> -->
+    <div layout="column" flex style="overflow-y:hidden;padding: 8px 8px 0 8px" ui-view="TemplateView">
+        <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+            <span class="child-page-header">Email Templates</span>
+            <md-button class="addPageBtn primary" ui-sref="Settings.AddEmailTemplate" style="color: white;" aria-label="Add Email Template">
+                <ng-md-icon icon="add" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <!-- Search and Filter elements -->
+            <div layout="row" layout-align="end center" flex ng-if="vm.emailTemplatesList.length > 0">
+                <md-button class="md-icon-button" aria-label="Search" ng-click="vm.emailTemplatesSearchBoxDisplay()">
+                    <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <form name="searchForm" ng-show="vm.templateSearch" ng-submit="search()">
+            <md-input-container style="margin:-20px 0 -20px 15px;min-width:95%;">
+                <label class="input-fields"></label>
+                <input id="search-box" name="searchby" type="search" style="border: 1px solid #44b3c2;border-radius: 2px;"
+                    class="md-no-underline" ng-pattern="/^[a-zA-Z0-9-_ ]+$/" ng-model="vm.searchquery" placeholder="Search email templates by their name" />
+            </md-input-container>
+            <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+            </div>
+        </form>
+
+        <!-- Email Templates display -->
+        <md-content layout="row" layout-xs="column" layout-align="start start" class="templates-display-area"
+            layout-wrap flex ng-if="totalPages(vm.emailTemplatesList.length) > 0">
+            <md-card style="height:1in;" ng-style="{'width': cardWidth}" ng-repeat="emailTemp in pagedItems[currentPage? currentPage-1 : 0]">
+                <div layout="column">
+                    <span style="margin:5px 0 0 14px;font-size:12px;color:#9e9e9e;overflow:hidden;text-overflow: ellipsis;white-space:nowrap;padding-right:35px;"
+                        title="{{ emailTemp.categoryname }}">{{ emailTemp.categoryname }}</span>
+                    <div id="template-{{emailTemp.templateid}}" layout="row" layout-align="space-between start">
+                        <div layout="row" layout-align="center center" style="padding-left:14px;margin-top:-15px;margin-bottom:-5px;">
+                            <p class="itemName" md-truncate title="{{ emailTemp.templatename }}" style="cursor:auto;">{{
+                                emailTemp.templatename }}</p>
+                        </div>
+                        <md-menu>
+                            <md-button class="md-icon-button" style="margin: -25px -5px 0 -3px;" ng-click="$mdMenu.open()">
+                                <md-icon md-svg-icon="images/icons/more_menu_icon.svg" md-menu-origin class="moreMenuBtnSvg"
+                                    style="fill:#44b3c2;cursor:pointer;">
+                                </md-icon>
+                            </md-button>
+                            <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
+                                <md-menu-item>
+                                    <md-button class="edit-button" ui-sref="Settings.EditEmailTemplate({id: {{emailTemp.templateid}}})">
+                                        <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                                <md-divider></md-divider>
+                                <md-menu-item>
+                                    <md-button class="delete-button" ng-click="vm.showDeleteConfirm($event, emailTemp.templateid, emailTemp.templatename)">
+                                        <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                                        Delete
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </div>
+                <div layout="row" layout-align="start center" style="margin:0 0 20px 15px;font-size:12px;color:#9e9e9e"
+                    flex>
+                    <!-- <md-icon md-svg-icon="images/icons/time_icon.svg" class="timerIconSvg" style="margin:0 0 0 10px;">
+                    </md-icon> -->
+                    <span>{{ emailTemp.modifyDateFormat | date: "EEE, MMM dd',' yyyy',' hh:mm a"}}</span>
+                </div>
+            </md-card>
+            <div layout="column" layout-align="center center" flex ng-if="(vm.emailTemplatesList | filter: {templatename : vm.query}).length == 0 && vm.query"
+                class="filter-message" style="width:100%">
+                <img src="images/no_results_img.png" style="padding-top: 50px;" />
+            </div>
+        </md-content>
+        <div ng-if="vm.emailTemplatesList.length == 0 && !vm.searchby" ui-view="NoTemplates"></div>
+        <!-- Pagination -->
+        <div ng-if="totalPages(vm.emailTemplatesList.length) > 1" align=right layout="row" layout-align="end center"
+            layout-xs="column">
+            <cl-paging flex cl-pages="vm.paging.total" cl-steps="6" cl-page-changed="vm.paging.onPageChanged()"
+                cl-align="end center" cl-current-page="vm.paging.current">
+            </cl-paging>
+        </div>
+
+    </div>
+
+    <!-- </div> -->
+
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

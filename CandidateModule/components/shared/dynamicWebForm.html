@@ -1,0 +1,164 @@
+<div flex class="sortable-stdFields-body formbuilderSortableOpts" element-drop ui-sortable="formbuilderSortableOpts"
+    ng-model="formFields" id="sortable-formbuilder-ul" ng-style="formFields.length == 0 && {'height' : '100%'}" style="min-height:auto;padding-bottom:80px;">
+    <div ng-repeat="field in formFields track by $index" data-index="{{$index}}" ng-switch on="field.Type" data-index="{{$index}}"
+        class="input-contain {{field.Type}} flex-{{getFieldSettingPar('Width',field).value}}  sortable-field"
+        element-drop>
+        <div class="form-group" ng-switch-when="text" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+            <input type="text" class="form-control" id="{{field.name.replace(' ','_') + field.id}}" value="{{field.value}}"
+                placeholder="{{field.labelName}}" readonly>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index);"></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="email" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+            <input type="text" class="form-control" id="{{field.name.replace(' ','_') + field.id}}" value="{{field.value}}"
+                placeholder="{{field.labelName}}" readonly>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="phone-number" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+            <input type="text" class="form-control" id="{{field.name.replace(' ','_') + field.id}}" value="{{field.value}}"
+                placeholder="{{field.labelName}}" readonly>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="number" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+            <input type="text" class="form-control" id="{{field.name.replace(' ','_') + field.id}}" value="{{field.value}}"
+                placeholder="{{field.labelName}}" readonly>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="numberwithdecimal" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+            <input type="text" class="form-control" id="{{field.name.replace(' ','_') + field.id}}" value="{{field.value}}"
+                placeholder="{{field.labelName}}" readonly>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="date" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required', field).value" class="orange-txt">*</span>
+            <div class="has-feedback">
+                <input type="text" class="form-control" placeholder="mm/dd/yyyy" readonly>
+
+                <span class="form-control-feedback custom-feedback" aria-hidden="true" style="float: right;position: absolute;right: 13px;top: 37px;">
+                    <md-icon md-svg-icon="images/icons/calendar_icon.svg" style="transform:scale(0.75)"></md-icon>
+
+                </span>
+                <span id="inputSuccess2Status" class="sr-only">(success)</span>
+            </div>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="dropdown" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+            <!-- <select class="form-control" size="{{getFieldSettingPar('Radio Choice',field).Possiblevalue.length}}" style="height:auto; overflow-y:auto;" disabled>
+                    <option ng-repeat="val in getFieldSettingPar('Radio Choice',field).Possiblevalue">
+                        {{val.name}}
+                    </option>
+                </select> -->
+            <div class="has-feedback">
+                <input type="text" class="form-control" placeholder="{{field.labelName}}" readonly>
+
+                <span class="form-control-feedback custom-feedback" aria-hidden="true" style="float: right;position: absolute;right: 13px;top: 37px;">
+                    <!-- <md-icon md-svg-icon="images/icons/calendar_icon.svg" style="transform:scale(0.75)" ></md-icon> -->
+                    <ng-md-icon icon="play_arrow" style="transform: scale(0.75)rotate(90deg);" size="24"></ng-md-icon>
+                </span>
+                <span id="inputSuccess2Status" class="sr-only">(success)</span>
+            </div>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group attachment-section" ng-switch-when="attachment" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+            <div name="docuploadform" ng-if=" (vm.newHire.document ? vm.newHire.document.length : 0) + attachedFiles.length < 3"
+                id="docuploadform" style="width: 100%;margin-top: 0px;">
+                <div layout="column" layout-padding style="padding-left:0px;display:block;">
+                    <div class="small-file-drop-zone docUpload" id="file-drop-zone" ngf-drop ngf-select ng-model="vm.file"
+                        ngf-multiple="true" style="margin: 0px 0px 20px 0px;overflow: hidden;width:100%;" flex>
+                    </div>
+                </div>
+            </div>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="textarea" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+            <textarea placeholder="{{field.labelName}}" class="form-control" rows="2" id="{{field.name.replace(' ','_')  + field.id}}"
+                readonly style="resize:none;"></textarea>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="devider" ng-class="field.Active ? 'active-field' : '' " style="padding:14px 10px;">
+            <div class="divider-div-line"></div>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="emptyspace" ng-class="field.Active ? 'active-field' : '' " style="padding:12px 10px;">
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-click="removeElement($event, $index, field)"></md-icon>
+            <div class="divider-div-line"></div>
+        </div>
+        <div class="form-group" ng-switch-when="header" ng-class="field.Active ? 'active-field' : '' ">
+            <p class="header-div" contenteditable="true" ng-style="{'font-size':getFieldSettingPar('Font Size',field).value,'font-family':getFieldSettingPar('Font-Family',field).value}">{{field.Settings[0].value}}</p>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="button" ng-class="field.Active ? 'active-field' : '' ">
+            <md-button class="md-primary md-raised">{{field.labelName}}</md-button>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-click="removeElement($event, $index, field)"></md-icon>
+        </div>
+        <div class="form-group" ng-switch-when="checkbox" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+            <input type="checkbox" value="{{field.value}}" ng-model="field.value" disabled>
+
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+
+        </div>
+        <div class="form-group" ng-switch-when="radio" ng-class="field.Active ? 'active-field' : '' ">
+            <span class="input-as-label">{{field.labelName}}</span>
+            <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+            <div class="chkBoxZone collapse in">
+                <div ng-repeat="op in getFieldSettingPar('Radio Choice',field).Possiblevalue" ng-class="{'inline-block':getFieldSettingPar('Radio Align Options',field).value == 'Align Horizontal','block':getFieldSettingPar('Radio Align Options',field).value == 'Align Vertical'}">
+                    <label class="checkbox-inline">
+                        <input type="radio" ng-model="op.value" disabled> <span class="radio-label-name">{{op.name}}</span>
+                    </label>
+                </div>
+            </div>
+            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="remove-ico editBtnSvg" ng-click="showSettingsDialog($event,$index); "></md-icon>
+            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="delete-ico editBtnSvg" ng-if="! field.isMaster && !isPdfWebform"
+                ng-click="removeElement($event, $index, field)"></md-icon>
+
+        </div>
+    </div>
+    <div ng-if="formFields.length == 0" style="text-align:center" class="dropLayoutControls" draggable="false">
+    </div>
+</div>

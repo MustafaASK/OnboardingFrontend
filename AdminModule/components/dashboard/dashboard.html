@@ -1,0 +1,144 @@
+<div layout="column" class="main-container" style="background-color: #f4f4f4;padding-bottom:0px;padding-top:0px"
+    layout-padding flex ng-cloak>
+    <span class="header-color">Dashboard</span>
+
+    <div layout="column" flex>
+        <div layout="column" style="margin:-10px 0 15px 0" layout-gt-sm="row" flex>
+            <div flex-gt-sm="60" layout="column" flex class="dashboard-container">
+                <div layout="row" layout-align="space-between start">
+                    <span class="dashboard-section-heading" style="margin: 5px 0 0 10px;">ONBOARDINGS</span>
+                </div>
+                <canvas class="chart chart-bar" chart-data="chartdata" chart-labels="labels" chart-series="series"
+                    chart-options="options" chart-legend="true" chart-click="onClick" chart-dataset-override="colors"
+                    style="margin-top:10px;width:85%;height:75%;" flex></canvas>
+            </div>
+            <div flex-gt-sm="40" layout="column" class="dashboard-container" flex layout-align="start stretch">
+                <div layout="row" layout-align="space-between start">
+                    <span class="dashboard-section-heading" style="margin: 5px 0 0 10px;">TASKS</span>
+                </div>
+                <md-content class="dashboard-area" layout="row" ng-repeat="task in vm.tasks track by $index"
+                    style="overflow:hidden;background:transparent !important;margin-left: 10px;"
+                    ng-style="{'margin-top': vm.taskMarginTop}">
+                    <div layout="row" layout-align="start start">
+                        <div class="taskStatusBar {{getClassByTaskStatus(task)}}">
+                            <span class="tooltiptext">{{getTaskStatusText(task.taskstatus)}}</span>
+                        </div>
+
+                        <div layout="column" flex>
+                            <span class="taskNameHyperLink" ng-click="gotoTask(task.taskid)">{{ task.taskname }}
+                            </span>
+                            <!-- </md-checkbox> -->
+                            <div layout="row" layout-align="start start" ng-class="vm.tasksAreaClass">
+                                <span ng-class="vm.dueByClass" style="margin-left:5px">Due by:
+                                    {{task.completiondateFormat | date: "EEE',' MMM dd',' yyyy" }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </md-content>
+            </div>
+        </div>
+        <div flex layout="column" style="margin-top:-18px" layout-gt-sm="row">
+            <div flex-gt-sm="40" layout="column" flex class="dashboard-container">
+                <!-- <div flex class="dashboard-activites-area">Activities</div> -->
+                <md-tabs class="md-no-animation" md-no-ink md-selected=0 md-center-tabs
+                    aria-label="dashboard navigation links">
+                    <md-tab ng-click="displayActivities()" label="RECENT ACTIVITIES"></md-tab>
+                    <md-tab ng-click="displayEvents()" label="UPCOMING EVENTS"></md-tab>
+                </md-tabs>
+                <md-divider></md-divider>
+                <!-- Recent Activities -->
+                <div layout="row" ng-repeat="activity in vm.recentActivities" ng-if="displayingActivities"
+                    style="overflow:hidden;margin: 10px 0 0 10px;" flex="15">
+                    <ng-md-icon icon="lens" style="transform:scale(.4);fill:#d75a5a;margin-top:-4px;">
+                    </ng-md-icon>
+                    <div layout="column" style="width:92%;">
+                        <span
+                            style="margin-left: 10px;font-size:12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 95%;"
+                            title="{{activity.description}}">{{activity.description}}</span>
+                        <span class="light12px888888"
+                            style="margin-left: 10px;font-size:10px;">{{ activity.actiondate | date : "EEE, MMM dd',' yyyy',' hh:mm a"}}</span>
+                    </div>
+                </div>
+                <!-- Upcoming Events -->
+                <div layout="row" ng-repeat="event in vm.events" ng-if="!displayingActivities"
+                    style="overflow:hidden;margin: 10px 0 0 10px;" flex="15">
+                    <ng-md-icon icon="lens" style="transform:scale(.4);fill:#d75a5a;margin-top:-4px;">
+                    </ng-md-icon>
+                    <div layout="column">
+                        <span style="margin-left: 10px;font-size:12px;">{{event.subject}}</span>
+                        <span class="light12px888888"
+                            style="margin-left: 10px;font-size:9px;">{{ event.startDateTime | date: "EEE, MMM dd',' yyyy',' hh:mm a"}}</span>
+                    </div>
+                </div>
+                <div layout="row" flex="*" style="overflow:hidden;margin: 10px 0 0 10px;"></div>
+            </div>
+            <div flex-gt-sm="60" layout="column" flex class="dashboard-container" layout-align="space-between stretch">
+                <div layout="row" layout-align="space-between start">
+                    <span class="dashboard-section-heading" style="margin: 5px 0 2px 10px;">NEW HIRES</span>
+                    <div layout-align="end center" layout="row" ng-mouseover="displaySelect = true" ng-mouseleave="displaySelect = false">
+                        <!-- <md-input-container class="md-block" style="margin: 4px 0;" >
+                            <md-select id="companyName" name="companyName" ng-model="vm.selectedNewHireControls"
+                                md-container-class="mySelect" multiple>
+                                <md-optgroup label="Display Inputs">
+                                    <md-option tabindex="vm.tabOrder++"
+                                        ng-value="control.name" ng-repeat="control in vm.masterNewHireJson  ">
+                                        {{control.labelName}}
+                                    </md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container> -->
+                        <ng-md-icon icon="settings" ng-click="openConfigPopup($event)"  style="transform:scale(.8);margin:5px;">
+                        </ng-md-icon>
+                    </div>
+                </div>
+                <md-content class="dashboard-area" style="margin-top:-5px" layout-padding flex
+                    layout-align="space-between stretch">
+                    <!-- <table class="tg dashboard-new-hire-tbl" style="max-height:100%;">
+                        <col width="21%">
+                        <col width="20%">
+                        <col width="22%">
+                        <col width="18%">
+                        <col width="17%">
+                        <col width="2%">
+                        <tr>
+                            <th ng-class="vm.newHiresTableHeaderClass" align=left>Name</th>
+                            <th ng-class="vm.newHiresTableHeaderClass" align=left>Client</th>
+                            <th ng-class="vm.newHiresTableHeaderClass" align=left>Start Date</th>
+                            <th ng-class="vm.newHiresTableHeaderClass" align=center
+                                style="white-space: nowrap;text-overflow: ellipsis;">Days Left</th>
+                            <th ng-class="vm.newHiresTableHeaderClass" align=center>Status</th>
+                            <th ng-class="vm.newHiresTableHeaderClass" align=left></th>
+                        </tr>
+                        <tr ng-repeat="newhire in vm.newhires track by $index" ng-style="{'line-height': vm.trLineHt}"
+                            layout-align="space-between stretch">
+                            <td class="tg-yw10l" align=left title="{{newhire.firstname +' '+ newhire.lastname}}"
+                                md-truncate>{{ truncated_firstName(newhire.firstname +' '+ newhire.lastname) }}</td>
+                            <td class="tg-yw10l" align=left title="{{newhire.clientname}}" md-truncate>
+                                {{getClientName(newhire.clientname)}}</td>
+                            <td class="tg-yw10l" align=left>
+                                {{ convertDateFormat(newhire.tentstartdate.substring(0,10)) }}</td>
+                            <td class="tg-yw10l" align=center>
+                                {{ date_diff_indays(newhire.tentstartdate.substring(0,10)) }}</td>
+                            <td class="tg-yw10l" align=center>
+                                <div layout="row" layout-align="start start"
+                                    class="dashboardNewhireStatusBox {{getClassByStatus(newhire.status)}}" flex>
+                                    {{ getStatusText(newhire.status) }}</div>
+                            </td>
+                            <td class="tg-yw10l" align=left>
+                                <ng-md-icon icon="mail" ng-if="newhire.status == 2 || newhire.status == 3"
+                                    style="transform:scale(.75);cursor:pointer;"
+                                    ng-click="vm.showEmailReminderDialog($event, newhire.emailid, newhire.newhireid)">
+                                </ng-md-icon>
+                            </td>
+                        </tr>
+                    </table> -->
+                </md-content>
+            </div>
+        </div>
+        <div loader="" class="LoaderDiv" ng-show="loading">
+            <div class="spinner">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </div>

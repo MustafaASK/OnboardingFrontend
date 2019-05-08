@@ -1,0 +1,245 @@
+<!-- <div flex ng-cloak> -->
+<div flex layout="row" layout-xs="column" style="height:100%;overflow-y:hidden;" layout-align="start start" layout-wrap ng-cloak>
+    <div layout="column" layout-align="start start">
+        <a ui-sref="Settings.EmailTemplates" tabindex="1" style="display:table;">
+            <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_left" md-menu-align-target>
+            </ng-md-icon>
+            <span style="font-size:12px;color:#1b2c3c">Email Templates</span>
+        </a>
+    </div>
+    <md-content id="quilleditor" class="email-temp-temp-area template-area" layout-padding style="height: 80%;" ng-style="{'height': vm.heightforEmailTemplate}">
+        <span class="child-page-header">{{add_or_edit}}</span>
+        <form name="templateData" id="templateData">
+            <div layout="row" layout-align="start start">
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">Template Name</label>
+                    <input type="text" id="template-name" name="templatename" tabindex="1" ng-pattern="/^\b[A-Za-z0-9 ]+$/" ng-model="vm.templateData.templatename"
+                        ob-autofocus md-maxlength="150" maxlength="150" required />
+                    <div ng-if="(submitted && templateData.templatename.$untouched) || templateData.templatename.$touched" ng-messages="templateData.templatename.$error"
+                        role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG019}}</div>
+                        <div ng-message-exp="['pattern']">
+                            {{errorMsgs.MSG102}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">Category</label>
+                    <md-select name="categoryName" ng-model="vm.templateData.templatecategory" md-container-class="mySelect" ng-disabled="vm.templateId"
+                        tabindex="2" required>
+                        <md-optgroup label="Categories">
+                            <md-option ng-repeat="category in categories" ng-value="category.categoryid" ng-disabled="vm.batchJobsList.length == 0 && category.categoryid == 24">
+                                {{ category.categoryname }}
+                            </md-option>
+                        </md-optgroup>
+                    </md-select>
+                    <div ng-if="(submitted && templateData.categoryName.$untouched) || templateData.categoryName.$touched" ng-messages="templateData.categoryName.$error"
+                        role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG020}}</div>
+                    </div>
+                </md-input-container>
+
+
+                <md-input-container class="md-block" flex="30" ng-if="vm.templateData.templatecategory == 24 ">
+                    <label class="input-fields">Batch Category</label>
+                    <md-select name="criteriaID" ng-model="vm.templateData.criteriaID" md-container-class="mySelect" ng-disabled="vm.templateId"
+                        tabindex="2" required>
+                        <md-optgroup label="batch Jobs">
+                            <md-option ng-repeat="category in vm.batchJobsList" ng-value="category.criteriaID">
+                                {{ category.criteriaName }}
+                            </md-option>
+                        </md-optgroup>
+                    </md-select>
+                    <div ng-if="(submitted && templateData.criteriaName.$untouched) || templateData.criteriaName.$touched" ng-messages="templateData.criteriaName.$error"
+                        role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG020}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="start start" style="margin-top:-20px;">
+                <md-input-container class="md-block" flex>
+                    <label class="input-fields">Description</label>
+                    <input type="text" name="description" tabindex="3" ng-pattern="/(?!^ +$)^.+$/m" ng-model="vm.templateData.templatedesc" maxlength="1000"
+                        md-maxlength="1000" />
+                    <!-- <textarea type="text" name="description" tabindex="3" ng-model="vm.templateData.templatedesc" maxlength="1000" md-maxlength="1000"
+                        ng-pattern="/(?!^ +$)^.+$/m" rows="3" md-no-autogrow required></textarea> -->
+                    <div ng-if="(submitted && templateData.description.$untouched) || templateData.description.$touched" ng-messages="templateData.description.$error"
+                        role="alert">
+                        <!-- <div ng-message="required">{{errorMsgs.MSG021}}</div> -->
+                        <div ng-message-exp="['pattern']">{{errorMsgs.MSG112}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="start start" style="margin-top:-20px;">
+                <md-input-container class="md-block" flex>
+                    <label class="input-fields">Subject</label>
+                    <input type="text" name="subject" tabindex="4" ng-model="vm.templateData.subject" maxlength="150" md-maxlength="150" ng-pattern="/(?!^ +$)^.+$/"
+                        required/>
+                    <div ng-if="(submitted && templateData.subject.$untouched) || templateData.subject.$touched" ng-messages="templateData.subject.$error"
+                        role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG022}}</div>
+                        <div ng-message-exp="['pattern']">{{errorMsgs.MSG113}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <!-- Create the editor container -->
+            <!-- modules="editorModules" -->
+            <!-- <ng-quill-editor class="email-temp-quill" ng-model="tbody" max-length="vm.templateData.templatecategory == 23 ? '10000' : '1000'"
+                placeholder="Insert your email template here ..." on-editor-created="editorCreated(editor)" required name="asdfg">
+                <ng-quill-toolbar>
+                    <div id="ng-quill-toolbar" style="border-bottom:none;margin-top:-10px;">
+                        <span class="ql-formats">
+                            <select class="ql-font">
+                                <option selected></option>
+                                <option value="serif"></option>
+                                <option value="monospace"></option>
+                                <option value="roboto"></option>
+                            </select>
+                            <select class="ql-size">
+                                <option value="small"></option>
+                                <option selected></option>
+                                <option value="large"></option>
+                                <option value="huge"></option>
+                            </select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-bold" tabindex="5" ng-attr-title="{{'Bold'}}"></button>
+                            <button class="ql-italic" tabindex="6" ng-attr-title="{{'Italic'}}"></button>
+                            <button class="ql-underline" tabindex="7" ng-attr-title="{{'Underline'}}"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-align" tabindex="8" ng-attr-title="{{'Aligment'}}">
+                                <option selected></option>
+                                <option value="center"></option>
+                                <option value="right"></option>
+                                <option value="justify"></option>
+                            </select>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-color"></select>
+                            <select class="ql-background"></select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="ordered" tabindex="9" ng-attr-title="{{'Ordered'}}"></button>
+                            <button class="ql-list" value="bullet" tabindex="10" ng-attr-title="{{'Bullet'}}"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-link" tabindex="11" ng-keypress="setFocusInEditor()" ng-attr-title="{{'Link'}}">
+                            </button>
+                        </span>
+                    </div>
+                </ng-quill-toolbar>
+            </ng-quill-editor> -->
+            <!-- Placeholders buttons -->
+
+            <ng-ckeditor ng-model="tbody" skin="moono-lisa" name="asdfg" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                remove-plugins="iframe,flash,smiley" ></ng-ckeditor>
+            <div layout="row" layout-align="space-between start" style="background-color: #e4e4e4;" flex>
+                <div layout="row" layout-align="start center" style="background-color: #e4e4e4;" layout-padding layout-wrap flex>
+                    <span style="padding:0;">
+                        <b>Place Holders</b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <div ng-repeat="plc in vm.placeholdersList" tabindex="12"
+                        class="placeHolderBtnEmailTemplates" layout="row" layout-align="start center" ng-click="addPlaceholderText(plc.viewFieldName)"
+                        aria-label="placeholder first name">
+                        <span class="md-caption">[{{plc.viewFieldName}}]</span>
+                    </div>
+                    <!-- <div
+                            id="ph-firstName"
+                            tabindex="12"
+                            class="placeHolderBtnEmailTemplates"
+                            layout="row"
+                            layout-align="start center"
+                            ng-click="addPlaceholderText('[First_Name]')"
+                            aria-label="placeholder first name">
+                            <span class="md-caption">[First_Name]</span>
+                        </div>
+                        <div
+                            id="ph-lastName"
+                            class="placeHolderBtnEmailTemplates"
+                            layout="row"
+                            tabindex="13"
+                            layout-align="start center"
+                            ng-click="addPlaceholderText('[Last_Name]')"                        
+                            aria-label="placeholder last name">
+                            <span class="md-caption">[Last_Name]</span>
+                        </div>
+                        <div
+                            id="ph-jobTitle"
+                            class="placeHolderBtnEmailTemplates"
+                            layout="row"
+                            tabindex="14"
+                            layout-align="start center"
+                            ng-click="addPlaceholderText('[Job_Title]')"                        
+                            aria-label="placeholder job title">
+                            <span class="md-caption">[Job_Title]</span>
+                        </div>
+                        <div
+                            id="ph-skillMetric"
+                            class="placeHolderBtnEmailTemplates"
+                            layout="row"
+                            tabindex="15"
+                            layout-align="start center"
+                            ng-click="addPlaceholderText('[Skill_metric]')"
+                            aria-label="placeholder skill metric">
+                            <span class="md-caption">[Skill_metric]</span>
+                        </div>                        
+                        <div
+                            id="ph-company"
+                            class="placeHolderBtnEmailTemplates"
+                            layout="row"
+                            tabindex="16"
+                            layout-align="start center"
+                            ng-click="addPlaceholderText('[Company]')"
+                            aria-label="placeholder company">
+                            <span class="md-caption">[Company]</span>
+                        </div>                                                
+                        <div
+                            id="ph-signature"
+                            class="placeHolderBtnEmailTemplates"
+                            layout="row"
+                            tabindex="17"
+                            layout-align="start center"
+                            ng-click="addPlaceholderText('[Signature]')"
+                            aria-label="placeholder signature">
+                            <span class="md-caption">[Signature]</span>
+                        </div>                                                 -->
+                </div>
+                <span class="counter">{{ vm.htmlToPlaintext(tbody).length ? vm.htmlToPlaintext(tbody).length : '0'}} / {{vm.templateData.templatecategory
+                    == 23 ? 10000 : 2000}}</span>
+            </div>
+            <div style="font-size: 12px;color: #dd2c00;" ng-if="!tbody && ( (submitted && templateData.asdfg.$untouched) || (templateData.asdfg.$touched ) )">
+                Please enter Email Template. It can’t be blank.
+            </div>
+            <!-- Dont delete this code. This is file attachment code -->
+            <!-- <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex="25">
+                    <label class="input-fields">Attachment (upto size 1MB)</label>
+                    <input ng-value="newAttachment?newAttachment.file.name:attachment" tabindex="18" ng-readonly="true"></input>
+                </md-input-container>
+                <ng-md-icon class="md-mini" ng-if="attachment != '' || newAttachment " icon="close" ng-click="vm.clearAttachment()" style="padding-top:25px;"
+                    md-menu-align-target>
+                </ng-md-icon>
+                <div class="md-block" flex="25" style="margin-top:5px;">
+                    <choose-file>
+                        <md-button for="fileInput" class="md-secondary" tabindex="19" style="min-height:20px;line-height:24px;height:24px;margin-top:20px;">Browse</md-button>
+                        <input id="fileInput" name="file_document_1" class="model-popup-file-upload ng-hide" type="file" required file-model="newAttachment"
+                            accept=".pdf" />
+                    </choose-file>
+                </div>
+            </div> -->
+        </form>
+    </md-content>
+    <div layout="row" layout-align="end center" flex>
+        <md-button class='md-primary md-raised' tabindex="20" ng-click="vm.saveEmailTemplate()">Save
+        </md-button>
+        <md-button class='md-secondary' tabindex="21" ui-sref="Settings.EmailTemplates">Cancel
+        </md-button>
+    </div>
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>
+<!-- </div> -->

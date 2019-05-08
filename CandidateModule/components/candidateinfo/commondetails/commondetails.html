@@ -1,0 +1,210 @@
+<div class="initiate-candidate" ng-style="{'height':vm.heightforCommonDetails}" layout="column" ng-cloak class="md-inline-form" style="height:90%;overflow:auto;">
+    <md-content class="templatearea " style="width:100%;" ng-style="{'overflow-y':vm.mdcontentoverflowy}">
+        <div layout-gt-sm="column" class="first-column" style="padding:10px;background-color:rgb(250,250,250);">
+            <form name="detailsForm">
+                <!-- Personal Details Div -->
+                <md-content class="letter-body-start" layout-padding >
+                    <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-body" id="dropZone" layout="row" style="padding: 15px 15px;">
+                        <div flex class="sortable-stdFields-body" id="sortable-formbuilder-ul">
+        
+                            <div ng-repeat="field in formFields track by $index" data-index="{{$index}}" ng-switch on="field.Type" ng-class="{'flex-100 sortable-field': getFieldSettingPar('Width',field).value == '100', 'flex-50 sortable-field': getFieldSettingPar('Width',field).value == '50', 'flex-33 sortable-field': getFieldSettingPar('Width',field).value == '33','flex-25 sortable-field': getFieldSettingPar('Width',field).value == '25', 'flex-20 sortable-field': getFieldSettingPar('Width',field).value == '20'}"
+                                data-index="{{$index}}" class="input-contain {{field.Type}}">
+                                <!-- {{submitted && detailsForm['text_'+$index].$untouched) || detailsForm['text_'+$index].$touched}} -->
+                                <md-input-container class="form-group" ng-switch-when="text">
+                                    <label for="{{field.name}}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <input type="text" name="text_{{$index}}" id="text_{{$index}}" minlength="{{getFieldSettingPar('Min Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}" class="form-control" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                    ng-model="field.value" newmodel="field.value" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" ng-if="!getFieldSettingPar('Enable Google Maps',field).value && !getFieldSettingPar('Mask Data',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                    <input type="text" name="text_{{$index}}" id="text_{{$index}}" minlength="{{getFieldSettingPar('Min Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}" class="form-control" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                    convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}" ng-model="field.changedValue" newmodel="field.value" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" ng-if="!getFieldSettingPar('Enable Google Maps',field).value && getFieldSettingPar('Mask Data',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                    <input type="text" name="text_{{$index}}" id="text_{{$index}}" minlength="{{getFieldSettingPar('Min Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}" ng-model="field.value" class="form-control gplace" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                     ng-autocomplete options="addressOptions" ng-if="getFieldSettingPar('Enable Google Maps',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                    <!-- ng-if="getFieldSettingPar('Enable Google Maps',field).value" -->
+                                     <div ng-if="(submitted && detailsForm['text_'+$index].$untouched) || detailsForm['text_'+$index].$touched" ng-messages="detailsForm['text_'+$index].$error" role="alert">
+                                        <div ng-message-exp="['minlength']">
+                                            This should have minimum {{getFieldSettingPar('Min Length',field).value}} charecters
+                                        </div>
+                                        <div ng-message="invalidPattern">Invalid pattern</div>
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message-exp="['max']">
+                                            This should have maximum {{getFieldSettingPar('Max Length',field).value}} charecters
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="form-group" ng-switch-when="number">
+                                    <label for="{{field.name}}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control" value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                     ng-min="getFieldSettingPar('Min',field).value" ng-max="getFieldSettingPar('Max',field).value"  ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                     <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="50" md-maxlength="50" class="form-control" value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                     ng-model="field.changedValue" newmodel="field.value"  convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" ng-if="getFieldSettingPar('Mask Data',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                     <input type="text" name="text_{{$index}}" id="text_{{$index}}"  class="form-control"  ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                     ng-model="field.value" maxlength="50" md-maxlength="50" ng-if="getFieldSettingPar('Readonly',field).value" >
+                                     <div ng-if="(submitted && detailsForm['text_'+$index].$untouched) || detailsForm['text_'+$index].$touched" ng-messages="detailsForm['text_'+$index].$error" role="alert">
+                                        <div ng-message-exp="['min']">
+                                            {{getFieldSettingPar('Label Name',field).value}} should be greater than {{getFieldSettingPar('Min',field).value}}
+                                        </div>
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message-exp="['max']">
+                                            {{getFieldSettingPar('Label Name',field).value}} should be less than {{getFieldSettingPar('Max',field).value}}
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="form-group" ng-switch-when="email">
+                                    <label for="{{field.name}}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                    ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"  mapping-value-change-check mappingid="{{field.mappingId}}">
+                                    <div ng-if="(submitted && detailsForm['text_'+$index].$untouched) || detailsForm['text_'+$index].$touched" ng-messages="detailsForm['text_'+$index].$error" role="alert">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Please enter valid email
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="form-group" ng-switch-when="phone-number">
+                                    <label for="{{field.name}}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <input type="tel" name="text_{{$index}}" id="text_{{$index}}"  ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+                                    md-maxlength="12"
+                                    ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999" ui-mask-placeholder mapping-value-change-check mappingid="{{field.mappingId}}"
+                                    ui-options={addDefaultPlaceholder:false}>
+                                    <div ng-if="(submitted && detailsForm['text_'+$index].$untouched) || detailsForm['text_'+$index].$touched" ng-messages="detailsForm['text_'+$index].$error" role="alert">
+                                        <div ng-message-exp="['min']">
+                                            Duration of Contract should be greater than 0
+                                        </div>
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message-exp="['max']">
+                                            Duration of Contract should not be greater than 99
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="form-group" ng-switch-when="date" style="margin-left:-17px;">
+                                    <label for="{{getFieldSettingPar('Label Name',field).value}}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <!-- <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value" dynamic-date-validation123="{{getFieldSettingPar('Dependency Validation',field).isDependent.value}}"></md-datepicker> -->
+                                    <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy"
+                                    ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value"
+                                    ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="!getFieldSettingPar('Dependency Validation',field).isDependent.value" mapping-value-change-check mappingid="{{field.mappingId}}"></md-datepicker>
+                                    <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy"
+                                        ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value"
+                                        ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<')"
+                                        md-max-date="field.maxdate" ng-init="field.maxdate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, -1)" mapping-value-change-check mappingid="{{field.mappingId}}"></md-datepicker>
+                                    <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy"
+                                        ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value"
+                                        ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=')"
+                                        md-max-date="field.maxdate" ng-init="field.maxdate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0)" mapping-value-change-check mappingid="{{field.mappingId}}"
+                                        ></md-datepicker>
+                                    <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy"
+                                        ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value"
+                                        ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>')"
+                                        md-min-date="field.mindate" ng-init="field.mindate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, +1)" mapping-value-change-check mappingid="{{field.mappingId}}"></md-datepicker>
+                                    <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy"
+                                        ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value"
+                                        ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=')"
+                                        md-min-date="field.mindate" ng-init="field.mindate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0)" mapping-value-change-check mappingid="{{field.mappingId}}"></md-datepicker>
+                                    <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy"
+                                        ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value"
+                                        ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==')"
+                                        md-min-date="field.mindate" md-max-date="field.maxdate" ng-init="field.value = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0);field.mindate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0); field.maxdate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0)" mapping-value-change-check mappingid="{{field.mappingId}}"></md-datepicker>
+                                    <div ng-if="(submitted && detailsForm['date_'+$index].$untouched) || detailsForm['date_'+$index].$touched"
+                                        ng-messages="detailsForm['date_'+$index].$error" role="alert">
+                                        <div ng-message="required">Please enter {{getFieldSettingPar('Label Name',field).value}}. It can't be blank.</div>
+                                        <div ng-message="mindate">Date is too early!</div>
+                                    </div>
+                                </md-input-container>
+                                <div class="form-group" ng-switch-when="dropdown" ng-class="field.Active ? 'active-field' : '' ">
+                                    <span class="input-as-label">{{getFieldSettingPar('Label Name',field).value}}</span>
+                                    <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+                                    <select class="form-control" size="{{getFieldSettingPar('Choice',field).Possiblevalue.length}}" style="height:auto; overflow-y:auto;" ng-disabled="getFieldSettingPar('Readonly',field).value">
+                                        <option ng-repeat="val in getFieldSettingPar('Choice',field).Possiblevalue">
+                                            {{val.name}}
+                                        </option>
+                                    </select>
+        
+        
+                                </div>
+                                <md-input-container class="form-group text-area-depart" ng-switch-when="textarea">
+                                    <label for="{{getFieldSettingPar('Label Name',field).value}}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <textarea class="form-control" ng-model="field.value" name="textarea_{{$index}}" id="textarea_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" id="{{field.name.replace(' ','_')  + field.id}}" rows="3" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value" newmodel="field.changedValue" ng-if="!getFieldSettingPar('Enable Google Maps',field).value && !getFieldSettingPar('Mask Data',field).value" mapping-value-change-check mappingid="{{field.mappingId}}"></textarea>
+                                    <textarea class="form-control" ng-model="field.changedValue" newmodel="field.value" name="textarea_{{$index}}" id="textarea_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" id="{{field.name.replace(' ','_')  + field.id}}" rows="3" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"  convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}" ng-if="!getFieldSettingPar('Enable Google Maps',field).value && getFieldSettingPar('Mask Data',field).value" mapping-value-change-check mappingid="{{field.mappingId}}"></textarea>
+                                    <textarea class="form-control gplace" ng-model="field.value" name="textarea_{{$index}}" id="textarea_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" id="{{field.name.replace(' ','_')  + field.id}}" rows="3" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value" newmodel="field.changedValue"   ng-autocomplete options="addressOptions" ng-if="getFieldSettingPar('Enable Google Maps',field).value" mapping-value-change-check mappingid="{{field.mappingId}}"></textarea>
+                                    <div ng-if="(submitted && detailsForm['textarea_'+$index].$untouched) || detailsForm['textarea_'+$index].$touched" ng-messages="detailsForm['textarea_'+$index].$error" role="alert">
+                                        <div ng-message="required">This is required</div>
+                                    </div>
+        
+                                </md-input-container>
+        
+                                <div class="form-group" ng-switch-when="devider" ng-class="field.Active ? 'active-field' : '' " style="padding:10px 0px 23px 0px;width: 98%;">
+        
+                                    <div class="divider-div-line"></div>
+                                </div>
+                                <div class="form-group" ng-switch-when="emptyspace" ng-class="field.Active ? 'active-field' : '' " style="padding:10px 0px 12px 0px">
+        
+                                    <div class="divider-div-line"></div>
+                                </div>
+                                <div class="form-group header" ng-switch-when="header" ng-class="field.Active ? 'active-field' : '' ">
+        
+                                    <p class="header-div" ng-style="{'font-size':getFieldSettingPar('Font Size',field).value+'px','font-family':getFieldSettingPar('Font-Family',field).value}">{{field.name}}</p>
+                                </div>
+                                <div class="form-group" ng-switch-when="button" ng-class="field.Active ? 'active-field' : '' ">
+                                    <md-button class="md-primary md-raised">{{getFieldSettingPar('Label Name',field).value}}</md-button>
+        
+        
+                                </div>
+                                <div class="form-group  check-box-depart" ng-switch-when="checkbox" ng-class="field.Active ? 'active-field' : '' ">
+                                    <md-checkbox ng-model="field.value" aria-label="{{field.value}}" ng-disabled="getFieldSettingPar('Readonly',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                        {{getFieldSettingPar('Label Name',field).value}}
+                                    </md-checkbox>
+        
+        
+        
+                                </div>
+                                <md-input-container class="form-group" ng-switch-when="radio" style="margin:12px 0">
+                                    <label for="{{getFieldSettingPar('Label Name',field).value}}" style="position:relative;" ng-class="{'md-required': (getFieldSettingPar('Required',field).value)}">{{getFieldSettingPar('Label Name',field).value}}</label>
+                                    <md-radio-group ng-model="set.value" name="radio_{{$index}}" id="radio_{{$index}}" layout="{{(getFieldSettingPar('Radio Align Options',field).value == 'Align Vertical' ? 'column': 'row')}}" layout-align="start start" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value" mapping-value-change-check mappingid="{{field.mappingId}}">
+                                        <md-radio-button class="my-radio" ng-repeat="op in  getFieldSettingPar('Radio Choice',field).Possiblevalue" style="outline:none;" value="{{op.value}}">
+                                            <span> {{op.name}} </span>
+                                        </md-radio-button>
+                                    </md-radio-group>
+                                    <div ng-if="(submitted && detailsForm['radio_'+$index].$untouched) || detailsForm['radio_'+$index].$touched" ng-messages="detailsForm['radio_'+$index].$error" role="alert">
+                                        <div ng-message="required">This is required</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+        
+                    </div>
+                </md-content>
+            </form>
+        </div>
+
+    </md-content>
+
+</div>
+<md-divider></md-divider>
+<div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:20px" ng-style="{'height': vm.heightforCommonDetailsFooter}" >
+    <div layout="row" layout-align="space-between center" flex>
+        <div>
+            <md-button class="addPageBtn primary" ng-disabled="vm.disablePrevious" ng-click="vm.goToIntro()" style="color: white;" aria-label="Previous">
+                <ng-md-icon icon="arrow_back" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <span>&nbsp; Previous</span>
+        </div>
+        <div ng-if="vm.checkCandidateSign">
+            <span>Submit & Sign &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.submitAndSign(detailsForm.$valid)" style="color: white;" aria-label="Skip">
+                <!-- <ng-md-icon icon="subdirectory_arrow_right" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon> -->
+                <md-icon md-svg-icon="images/icons/signature_icon.svg" style="fill: white !important;margin: -5px 0 0 -6px;" class="signatureIconSvg"></md-icon>
+            </md-button>
+        </div>
+        <div>
+            <span>Next &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.saveCommonDetails(detailsForm.$valid)" ng-disabled="isDisabled" style="color: white;"
+                aria-label="Next">
+                <ng-md-icon icon="arrow_forward" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+        </div>
+    </div>
+</div>
+<div class="LoaderDiv" id="loader" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

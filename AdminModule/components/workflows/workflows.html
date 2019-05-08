@@ -1,0 +1,45 @@
+<div flex style="overflow:hidden;" ng-init="vm.getWorkflowList(false)">
+    <md-content flex layout="row" layout-xs="column" 
+        style="background-color:white;height: 12%;overflow:hidden;" 
+        layout-align="start start" ng-cloak>
+        <div layout="column" layout-padding flex>
+            <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+                <span class="header-color">Workflows</span>
+                <!-- ng-if="UserInfo.isAdmin || vm.rolesData.addflag" -->
+                <md-button id="add-workflow-btn" class="addPageBtn primary" ui-sref="AddWorkflow"
+                    ui-sref-opts="{reload:true}"
+                    aria-label="Add Workflow">
+                    <ng-md-icon icon="add" 
+                        style="fill: white;margin:-2px 0 0 -5px"
+                        size="18"></ng-md-icon>
+                </md-button>
+            </div>
+        </div>
+        <!-- Search and Filter elements -->
+        <div layout="row" layout-align="end end" style="margin:20px 20px 0 0;" ng-show="vm.workflows.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)" >
+            <md-button id="search-icon" class="md-icon-button" aria-label="Search" ng-click="vm.workflowSearchBoxDisplay()">
+                <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg"></md-icon>
+            </md-button>
+        </div>
+            
+    </md-content>
+    <form name="searchForm" ng-show="vm.workflowSearch" ng-submit="vm.filterWorkflowsBy()" style="margin-bottom: -20px;">
+        <md-input-container style="margin:-10px 0 -20px 20px;min-width:95%;">
+            <label class="input-fields"></label>
+            <input id="search-box"
+                name="searchby" 
+                type="search" 
+                style="border: 1px solid #44b3c2;border-radius: 2px;"
+                class="md-no-underline" 
+                ng-model="vm.filterby" 
+                ob-autofocus
+                placeholder="Search workflows by their name" />
+        </md-input-container>
+        <!-- <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:22px;">
+            <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+        </div>                 -->
+    </form>
+
+    <div class="motherOfAll" layout="column" ui-view="WorkflowOptions" style="height:88%">
+    </div>
+</div>

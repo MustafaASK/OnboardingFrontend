@@ -1,0 +1,781 @@
+<div class="initiate-candidate" layout="column" ng-style="{'height': vm.heightforCommonDetails}" ng-cloak class="md-inline-form">
+    <md-content style="overflow-y:auto;overflow-x:hidden;height:100%">
+        <div layout="column" class="new-hire-personal-info-div payroll-div-height" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container" style="height:100%;">
+                <div class="new-hire-personal-info-area" style="padding:10px;height:100%">
+                    <!-- <span class="cust-heading">Payroll Package</span> -->
+                    <div style="padding-top:10px;height:100%">
+                        <form name="payrollform" style="height:100%">
+                            <h3 style="text-align:center;;font-weight:bold">Payroll Method Selection</h3>
+                            <p>ASK Staffing offers two options for receiving your paycheck. Please choose from one of
+                                the options
+                                below and sign and date.
+                            </p>
+                            <div layout="column" class="md-block" style="height:80%" flex-gt-sm>
+                                <md-radio-group layout="column" style="padding-top: 10px;height:100%" ng-model="vm.payrollPackage.payoption"
+                                    required tabindex="1">
+                                    <div layout="row" class="md-block" style="padding-bottom: 20px;" flex-gt-sm>
+                                        <div layout-align="start start">
+                                            <md-radio-button class="my-radio" style="transform:scale(.8);outline:none"
+                                                value="1">
+                                            </md-radio-button>
+                                        </div>
+                                        <span layout="column" style="width:98%">
+                                            <div>
+                                                <strong>Direct Deposit</strong> — Paychecks will be automatically
+                                                deposited into
+                                                the employee's bank account when a voided check is provided by the
+                                                employee.
+                                                Employees will be able to view and/or print their paystubs from ADP
+                                                Online
+                                                Payroll site at
+                                                <a href="https://workforcenow.adp.com/public/index.htm" tabindex="2"
+                                                    style="border-bottom: 1px solid #BF0000;">https://workforcenow.adp.com/public/index.htm</a>.
+                                                Before your first paycheck
+                                                date you will receive a welcome letter via email from ASK Staffing with
+                                                a
+                                                temporary login and password. You will be given the opportunity to
+                                                change
+                                                your password after your first login.
+                                            </div>
+                                            <div>
+                                                <span style="color:#BF0000;font-weight:bold;">The voided check or
+                                                    direct deposit form from the employee's banking institution
+                                                    is mandatory for participation in direct deposit. Please note, by
+                                                    <span style="font-size:16px;border-bottom: 3px solid #BF0000;">not
+                                                        providing
+                                                    </span> a voided check or direct deposit form from your banking
+                                                    institution
+                                                    <span style="border-bottom: 2px solid #BF0000;">you are fully
+                                                        responsible</span> for the $25.00 FEE charged by the payroll
+                                                    company for every direct deposit returned due to closed accounts
+                                                    and
+                                                    incorrect routing or account numbers supplied by the employee.
+                                                </span>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div layout="row" class="md-block" style="padding-bottom: 20px;" flex-gt-sm>
+                                        <div layout-align="start start">
+                                            <md-radio-button class="my-radio" style="transform:scale(.8);outline:none"
+                                                value="2">
+                                            </md-radio-button>
+                                        </div>
+                                        <span layout="column" style="width:98%;display:block">
+                                            <div>
+                                                <strong>Payroll Card</strong> — Employees wishing to take advantage of
+                                                direct deposit
+                                                without the use of a bank account can elect to receive a Skylight
+                                                Financial
+                                                payroll card. The temporary payroll card will be enrolled and sent by
+                                                priority
+                                                mail with the first paper paycheck.
+                                                <span style="color:#BF0000;font-weight:bold;">There is a one-time
+                                                    $10.00 fee for a payroll card and mailing, which will
+                                                    be deducted from the first paycheck when the card is mailed out.
+                                                    Once
+                                                    the employee receives the card in the mail, he/she must activate
+                                                    the
+                                                    card by calling the activation number on the card.
+                                                </span> All future paychecks will be deposited to the payroll card
+                                                beginning
+                                                with your second paycheck.
+                                            </div>
+                                            <div style="height:10px"></div>
+                                            <span style="color:#BF0000;font-weight:bold; ">
+                                                ***When assignment ends for any reason (i.e. termination, resignation
+                                                or assignment complete) Final paycheck will/may be
+                                                issued as paper check NOT direct deposit.
+                                            </span>
+                                            <span style="color:#BF0000;font-weight:bold; ">*** Please note: If a paper
+                                                check lost in the mail or not received due to an
+                                                incorrect address provided by you, there will be a $25.00 stop payment
+                                                fee
+                                                to reissue your check. ASK Staffing is not responsible for any delays
+                                                by
+                                                the US Postal service, or any delivery issues at your location.
+                                            </span>
+                                        </span>
+                                    </div>
+                                </md-radio-group>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-show="vm.payrollPackage.payoption == 1" style="display:block;"
+            ng-style="{'height' : vm.authFormHeight}" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container" style="height:100%">
+                <div class="new-hire-personal-info-area" style="padding:10px;height:100%">
+                    <div style="padding-top:10px;">
+                        <form name="directDepositForm">
+                            <h3>Direct Deposit Authorization Forms</h3>
+                            <div layout="column" class="md-block" style="display:block;" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Employee Name</label>
+                                    <input ng-model="fullNameUpdated" type="text" tabindex="3" name="EmployeeName"
+                                        ng-pattern="/^\b[A-Za-z0-9 ]+$/" required disabled>
+                                    <div ng-if="(submitted && directDepositForm.EmployeeName.$untouched) || directDepositForm.EmployeeName.$touched"
+                                        ng-messages="directDepositForm.EmployeeName.$error" role="alert">
+                                        <div ng-message="required">Please enter Employee Name. It can't be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Employee Name is incorrect. Please enter the valid Employee
+                                            Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p>I hereby authorize ASK Staffing, Inc to deposit my pay directly into the bank
+                                    account(s)
+                                    listed below. I have attached a voided check for each account so bank transit and
+                                    account
+                                    numbers can be verified.</p>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p style="color:red;font-weight:bold;">Please note, a $25.00 FEE is charged by the
+                                    payroll company for every direct deposit returned
+                                    due to incorrect routing or account information supplied during registration if a
+                                    voided
+                                    check is not provided.</p>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p>I also authorize ASK Staffing, Inc to correct any erroneous payment or overpayment
+                                    to my
+                                    account(s) by withdrawing funds in the amount of the excess payment.</p>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p>
+                                    <strong>NOTE:</strong> If your joint account requires both account holders to sign
+                                    checks or
+                                    authorize payments, the joint account holder must indicate their agreement with the
+                                    above
+                                    terms by signing below:
+                                </p>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Account Number 1</label>
+                                    <!-- ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" -->
+                                    <!-- <input type="text" name="ssn" newmodel="ssn" ng-model="testval" maxlength="9" md-maxlength="9" required ng-if="testval" convert-stars autocomplete="off"> -->
+                                    <input type="text" class="clearIEicon" tabindex="4" name="accountnumber1" maxlength="25"
+                                        required md-maxlength="25" newmodel="orignaccountnumber1" ng-model="tempaccountnumber1"
+                                        defaultval="{{tempaccountnumber1}}" ng-if="tempaccountnumber1"
+                                        convert-stars-atleast-number autocomplete="off">
+                                    <!-- <input ng-model="vm.payrollPackage.accountone" type="text" tabindex="3" name="accountnumber1" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" maxlength="50" required md-maxlength="50"> -->
+                                    <div ng-if="(submitted && directDepositForm.accountnumber1.$untouched) || directDepositForm.accountnumber1.$touched"
+                                        ng-messages="directDepositForm.accountnumber1.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Account Number 1. It can't be blank.</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="directDepositForm.accountnumber1.$error.atleastOneDigit">
+                                        <div>Atleast 1 digit is mandatory.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Routing Number 1</label>
+                                    <!-- <input ng-model="vm.payrollPackage.routingone" type="text" tabindex="4" name="routingnumber1" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" maxlength="50" required md-maxlength="50"> -->
+                                    <input type="text" class="clearIEicon" tabindex="5" name="routingnumber1" maxlength="9"
+                                        required md-maxlength="9" minlength="9" newmodel="orignrouting1" ng-model="temprouting1"
+                                        defaultval="{{temprouting1}}" ng-if="temprouting1" convert-stars-only-numbers
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && directDepositForm.routingnumber1.$untouched) || directDepositForm.routingnumber1.$touched"
+                                        ng-messages="directDepositForm.routingnumber1.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Routing Number 1. It can't be blank.</div>
+                                        <div ng-message-exp="['minlength']">Routing Number 1 should be 9 characters</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Account Number 2</label>
+                                    <!-- <input ng-model="vm.payrollPackage.accounttwo" type="text" tabindex="5" name="accountnumber2" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" maxlength="50" required md-maxlength="50"> -->
+                                    <input type="text" class="clearIEicon" tabindex="6" name="accountnumber2" maxlength="25"
+                                        md-maxlength="25" newmodel="orignaccountnumber2" ng-model="tempaccountnumber2"
+                                        defaultval="{{tempaccountnumber2}}" ng-if="tempaccountnumber2"
+                                        convert-stars-atleast-number autocomplete="off">
+                                    <div ng-if="(submitted && directDepositForm.accountnumber2.$untouched) || directDepositForm.accountnumber2.$touched"
+                                        ng-messages="directDepositForm.accountnumber2.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Account Number 2. It can't be blank.</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="directDepositForm.accountnumber2.$error.atleastOneDigit">
+                                        <div>Atleast 1 digit is mandatory.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Routing Number 2</label>
+                                    <!-- <input ng-model="vm.payrollPackage.routingtwo" type="text" tabindex="6" name="routingnumber2" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" maxlength="50" required md-maxlength="50"> -->
+                                    <input type="text" class="clearIEicon" tabindex="7" name="routingnumber2" maxlength="9"
+                                        md-maxlength="9" minlength="9" newmodel="orignrouting2" ng-model="temprouting2"
+                                        defaultval="{{temprouting2}}" ng-if="temprouting2" convert-stars autocomplete="off">
+                                    <div ng-if="(submitted && directDepositForm.routingnumber2.$untouched) || directDepositForm.routingnumber2.$touched"
+                                        ng-messages="directDepositForm.routingnumber2.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Routing Number 2. It can't be blank.</div>
+                                        <div ng-message-exp="['minlength']">Routing Number 2 should be 9 characters</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Joint Account Holder Name</label>
+                                    <input ng-model="vm.payrollPackage.jointholdername" type="text" tabindex="8" name="jointAccountHolderName"
+                                        ng-pattern="/^\b[A-Za-z0-9 ]+$/" maxlength="100" md-maxlength="100">
+                                    <div ng-messages="directDepositForm.jointAccountHolderName.$error" role="alert">
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Joint Account Holder Name is incorrect. Please enter the
+                                            valid Employee Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-show="vm.payrollPackage.payoption == 1" style="display:block"
+            flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <div style="padding-top:10px;">
+                        <form name="account1Form">
+                            <h3>Account Information — Form for Account 1</h3>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p>Complete only this form for Account 1 if you want all of your pay deposited into a
+                                    single
+                                    account. If you want your pay per pay period deposited into two accounts, complete
+                                    both
+                                    this form for Account 1 and the form for Account 2.
+                                </p>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <label style="text-transform: none;font-size: 14px;padding-left:4px;font-weight:bold">Account
+                                    Type*:</label>
+                                <md-radio-group required layout="row" tabindex="9" class="md-block" ng-model="vm.payrollPackage.accountonetype"
+                                    name="accounttype" style="margin-left:20px;">
+                                    <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="1">
+                                        <span> Checking </span>
+                                    </md-radio-button>
+                                    <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="2">
+                                        <span> Savings </span>
+                                    </md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <div ng-if="(submitted && account1Form.accounttype.$untouched) || account1Form.accounttype.$touched"
+                                ng-messages="account1Form.accounttype.$error" role="alert">
+                                <div ng-message="required" style="font-size: 12px;color: rgb(221,44,0);padding-left: 4px;">Please
+                                    Select Account Type. It can't be blank</div>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm style="display:block">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Name of Financial Institution</label>
+                                    <input ng-model="vm.payrollPackage.institutionname1" type="text" tabindex="10" name="FinancialInstName"
+                                        ng-pattern="/^\b[A-Za-z0-9 ]+$/" required maxlength="100" md-maxlength="100">
+                                    <div ng-if="(submitted && account1Form.FinancialInstName.$untouched) || account1Form.FinancialInstName.$touched"
+                                        ng-messages="account1Form.FinancialInstName.$error" role="alert">
+                                        <div ng-message="required">Please enter Name of Financial Institution. It can't
+                                            be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Name of Financial Institution is incorrect. Please enter the
+                                            valid Name of Financial Institution.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <md-input-container flex="66">
+                                    <label class="input-fields">Address</label>
+                                    <input ng-model="vm.payrollPackage.address1" type="text" rows="2" tabindex="11"
+                                        name="address" required maxlength="1000" md-maxlength="1000" class="gplace"
+                                        ng-autocomplete options="addrOptionsUS" ng-pattern="/^\b.+$/" details="details"
+                                        othermodels="updateCityStateCountryZip1(cityParam, stateParam, zipParam)"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account1Form.address.$untouched) || account1Form.address.$touched"
+                                        ng-messages="account1Form.address.$error" role="alert">
+                                        <div ng-message="required">Please enter Address of Financial Institution. It
+                                            can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid Address of Financial
+                                            Institution.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container flex="33">
+                                    <label class="firstNameLabel input-fields">APT/STE #</label>
+                                    <input type="text" name="apartmentsuitenumber" ng-model="vm.payrollPackage.apartmentsuitenumber1"
+                                        tabindex="12" maxlength="50" md-maxlength="50" ng-pattern="/^[A-Za-z0-9-#/\\ ]+$/"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account1Form.apartmentsuitenumber.$untouched) || account1Form.apartmentsuitenumber.$touched"
+                                        ng-messages="account1Form.apartmentsuitenumber.$error" role="alert">
+                                        <div ng-message="pattern">Please enter a valid APT/STE #.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row" flex-gt-sm>
+                                <!-- <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">City</label>
+                                    <input ng-model="vm.payrollPackage.city1" type="text" tabindex="6" name="city" required maxlength="100" md-maxlength="100">
+                                    <div ng-messages="account1Form.city.$error" role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG038}}</div>
+                                    </div>
+                                </md-input-container> -->
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>City</label>
+                                    <!-- <md-select ng-model="vm.payrollPackage.city1" name="city1" tabindex="11" ng-required>
+                                        <md-option ng-repeat="city in vm.cityList" value="{{city.cityCode}}">
+                                            {{city.cityName}}
+                                        </md-option>
+                                    </md-select> -->
+                                    <input type="text" name="city1" required ng-model="vm.payrollPackage.city1"
+                                        maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete options="options1"
+                                        tabindex="13" ng-pattern="/^\b.+$/" details="details" othermodels="updateState(stateParam)"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account1Form.city1.$untouched) || account1Form.city1.$touched"
+                                        ng-messages="account1Form.city1.$error" role="alert">
+                                        <div ng-message="required">Please enter City. It can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid City.</div>
+                                    </div>
+                                    <!-- <div ng-if="(submitted && account1Form.city1.$untouched) || account1Form.city1.$touched" ng-messages="account1Form.city1.$error">
+                                        <div ng-message="required">Please select City. It can't be blank.</div>
+                                    </div> -->
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">State</label>
+                                    <!-- <md-select tabindex="12" name="state1" ng-model="vm.payrollPackage.state1" required>
+                                        <md-option ng-repeat="state in vm.statesList" value="{{state.stateCode}}">
+                                            {{state.stateName}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-if="(submitted && account1Form.state1.$untouched) || account1Form.state1.$touched" ng-messages="account1Form.state1.$error">
+                                        <div ng-message="required">Please select State. It can't be blank.</div>
+                                    </div> -->
+
+                                    <input type="text" tabindex="14" name="state1" required ng-model="vm.payrollPackage.state1"
+                                        required maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                        options="options" ng-pattern="/^\b.+$/" details="details" autocomplete="off">
+
+                                    <div ng-if="(submitted && account1Form.state1.$untouched) || account1Form.state1.$touched"
+                                        ng-messages="account1Form.state1.$error">
+                                        <div ng-message="required">Please enter State. It can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid State.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Zip</label>
+                                    <input required name="zipcode" ng-minlength="3" maxlength="12" md-maxlength="12"
+                                        ng-model="vm.payrollPackage.zipcode1" tabindex="15" ng-pattern="/^\b[a-zA-Z0-9- ]{3,12}$/"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account1Form.zipcode.$untouched) || account1Form.zipcode.$touched"
+                                        ng-messages="account1Form.zipcode.$error">
+                                        <div ng-message="required">Please enter Zip. It can't be blank.</div>
+                                        <div ng-message="pattern">Please enter a valid Zip.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Telephone # for Financial Institution</label>
+                                    <input type="tel" name="phoneFinancialInst" ng-model="vm.payrollPackage.phone1"
+                                        md-maxlength="12" ui-mask="999-999-9999" ui-mask-placeholder ui-options={addDefaultPlaceholder:false}
+                                        id="telephone" tabindex="16">
+                                    <div ng-messages="account1Form.phoneFinancialInst.$error" md-auto-hide="true">
+                                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                            Format of the Telephone for Financial Institution is incorrect. Please
+                                            enter the valid Telephone # for Financial Institution.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" class="md-block" style="display:block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Percentage or Amount per Pay Period to Deposit for this
+                                        Account</label>
+                                    <!-- <input required type="number" ng-model="vm.payrollPackage.payamountpercent1" min="0" tabindex="17" name="percentamount" maxlength="10"> -->
+                                    <input type="text" ng-model="vm.payrollPackage.payamountpercent1" name="percentamount"
+                                        tabindex="17" ng-pattern="/^(\d{1,5}(\.\d{1,2})?)$|^\d{1,2}(\.\d{1,2})?[%]$|^[$]\d{1,5}(\.\d{1,2})?$|^\d{1,5}(\.\d{1,2})?[$]$|^100%$/"
+                                        required >
+                                    <div role="alert">
+                                        <div style="font-size:11px">
+                                            (examples: 100%; $350)(Use when pay is split between two accounts)
+                                        </div>
+                                    </div>
+                                    <div ng-if="(submitted && account1Form.percentamount.$untouched) || account1Form.percentamount.$touched"
+                                        ng-messages="account1Form.percentamount.$error">
+                                        <div ng-message="required">Please enter Percentage or Amount. It can't be
+                                            blank.</div>
+                                        <div ng-message="pattern">Please enter a valid Percentage or Amount.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Confirm Account Number 1</label>
+                                    <!-- <input ng-model="vm.confrmaccountnumber1" type="text" tabindex="16" name="confrmaccountnumber1" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" compare-to="vm.payrollPackage.accountone" maxlength="50" required md-maxlength="50"> -->
+                                    <!-- <input type="text" tabindex="16" name="confrmaccountnumber1"  maxlength="50" required md-maxlength="50" newmodel="orignconfrmaccountnumber1" ng-model="tempconfrmaccountnumber1" defaultval="{{tempconfrmaccountnumber1}}" ng-if="tempconfrmaccountnumber1" convert-stars-compare="orignaccountnumber1" > -->
+                                    <input class="clearIEicon" type="text" tabindex="18" name="confrmaccountnumber1"
+                                        maxlength="25" required md-maxlength="25" newmodel="orignconfrmaccountnumber1"
+                                        ng-model="tempconfrmaccountnumber1" defaultval="{{tempconfrmaccountnumber1}}"
+                                        ng-if="tempconfrmaccountnumber1" convert-stars-compare="orignaccountnumber1"
+                                        autocomplete="off">
+                                    <!-- <div ng-messages="account1Form.accountnumber2.$error.compareTo" role="alert">
+                                        <div ng-message-exp="['compare-to']">
+                                            Account Number 1 and Confirm Account Number 1 should be same.
+                                        </div>
+                                    </div> -->
+                                    <div ng-if="(submitted && account1Form.confrmaccountnumber1.$untouched) || account1Form.confrmaccountnumber1.$touched"
+                                        ng-messages="account1Form.confrmaccountnumber1.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Confirm Account Number 1. It can't be
+                                            blank.</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="account1Form.confrmaccountnumber1.$error.convertStarsCompare">
+                                        <div>Account Number 1 and Confirm Account Number 1 should be same.</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="account1Form.confrmaccountnumber1.$error.atleastOneDigit">
+                                        <div>Atleast 1 digit is mandatory.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Confirm Routing Number 1</label>
+                                    <!-- <input ng-model="vm.cnfrmroutingnumber1" type="text" tabindex="17" name="cnfrmroutingnumber1" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" compare-to="vm.payrollPackage.routingone" maxlength="50" required md-maxlength="50"> -->
+                                    <input class="clearIEicon" type="text" tabindex="19" name="cnfrmroutingnumber1"
+                                        maxlength="9" required md-maxlength="9" minlength="9" newmodel="orignconfrmrouting1"
+                                        ng-model="tempconfrmrouting1" defaultval="{{tempconfrmrouting1}}" ng-if="tempconfrmrouting1"
+                                        convert-stars-compare-only-numbers="orignrouting1" autocomplete="off">
+                                    <!-- <div ng-messages="directDepositForm.routingnumber1.$error" role="alert">
+                                        <div ng-message-exp="['compare-to']">
+                                            Routing Number 1 and Confirm Routing Number 1 should be same.
+                                        </div>
+                                    </div> -->
+                                    <div ng-if="(submitted && account1Form.cnfrmroutingnumber1.$untouched) || account1Form.cnfrmroutingnumber1.$touched"
+                                        ng-messages="account1Form.cnfrmroutingnumber1.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Confirm Routing Number 1. It can't be
+                                            blank.</div>
+                                        <div ng-message-exp="['minlength']">Confirm Routing Number 1 should be 9
+                                            characters</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="account1Form.cnfrmroutingnumber1.$error.convertStarsCompare">
+                                        <div>Routing Number 1 and Confirm Routing Number 1 should be same.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <!-- <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Bank / ABA Number</label>
+                                    <input ng-model="vm.bankNumber" type="number" tabindex="6" name="bankNumber" maxlength="50" md-maxlength="50">
+                                    <div role="alert">
+                                        <div style="font-size:11px">
+                                            (Company Use Only)
+                                        </div>
+                                    </div>
+                                </md-input-container> -->
+                                <!-- <md-input-container class="md-block" flex-gt-sm> -->
+                                <label style="font-weight:bold;font-style:italic">Company Use Only -</label>
+                                <label class="input-fields" style="padding-top:1px">&nbsp; Bank/ABA Number:</label>
+                                <label flex style="border-bottom:1px solid black;margin:0 20px 0 10px"></label>
+                                <!-- </md-input-container> -->
+                            </div>
+                            <div style="height:10px"></div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p style="color:red;font-weight:bold; ">Please note, a $25.00 FEE is charged by the
+                                    payroll company for every direct deposit returned
+                                    due to incorrect routing or account information supplied during registration if a
+                                    voided
+                                    check is not provided.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-show="vm.payrollPackage.payoption == 1 && (orignaccountnumber2 || orignrouting2)"
+            style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <div style="padding-top:10px;">
+                        <form name="account2Form">
+                            <h3>Account Information — Form for Account 2</h3>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p>Complete this form in addition to the form for Account 1 if you want your pay per
+                                    pay period
+                                    deposited into two accounts. DO NOT complete this form if you want all of your pay
+                                    deposited
+                                    into a single account.</p>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <label style="text-transform: none;font-size: 14px;padding-left:4px;font-weight:bold">Account
+                                    Type*:</label>
+                                <md-radio-group layout="row" name="accounttype" class="md-block" ng-model="vm.payrollPackage.accounttwotype"
+                                    style="margin-left:20px;" tabindex="20" required>
+                                    <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="1">
+                                        <span> Checking </span>
+                                    </md-radio-button>
+                                    <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="2">
+                                        <span> Savings </span>
+                                    </md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <div ng-if="(submitted && account2Form.accounttype.$untouched) || account2Form.accounttype.$touched"
+                                ng-messages="account2Form.accounttype.$error" role="alert">
+                                <div ng-message="required" style="font-size: 12px;color: rgb(221,44,0);padding-left: 4px;">Please
+                                    Select Account Type. It can't be blank</div>
+                            </div>
+                            <div layout="column" class="md-block" style="display:block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Name of Financial Institution</label>
+                                    <input ng-model="vm.payrollPackage.institutionname2" type="text" tabindex="21" name="FinancialInstName"
+                                        ng-pattern="/^\b[A-Za-z0-9 ]+$/" required maxlength="100" md-maxlength="100">
+                                    <div ng-if="(submitted && account2Form.FinancialInstName.$untouched) || account2Form.FinancialInstName.$touched"
+                                        ng-messages="account2Form.FinancialInstName.$error" role="alert">
+                                        <div ng-message="required">Please enter Name of Financial Institution. It can't
+                                            be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Name of Financial Institution is incorrect. Please enter the
+                                            valid Name of Financial Institution.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <md-input-container flex="66">
+                                    <label class="input-fields">Address</label>
+                                    <input ng-model="vm.payrollPackage.address2" type="text" rows="2" tabindex="22"
+                                        name="address" required maxlength="1000" md-maxlength="1000" class="gplace"
+                                        ng-autocomplete options="addrOptionsUS" ng-pattern="/^\b.+$/" details="details"
+                                        othermodels="updateCityStateCountryZip2(cityParam, stateParam, zipParam)"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account2Form.address.$untouched) || account2Form.address.$touched"
+                                        ng-messages="account2Form.address.$error" role="alert">
+                                        <div ng-message="required">Please enter Address of Financial Institution. It
+                                            can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid Address of Financial
+                                            Institution.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container flex="33">
+                                    <label class="firstNameLabel input-fields">APT/STE #</label>
+                                    <input type="text" name="apartmentsuitenumber2" ng-model="vm.payrollPackage.apartmentsuitenumber2"
+                                        tabindex="23" maxlength="50" md-maxlength="50" ng-pattern="/^[A-Za-z0-9-#/\\ ]+$/"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account2Form.apartmentsuitenumber2.$untouched) || account2Form.apartmentsuitenumber2.$touched"
+                                        ng-messages="account2Form.apartmentsuitenumber2.$error" role="alert">
+                                        <div ng-message="pattern">Please enter a valid APT/STE #.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>City</label>
+                                    <!-- <md-select ng-model="vm.payrollPackage.city2" name="city2" tabindex="21" ng-required>
+                                        <md-option ng-repeat="city in vm.cityList" value="{{city.cityCode}}">
+                                            {{city.cityName}}
+                                        </md-option>
+                                    </md-select> -->
+                                    <input type="text" name="city2" required ng-model="vm.payrollPackage.city2"
+                                        tabindex="24" required maxlength="50" md-maxlength="50" class="gplace"
+                                        ng-autocomplete options="options1" ng-pattern="/^\b.+$/" details="details"
+                                        othermodels="updateState2(stateParam)" autocomplete="off">
+                                    <!-- <div ng-if="(submitted && newhirePersonalInfoForm.clientcity.$untouched) || newhirePersonalInfoForm.clientcity.$touched"
+                                        ng-messages="newhirePersonalInfoForm.clientcity.$error" role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG255}}</div>
+                                        <div ng-message-exp="['pattern']">
+                                            {{errorMsgs.MSG256}}
+                                        </div>
+                                    </div> -->
+                                    <div ng-if="(submitted && account2Form.city2.$untouched) || account2Form.city2.$touched"
+                                        ng-messages="account2Form.city2.$error">
+                                        <div ng-message="required">Please enter City. It can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid City.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">State</label>
+                                    <!-- <md-select tabindex="22" name="state2" ng-model="vm.payrollPackage.state2" required>
+                                        <md-option ng-repeat="state in vm.statesList" value="{{state.stateCode}}">
+                                            {{state.stateName}}
+                                        </md-option>
+                                        <div ng-if="(submitted && account2Form.state2.$untouched) || account2Form.state2.$touched" ng-messages="account2Form.state2.$error">
+                                            <div ng-message="required">Please select State. It can't be blank.</div>
+                                        </div>
+                                    </md-select> -->
+
+                                    <input type="text" name="state2" required ng-model="vm.payrollPackage.state2"
+                                        tabindex="25" required maxlength="50" md-maxlength="50" class="gplace"
+                                        ng-autocomplete options="options" ng-pattern="/^\b.+$/" details="details"
+                                        autocomplete="off">
+
+                                    <div ng-if="(submitted && account2Form.state2.$untouched) || account2Form.state2.$touched"
+                                        ng-messages="account2Form.state2.$error">
+                                        <div ng-message="required">Please enter State. It can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid State.</div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Zip</label>
+                                    <input required name="zipcode" ng-minlength="3" maxlength="12" md-maxlength="12"
+                                        ng-model="vm.payrollPackage.zipcode2" tabindex="26" ng-pattern="/^\b[a-zA-Z0-9- ]{3,12}$/"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && account2Form.zipcode.$untouched) || account2Form.zipcode.$touched"
+                                        ng-messages="account2Form.zipcode.$error">
+                                        <div ng-message="required">Please enter Zip. It can't be blank.</div>
+                                        <div ng-message="pattern">Please enter a valid Zip.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Telephone # for Financial Institution</label>
+                                    <input type="tel" name="phoneFinancialInst" ng-model="vm.payrollPackage.phone2"
+                                        md-maxlength="12" ui-mask="999-999-9999" ui-mask-placeholder ui-options={addDefaultPlaceholder:false}
+                                        id="telephone" tabindex="27">
+                                    <div ng-if="(submitted && account2Form.phoneFinancialInst.$untouched) || account2Form.phoneFinancialInst.$touched"
+                                        ng-messages="account2Form.phoneFinancialInst.$error" md-auto-hide="true">
+                                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                            Format of the Telephone for Financial Institution is incorrect. Please
+                                            enter the valid Telephone # for Financial Institution.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" class="md-block" style="display:block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Percentage or Amount per Pay Period to Deposit for this
+                                        Account</label>
+                                    <!-- <input required ng-model="vm.payrollPackage.payamountpercent2" type="number" min="0"
+                                        tabindex="28" name="percentamount2" maxlength="10"> -->
+                                    <input type="text" ng-model="vm.payrollPackage.payamountpercent2" name="percentamount2"
+                                        ng-pattern="/^(\d{1,5}(\.\d{1,2})?)$|^\d{1,2}(\.\d{1,2})?[%]$|^[$]\d{1,5}(\.\d{1,2})?$|^\d{1,5}(\.\d{1,2})?[$]$|^100%$/"
+                                        tabindex="28">
+                                    <div role="alert">
+                                        <div style="font-size:11px">
+                                            (examples: 100%; $350)(Use when pay is split between two accounts)
+                                        </div>
+                                    </div>
+                                    <div ng-if="(submitted && account2Form.percentamount2.$untouched) || account2Form.percentamount2.$touched"
+                                        ng-messages="account2Form.percentamount2.$error">
+                                        <div ng-message="required">Please enter Percentage or Amount. It can't be
+                                            blank.</div>
+                                        <!-- <div ng-message-exp="['min']">Please enter a valid Percentage or Amount.</div> -->
+                                        <div ng-message="pattern">Please enter a valid Percentage or Amount.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Confirm Account Number 2</label>
+                                    <!-- <input ng-model="vm.confrmaccountnumber2" type="text" tabindex="26" name="confrmaccountnumber2" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" compare-to="vm.payrollPackage.accounttwo" maxlength="50" required md-maxlength="50"> -->
+                                    <input type="text" class="clearIEicon" tabindex="29" name="confrmaccountnumber2"
+                                        maxlength="25" required md-maxlength="25" newmodel="orignconfrmaccountnumber2"
+                                        ng-model="tempconfrmaccountnumber2" defaultval="{{tempconfrmaccountnumber2}}"
+                                        ng-if="tempconfrmaccountnumber2" convert-stars-compare="orignaccountnumber2"
+                                        autocomplete="off">
+                                    <!-- <div ng-messages="directDepositForm.accountnumber2.$error" role="alert">
+                                        <div ng-message-exp="['compare-to']">
+                                            Account Number 2 and Confirm Account Number 2 should be same.
+                                        </div>
+                                    </div> -->
+                                    <div ng-if="(submitted && account2Form.confrmaccountnumber2.$untouched) || account2Form.confrmaccountnumber2.$touched"
+                                        ng-messages="account2Form.confrmaccountnumber2.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Confirm Account Number 1. It can't be
+                                            blank.</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="account2Form.confrmaccountnumber2.$error.convertStarsCompare">
+                                        <div>Account Number 2 and Confirm Account Number 2 should be same.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Confirm Routing Number 2</label>
+                                    <!-- <input ng-model="vm.cnfrmroutingnumber2" type="text" tabindex="27" name="cnfrmroutingnumber2" ng-pattern="/^$|^[^-\s][A-Za-z0-9 ]+$/" compare-to="vm.payrollPackage.routingtwo" maxlength="50" required md-maxlength="50"> -->
+                                    <input type="text" class="clearIEicon" tabindex="30" name="cnfrmroutingnumber2"
+                                        maxlength="9" required md-maxlength="9" minlength="9" newmodel="orignconfrmrouting2"
+                                        ng-model="tempconfrmrouting2" defaultval="{{tempconfrmrouting2}}" ng-if="tempconfrmrouting2"
+                                        convert-stars-compare="orignrouting2" autocomplete="off">
+                                    <!-- <div ng-messages="directDepositForm.routingnumber2.$error" role="alert">
+                                        <div ng-message-exp="['compare-to']">
+                                            Routing Number 2 and Confirm Routing Number 2 should be same.
+                                        </div>
+                                    </div> -->
+                                    <div ng-if="(submitted && account2Form.cnfrmroutingnumber2.$untouched) || account2Form.cnfrmroutingnumber2.$touched"
+                                        ng-messages="account2Form.cnfrmroutingnumber2.$error" role="alert">
+                                        <div ng-message-exp="['pattern']"></div>
+                                        <div ng-message="required">Please enter Confirm Account Number 2. It can't be
+                                            blank.</div>
+                                        <div ng-message-exp="['minlength']">Confirm Routing Number 2 should be 9
+                                            characters</div>
+                                    </div>
+                                    <div class="errorMsg" style="font-size:11px;color:rgb(221,44,0);" ng-show="account2Form.cnfrmroutingnumber2.$error.convertStarsCompare">
+                                        <div>Routing Number 2 and Confirm Routing Number 2 should be same.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <!-- <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Bank / ABA Number</label>
+                                    <input ng-model="vm.bankNumber" type="number" tabindex="6" name="bankNumber" maxlength="50" md-maxlength="50">
+                                    <div role="alert">
+                                        <div style="font-size:11px">
+                                            (Company Use Only)
+                                        </div>
+                                    </div>
+                                </md-input-container> -->
+                                <label style="font-weight:bold;font-style:italic">Company Use Only -</label>
+                                <label class="input-fields" style="padding-top:1px">&nbsp; Bank/ABA Number:</label>
+                                <label flex style="border-bottom:1px solid black;margin:0 20px 0 10px"></label>
+                            </div>
+                            <div style="height:10px"></div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <p style="color:red;font-weight:bold; ">Please note, a $25.00 FEE is charged by the
+                                    payroll company for every direct deposit returned
+                                    due to incorrect routing or account information supplied during registration if a
+                                    voided
+                                    check is not provided.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-content>
+</div>
+<md-divider></md-divider>
+<div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:0 20px" ng-style="{'height': vm.heightforCommonDetailsFooter}">
+    <div layout="row" layout-align="space-between center" flex>
+        <div>
+            <md-button class="addPageBtn primary" tabindex="31" ng-disabled="vm.disablePrevious" ng-click="vm.navigatePrevious()"
+                style="color: white;" aria-label="Previous">
+                <ng-md-icon icon="arrow_back" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <span>&nbsp; Previous</span>
+        </div>
+        <div>
+            <span>Skip &nbsp;</span>
+            <md-button class="addPageBtn primary" tabindex="32" ng-disabled="vm.disableSkip" ng-click="vm.navigateNext()"
+                style="color: white;" aria-label="Next">
+                <ng-md-icon icon="skip_next" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+        </div>
+        <div ng-if="vm.checkCandidateSign">
+            <span>Submit & Sign &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.submitAndSign(payrollform.$valid,directDepositForm.$valid,account1Form.$valid,account2Form.$valid)"
+                style="color: white;" aria-label="Skip">
+                <md-icon md-svg-icon="images/icons/signature_icon.svg" style="fill: white !important;margin: -5px 0 0 -6px;"
+                    class="signatureIconSvg"></md-icon>
+                <!-- <ng-md-icon icon="subdirectory_arrow_right" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon> -->
+            </md-button>
+        </div>
+        <div>
+            <span>Next &nbsp;</span>
+            <md-button class="addPageBtn primary" tabindex="33" ng-click="vm.savePayrollPackage(payrollform.$valid,directDepositForm.$valid,account1Form.$valid,account2Form.$valid)"
+                style="color: white;" aria-label="Next">
+                <ng-md-icon icon="arrow_forward" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+        </div>
+    </div>
+</div>
+<div class="LoaderDiv" id="loader" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

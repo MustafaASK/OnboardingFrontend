@@ -1,0 +1,89 @@
+<div flex layout="column" layout-xs="column" style="height:100%;" layout-wrap ng-cloak>
+    <div flex layout="column" style="width:100%;" layout-padding>
+        <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+            <span class="child-page-header">Intro Pages</span>
+            <!-- <md-button class="md-icon-button" aria-label="Add" ui-sref="AddIntroPage">
+                <ng-md-icon icon="add_circle" style="fill:#d75a5a" size="32">
+                    </p>
+                </ng-md-icon>
+            </md-button> -->
+            <md-button class="addPageBtn primary" ui-sref="Settings.AddIntroPage" style="color: white;" aria-label="Add Intro Page">
+                <ng-md-icon icon="add" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+            <!-- Search and Filter elements -->
+            <div layout="row" layout-align="end center" flex ng-if="vm.clientsIntroList.clientIntroduction.length > 0 ">
+                <md-button class="md-icon-button" aria-label="Search" ng-click="vm.pageSearchBoxDisplay()">
+                    <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg"></md-icon>
+                </md-button>
+            </div>
+        </div>
+
+        <form name="searchForm" ng-show="vm.pageSearch" ng-submit="vm.searchPagesBy()">
+            <md-input-container style="margin:-20px 0 -20px 10px;min-width:97%;">
+                <label class="input-fields"></label>
+                <input id="search-box" name="searchby" type="search" style="border: 1px solid #44b3c2;border-radius: 2px;" class="md-no-underline"
+                    ng-pattern="/^[a-zA-Z0-9-&., ]+$/" ng-model="vm.filterby" placeholder="Search pages by name" />
+            </md-input-container>
+            <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+            </div>
+        </form>
+
+        <div ng-if="!(vm.clientsIntroList.clientIntroduction.length == 0 && !vm.searchby)" layout="row" layout-xs="column" layout-align="{{layoutAlign}}"
+            style="overflow-y:auto" layout-wrap>
+            <md-card style="height:1in;" ng-style="{'width': cardWidth }" ng-repeat="objClient in filteredClientIntroductions = (vm.clientsIntroList.clientIntroduction | filter : {clientName:vm.searchby}) | orderBy: vm.filter | limitTo: 20 : 20*(vm.currentPage-1) ">
+                <div id="dir{{folder.folderid}}" layout="row" layout-align="space-between start">
+                    <div layout="row" layout-align="start center" style="margin-left:20px;">
+                        <p class="folderName" style="font-size:20px;color:#d75a5a;cursor:auto;" title="{{objClient.clientName}}">{{objClient.clientName}}</p>
+                    </div>
+                    <md-menu>
+                        <md-button class="md-icon-button" style="margin: 0px -5px 0 -3px;" ng-click="$mdMenu.open()">
+                            <md-icon md-svg-icon="images/icons/more_menu_icon.svg" md-menu-origin class="moreMenuBtnSvg" style="fill:#44b3c2;cursor:pointer;">
+                            </md-icon>
+                        </md-button>
+                        <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
+                            <md-menu-item>
+                                <md-button class="edit-button" ui-sref="Settings.EditIntroPage({id: objClient.introId, clientName: objClient.clientName,clientId:objClient.clientId})">
+                                    <md-icon md-svg-icon="images/icons/edit_icon.svg" md-menu-align-target class="editBtnSvg"></md-icon>
+                                    Edit
+                                </md-button>
+                            </md-menu-item>
+                            <md-divider></md-divider>
+                            <md-menu-item>
+                                <md-button class="delete-button" ng-click="vm.showDeleteConfirm($event,objClient.introId,objClient.clientName)">
+                                    <md-icon md-svg-icon="images/icons/delete_icon.svg" md-menu-align-target class="deleteBtnSvg" style="fill:#d75a5a;"></md-icon>
+                                    Delete
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+                <div layout="row" layout-align="start center" flex>
+                    <!-- <md-icon md-svg-icon="images/icons/time_icon.svg" class="timerIconSvg" style="margin:0px 0px 20px 16px;"></md-icon> -->
+                    <span layout="row" layout-align="start center" style="margin:0px 0px 20px 20px;font-size:12px;color:#9e9e9e" flex>{{objClient.modifyDateFormat | date: "EEE',' MMM dd',' yyyy',' hh:mm a" }}</span>
+                </div>
+            </md-card>
+
+            <div layout="row" layout-align="center center" style="width:100%" flex ng-if="filteredClientIntroductions.length == 0 && vm.searchby" class="filter-message">
+                <img src="images/no_results_img.png" style="padding-top: 50px;" />
+            </div>
+        </div>
+        <div ng-if="vm.clientsIntroList.clientIntroduction.length == 0 && !vm.searchby" layout="row" layout-xs="column" layout-align="center start"
+            style="overflow-y:auto" layout-wrap flex>
+            <div ui-view="NoIntroPages"></div>
+        </div>
+
+    </div>
+
+    <div ng-if="totalPages(filteredClientIntroductions.length) > 1" align=right layout="row" layout-xs="column">
+        <cl-paging flex cl-pages="vm.paging.total" cl-steps="6" cl-page-changed="vm.paging.onPageChanged()" cl-align="end center"
+            cl-current-page="vm.paging.current">
+        </cl-paging>
+    </div>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</div>

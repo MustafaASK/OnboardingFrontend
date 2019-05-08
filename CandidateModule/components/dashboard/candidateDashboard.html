@@ -1,0 +1,212 @@
+<div class="candidate-Dashboard" style="height: 100%;" flex>
+    <div layout="row" flex>
+        <span flex="5"></span>
+        <span flex="90" style="text-align: right;padding-right: 23px;">
+            <a href="{{signedOfferLetterUrl}}" target="_blank" class="hyperlink" >
+                <i class="fa fa-download" style="padding-left: 5px;"></i>
+                <span style="padding-left:5px;">Signed {{CandidateInfo.catgid == 1 ? 'Offer Letter' : 'Engagement Letter'}}</span>
+            </a>
+        </span>
+        <!-- <a ng-if="docs.documentSignStatus === 5 && (docs.settingId.indexOf(3) !== -1 || docs.settingId.indexOf(9) !== -1 || docs.settingId.indexOf(2) !== -1) "
+            style="cursor:pointer; padding-left:10px;" href="{{EchoDocsURL}}{{CandidateInfo.newhireid}}/{{step.newHireWorkFlowId}}/{{docs.documentid}}.pdf"
+            target="_blank" title="Download">
+            <i class="fa fa-download"></i>
+        </a> -->
+
+    </div>
+    <div layout="column" class="workflow-list" ng-repeat="step in vm.stepsData | orderBy : 'workflowstepsequence'">
+        <!-- <div layout="row" >
+            <div flex="5">
+                <button ng-class="{'completed':step.workflowstepstatus == 5}" class="smallFabBtn stepNum md-button md-ink-ripple" type="button"  id="4144" drop-on-me="">
+                    <span ng-if="step.workflowstepstatus != 5">{{$index + 1}}</span>
+                    <i ng-if="step.workflowstepstatus == 5" class="fa fa-check"></i>
+                </button>
+            </div>
+            <div flex></div>
+            <div flex="20" class="status-drpdown">
+            </div>
+        </div>
+        <div  layout-align="start start"  class="layout-row doc-view"  layout-wrap>
+            <div class="documents-card">
+                <label class="labelStyle"><a href  ng-click="vm.openLetter($event,step.newHireWorkFlowId)">{{step.stepname}}</a></label>
+               <a href download="">
+                    <button  style="background-color:white;border:1px solid lightgrey;border-radius:3px;width:100px;height:30px;float:right;margin-top:-30px;margin-right:20px;box-shadow:1px 1px 1px 1px lightgrey">
+                    <i><img src="images/icons/download_icon.svg" class="imageStyle"></i>  Download
+                    </button>  
+                </a>
+                <br>
+                <table class="customers">
+                    <thead>
+                        <th>Document Name</th>
+                        <th>Action Required</th>
+                    </thead>
+                    <tbody>
+                    <tr  ng-repeat="docs in step.stepdocumentids">
+                    <td><a href class="tablerow" ng-click="vm.openLetter($event,step.newHireWorkFlowId)" title="{{docs.documentname}}">{{docs.documentname}}</a></td>
+                    <td class="tablerow" > 
+                       <p layout="row"> 
+                            <span>Sign-Off</span>
+                            <md-divider class="dividerStyle"></md-divider>
+                            <span>View</span>
+                            <md-divider class="dividerStyle" ng-if="step.workflowstepstatus == 5"></md-divider>
+                            <span ng-if="step.workflowstepstatus == 5"><a href="{{UploadsURL}}/OnBoarding/Echosign/{{CandidateInfo.newhireid}}_{{docs.documentid}}.pdf" href="192.168.1.198:9000/OnBoarding/Echosign/newhire_docid.pdf" target="_blank">Download</a></span>
+                         </p>
+                        
+                    </td> 
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+            </div>
+        </div> -->
+        <div layout="row">
+            <div flex="5" layout="column">
+                <button style="height:35px;" ng-class="{'completed':vm.checkStepCompleted(step)}" class="smallFabBtn stepNum md-button md-ink-ripple"
+                    type="button">
+                    <span ng-if="!vm.checkStepCompleted(step)">{{$index + 1}}</span>
+                    <i ng-if="vm.checkStepCompleted(step)" class="fa fa-check"></i>
+                </button>
+                <div class="step-line" style="height:95%;margin:0 28px;"></div>
+            </div>
+            <div flex="90">
+                <div class="documents-card" style="display:inline-block">
+                    <!-- <div style="margin-top:10px;height:30px;">
+                    <label class="labelStyle">{{step.stepname}}</label>
+                    <a href ng-if="!checkAllDocsCompleted(step)">
+                        <md-button ng-click="vm.openLetter($event,step)" style="float: right;margin-right: 20px;" class="md-secondary">Sign</md-button>
+                    </a>
+                    </div> -->
+                    <div layout="row" flex style="margin-top:10px;">
+                        <div class="labelStyle" flex="85" title="{{step.stepname}}" style="text-overflow: ellipsis;overflow: hidden;">{{step.stepname}}</div>
+                        <div flex="15" ng-if="!checkAllDocsCompleted(step)" style="text-align:center;">
+                            <md-button ng-click="vm.openLetter($event,step)" style="float: right;margin-right: 20px;" class="md-secondary" ng-bind="vm.checkStepReadonly(step)"></md-button>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <span style="word-wrap:break-word;width:100%;text-align: justify;" class="previewstep" ng-bind-html="trustAsHtml(step.workflowstepcomment)"></span>
+                    </div>
+                    <div layout="row" flex class="table-headers" style="width:100%" ng-if="step.stepdocumentids.length">
+                        <div flex="70">Document Name</div>
+                        <div flex="30" >Status</div>
+                    </div>
+                    <div layout="row" ng-repeat="docs in step.stepdocumentids" class="customer-doc" style="display:block" flex>
+
+                        <div layout="column" class="customer-doc" flex style="display:block">
+                            <div layout="row" flex class="doc-row">
+                                <!-- ng-click="vm.openLetter($event,step.newHireWorkFlowId)" -->
+                                <!-- <a href class="tablerow"  title="{{docs.documentname}}" ng-if="docs.settingId.indexOf(2) != -1">{{docs.documentname}}</a>
+                                    <a href="{{EchoDocsURL}}{{CandidateInfo.newhireid}}_{{docs.documentid}}.pdf" target="_blank" class="tablerow action-req"  title="{{docs.documentname}}" ng-if="docs.settingId.indexOf(2) == -1">{{docs.documentname}}</a> -->
+                                <div flex="70" layout="row" ng-if="docs.settingId.indexOf(15) == -1">
+                                    <a href class="tablerow" flex="100" title="{{docs.documentname}}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{docs.documentname}}</a>
+                                </div>
+                                <div flex="70" layout="row" ng-if="docs.settingId.indexOf(15) !== -1 && (docs.documentfilestatus == 2 || docs.documentfilestatus == 5)">
+                                    <a href class="tablerow" flex="100" title="{{docs.documentname}}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{docs.documentname}}</a>
+                                </div>
+                                <div flex="70" layout="row" ng-if="docs.settingId.indexOf(15) !== -1 && (docs.documentfilestatus == 3 || docs.documentfilestatus == 4 || docs.documentfilestatus == 1)">
+                                    <a href class="tablerow" flex="55" title="{{docs.documentname}}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{docs.documentname}}</a>
+                                    <!-- <span flex="45" style="padding-left:10px;">
+                                        <a target="_blank" href="{{DocsURL}}{{docs.documentid}}.pdf" class="md-secondary download-doc"   title="Download document"><i class="fa fa-download" style="border: 1px solid #ba3535;border-radius: 50%;padding: 6px 7px 6px 7px;background-color: #ba3535;color: #fff;font-size:11px;"></i>&nbsp;&nbsp;</a>
+                                        <a ng-click="vm.openHandSignUpload($event,step,docs,'upload')" class="md-secondary download-doc"   title="Upload document"><i class="fa fa-upload" style="border: 1px solid #ba3535;border-radius: 50%;padding: 6px 7px 6px 7px;background-color: #ba3535;color: #fff;font-size:11px;"></i></a>
+                                   </span> -->
+                                </div>
+                                <!-- <div flex="70" layout="row" ng-if="docs.settingId.indexOf(15) !== -1 && docs.documentfilestatus !== 2 &&  docs.documentfilestatus !== 5">
+                                        <a href class="tablerow" flex="100" title="{{docs.documentname}}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{docs.documentname}}</a>
+                                    </div> -->
+                                <!-- <div flex="70" ng-if="docs.settingId.indexOf(15) !== -1">
+                                    <a href class="tablerow" ng-if="(docs.documentfilestatus !== 3 && docs.documentfilestatus !== 4)">{{docs.documentname}}</a>
+                                    <a target="_blank" ng-if="(docs.documentfilestatus == 3 || docs.documentfilestatus == 4)" href="{{DocsURL}}{{docs.documentid}}.pdf" class="tablerow" style="color:#008fb1; cursor:pointer;">{{docs.documentname}}</a>
+                                </div> -->
+                                <!-- <div flex="20" class="action-require-block">
+                                    <a class="action-req" href ng-if="docs.settingId.indexOf(9) !== -1 && step.workflowstepstatus == 5 && docs.documentfilestatus != 2 && !disableAll"  ng-disabled="disableAll" ng-click="vm.uploadMultipleDos($event, step, docs,'doc',null)">Upload Document</a>
+                                </div> -->
+                                <!-- <div flex title="{{docs.documentfilecomments}}">{{docs.documentfilecomments}}</div> -->
+                                <div flex="30" class="file-status" >
+                                    <span class="status-doc" ng-if="docs.documentfilestatus !== 2 && docs.documentfilestatus !== 3 && docs.documentfilestatus !== 4 && docs.documentfilestatus !== 5 && docs.documentSignStatus !== 5">Open</span>
+                                    <span class="status-doc" ng-if="docs.documentfilestatus !== 2 && docs.documentfilestatus !== 3 && docs.documentfilestatus !== 4 && docs.documentfilestatus !== 5 && docs.documentSignStatus === 5 && doc.settingId.indexOf(9) !== -1">
+                                        <a ng-click="vm.openPendingDoc($event,step,$index)" class="action-req" href>Open</a>
+                                    </span>
+                                    <span class="status-doc" ng-if="docs.documentfilestatus === 2">
+                                        
+                                            <md-icon md-svg-icon="images/icons/correct icon _01.svg" class="userProfileSvg" style="width:18px; height:18px;min-width:18px; min-height:18px;margin-top: -5px;" title="Approved"></md-icon>
+                                        <a ng-if="docs.settingId.indexOf(15) === -1 && docs.documentSignStatus === 5 && (docs.settingId.indexOf(3) !== -1 || docs.settingId.indexOf(9) !== -1 || docs.settingId.indexOf(2) !== -1) "
+                                            style="cursor:pointer; padding-left:5px;" href="{{EchoDocsURL}}{{CandidateInfo.newhireid}}/{{step.newHireWorkFlowId}}/{{docs.documentid}}.pdf"
+                                            target="_blank" title="Download">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+                                    </span>
+                                    <span class="status-doc" ng-if="docs.documentfilestatus === 5">Completed 
+                                        <a ng-if="docs.settingId.indexOf(15) === -1 && docs.documentSignStatus === 5 && (docs.settingId.indexOf(3) !== -1 || docs.settingId.indexOf(9) !== -1 || docs.settingId.indexOf(2) !== -1) "
+                                            style="cursor:pointer; padding-left:10px;" href="{{EchoDocsURL}}{{CandidateInfo.newhireid}}/{{step.newHireWorkFlowId}}/{{docs.documentid}}.pdf"
+                                            target="_blank" title="Download">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+                                        <a ng-if="docs.settingId.indexOf(15) !== -1 && docs.documentSignStatus === 5 && (docs.settingId.indexOf(3) !== -1 || docs.settingId.indexOf(9) !== -1 || docs.settingId.indexOf(2) !== -1) "
+                                            style="cursor:pointer; padding-left:10px;" ng-click="vm.openHandSignUpload($event,step,docs, 'view')" href title="View Documents">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </span>
+                                    <span class="status-doc" ng-if="docs.settingId.indexOf(15) !== -1 && docs.documentfilestatus === 2" style="padding-left:5px;">                                         
+                                        <a ng-if="docs.settingId.indexOf(15) !== -1"
+                                            style="cursor:pointer; " ng-click="vm.openHandSignUpload($event,step,docs, 'view')" href title="View Documents">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </span>
+                                    <!-- <span style="padding-left:10px;position: relative;top: 1px;cursor:pointer;" ng-if="docs.documentSignStatus === 5 && (docs.settingId.indexOf(3) !== -1 || docs.settingId.indexOf(9) !== -1 || docs.settingId.indexOf(2) !== -1) "></span> -->
+                                    <span class="status-doc" style="color:#ba3535" ng-if="docs.documentfilestatus === 3 || docs.documentfilestatus === 4">
+                                        <span>Rejected</span>
+                                        <span>
+                                            <a href>
+                                                <i title="{{docs.documentfilecomments}}" style="margin-left:5px;color:#ba3535" class="fa fa-ban" aria-hidden="true"></i>
+                                            </a>
+                                        </span>
+                                        <a href style="cursor:pointer" ng-click="vm.openDocLetter($event,step,$index)" ng-if="docs.settingId.indexOf(15) === -1">
+                                            <span>
+                                                <i class="fa fa-edit" style="margin-left:5px;color:#ba3535" ng-click="vm.openEmpForm('emp-address',addr)" title="Edit"></i>
+                                            </span>
+                                        </a>
+                                    </span>
+                                    <!-- <span class="status-doc" style="color:#ba3535" ng-if="((docs.settingId.indexOf(7) === -1) && docs.documentSignStatus !== 5)">
+                                        <a href style="cursor:pointer" ng-click="vm.openDocLetter($event,step,$index)" title="Edit">
+                                            <span>
+                                                <i class="fa fa-edit" style="margin-left:5px;color:#008fb1"></i>
+                                            </span>
+                                        </a>
+                                    </span> -->
+                                    <!-- <span class="status-doc" ng-if="docs.settingId.indexOf(9) == -1 && docs.settingId.indexOf(2) == -1">Not Applicable</span>
+                                    <span class="status-doc" ng-if="(docs.settingId.indexOf(9) !== -1 || docs.settingId.indexOf(2) !== -1) && ( docs.documentfilestatus == 1 || docs.documentfilestatus == 0)">Pending</span>
+                                    <span class="status-doc" ng-if="docs.documentfilestatus == 3">Rejected</span>
+                                    <span class="status-doc" ng-if="docs.documentfilestatus == 2">Approved</span>
+                                    <a class="action-req" style="padding-left:10px;" href ng-disabled="disableAll" ng-click="vm.uploadMultipleDos($event, step, docs,'doc',null)" ng-if="docs.documentfilestatus == 4">Replace</a> -->
+
+                                </div>
+                            </div>
+                            <!-- <div class="sub-doc-row" layout="row" flex ng-if="docs.candidateattachfiles.length" ng-repeat="subdoc in docs.candidateattachfiles">
+
+                                <div flex="20" class="sub-doc-first" title="{{subdoc.candidatedocname}}">{{subdoc.candidatedocname}}</div>
+                                <div flex="20" class="action-require-block">
+                                </div>
+                                <div flex title="{{subdoc.hrcomments}}">{{subdoc.hrcomments}}</div>
+                                <div flex="20" class="hr-status file-status">
+                                        <span class="status-doc" ng-if="subdoc.candidatedocstatus == 1 || subdoc.candidatedocstatus == 0">Pending</span>
+                                        <span class="status-doc"  ng-if="subdoc.candidatedocstatus == 2">
+                                                Approved <a class="action-req" style="padding-left:20px;" href="{{CandidateDocsURL}}{{subdoc.candidatedocid}}.pdf" title="Download" target="_blank"><i><img src="images/icons/download_icon.svg" class="imageStyle"></i></a>
+                                            </span>
+                                            <a class="action-req" style="padding-left:10px;" href ng-if="subdoc.candidatedocstatus == 4 && !disableAll"  ng-disabled="disableAll" ng-click="vm.uploadMultipleDos($event, step, docs,'subdoc',subdoc.candidatedocid)">Replace</a>
+                                            
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="LoaderDiv" id="loader123" ng-show="loadingLoaderDB">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<md-dialog class="myaccount-modal review-attached-modal">
+    <md-toolbar>
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+            layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+            <h2 ng-if="openType == 'upload'">Upload Documents</h2>
+            <h2 ng-if="openType == 'view'">Attached Documents</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="cancel()">
+                <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                </ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content layout-padding style="min-height:300px;">
+        <div layout="row" ng-show="openType == 'upload'">
+            <form name="docuploadform" id="docuploadform" style="width: 100%;" ng-submit="!isFileEditMode? uploadDocuments() : updateDocument()">
+                <div layout="row" layout-align="start center" layout-padding>
+                    <div class="small-file-drop-zone docUpload" id="file-drop-zone" ngf-drop ngf-select ng-model="file"
+                        ngf-multiple="true" ngf-pattern="'application/pdf,image/jpeg,image/png,image/jpg'" ngf-accept="'.pdf,.png,.jpg,.jpeg'"
+                        style="margin: 20px;overflow: hidden;" flex ng-disabled="stepData.stepdocumentids[record].documentfilestatus==2">
+
+                        <!-- <md-card class="upload-doc-card" ng-if="file && file.length" style="margin-top: 20px;"
+                            layout-wrap flex>
+                            <div class="{{vm.workflowDocCardClass}}" layout="row" layout-align="space-between center"
+                                flex>
+                                <div layout="row" layout-align="start center">
+                                    <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a">
+                                    </md-icon>
+                                    <p class="md-caption" style="white-space:nowrap;" md-truncate>{{ file[0].name }}</p>
+                                </div>
+                                <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer" ng-click="removeFile($event);">
+                                </ng-md-icon>
+                            </div>
+                        </md-card> -->
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <form name="myAccountForm" id="myAccountForm">
+            <span class="cust-heading" style="font-size: 15px;margin-top:10px">Attachments (Maximum file size should be
+                20MB)</span>
+            <!-- <div layout="row" style="clear:both">
+                    <table class="tg action-table">
+                        <thead>
+                            <th class="tg-qmme" align="left">Doc Name</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="subdoc in attachedFilesList" ng-init="outerIndex=$index; (subdoc.candidatedocstatus==0||subdoc.candidatedocstatus==1) ? subdoc.candidatedocstatus=2:'' ">
+                                <td class="tg-yw4l" align="left"  title="{{subdoc.candidatedocname}}"><a href="{{CandidateDocsURL}}{{subdoc.candidatedocid}}.pdf" target="_blank">{{subdoc.candidatedocname}}</a></td>
+                                
+                                <td class="tg-yw4l"><a  href="{{CandidateDocsURL}}{{subdoc.candidatedocid}}.pdf" title="view file" target="_blank"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+    
+                           
+                        </tbody>
+                    </table>
+                </div> -->
+            <div layout="row" style="clear:both;margin-top:10px">
+                <table class="tg" style="border: 0px solid #eaeaea;">
+                    <thead>
+                        <th class="tg-qmme" align="left" style="background-color: #eaeaea;">File Name</th>
+                        <th class="tg-qmme" align="center" style="background-color: #eaeaea;">File Size</th>
+                        <th class="tg-qmme" align="center" style="background-color: #eaeaea;"></th>
+                        <th class="tg-qmme" style="background-color: #eaeaea;"></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="attachfile in attachedFilesList">
+                            <td class="tg-yw4l" align="left">{{attachfile.candidatedocname}}</td>
+                            <td class="tg-yw4l" align="center">{{attachfile.filesize}} KB</td>
+                            <td class="tg-yw4l" align="center"></td>
+                            <td class="tg-yw4l" align="left" ng-if="stepData.stepdocumentids[record].documentfilestatus!=2">
+                                <a href="{{CandidateDocsURL}}{{attachfile.candidatedocid}}.{{attachfile.candidatedocname.split('.')[attachfile.candidatedocname.split('.').length -1]}}"
+                                    target="_blank">
+                                    <i class="fa fa-eye" title="View"></i>
+                                </a> &nbsp;
+                                <a href ng-click="showStepDeleteConfirm($event, attachfile.candidatedocid)" ng-if="openType == 'upload'">
+                                    <i class="fa fa-times" title="Delete"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!attachedFilesList.length">
+                            <td class="tg-yw4l" align="center" colspan="3">No files added</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </md-content>
+    <md-divider></md-divider>
+    <footer class="edit-intro-footer">
+        <div layout="row" layout-align="end center" flex ng-if="openType == 'view'">
+            <md-button class="md-primary md-raised" ng-click="cancel()">Close</md-button>
+        </div>
+        <div layout="row" layout-align="end center" flex ng-if="openType == 'upload'">
+            <md-button class="md-secondary" ng-click="cancel()">Cancel</md-button>
+            <md-button class="md-primary md-raised" ng-disabled="!attachedFilesList.length" ng-click="approveAcknowledge('completed')">Submit</md-button>
+        </div>
+    </footer>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

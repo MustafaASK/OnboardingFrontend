@@ -1,0 +1,126 @@
+<md-dialog style="max-height:95%;max-width:800px;min-width:800px;overflow:hidden;">
+    <md-toolbar style="min-height: 64px;">
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+            layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+            <h2 flex>
+                Stop Onboarding - {{newHires_short_name(newhirefullname)}}
+            </h2>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="closeDeleteModal()">
+                <ng-md-icon icon="clear" size="14" style="cursor:pointer">
+                </ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content style="padding:20px;">
+        <form name="stopOnboardingForm" novalidate>
+            <div layout="row" flex>
+                <div flex="50">
+                    <md-input-container class="md-block" >
+                        <label class="input-fields">Reason For Stop Onboarding </label>
+                        <md-select id="reason" name="reasonfrrjctn" ng-model="reason" required ng-change="changeReason(reason)">
+                            <md-option ng-repeat="reason in reasonsForRejection" ng-value="reason.ReasonDesc">
+                                {{ reason.ReasonDesc }}
+                            </md-option>
+                        </md-select>
+                        <div ng-if="(submitted && stopOnboardingForm.reasonfrrjctn.$untouched) || stopOnboardingForm.reasonfrrjctn.$touched"
+                            ng-messages="stopOnboardingForm.reasonfrrjctn.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG278}}</div>
+                        </div>
+                    </md-input-container> 
+                </div>
+                <div ng-show="reason == 'Other'" flex="50">
+                    <md-input-container  class="md-block" >
+                        <label class="input-fields">Other Reason</label>
+                        <input type="text" name="otherreason" ng-model="otherreasons" ng-required="reason == 'Other'"  maxlength="100" md-maxlength="100"  ng-pattern="/^\b[A-Za-z0-9 ]+$/"/>
+                        <div ng-if="(submitted && stopOnboardingForm.otherreason.$untouched) || (stopOnboardingForm.otherreason.$touched)"
+                            ng-messages="stopOnboardingForm.otherreason.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG271}}</div>
+                            <div ng-message-exp="['pattern']">{{errorMsgs.MSG273}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+            <div style="padding-bottom:5px;">
+                <h2 style="color: #688081 !important;font-size:14px;padding-left:0px;">Comments For Stop Onboarding *</h2>
+            </div>
+            <ng-ckeditor ng-model="comments" skin="moono-lisa" name="commentsRcjtn" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+            <div layout="row" layout-align="end center" style="margin-top:-10px;padding-bottom: 0px;" layout-padding>
+                <span class="counter">{{ htmlToPlaintext(comments).length ? htmlToPlaintext(comments).length :
+                    '0'}} /
+                    2000</span>
+            </div>
+            <div style="font-size: 12px;color: #dd2c00;" ng-if="!comments && ( (submitted && stopOnboardingForm.commentsRcjtn.$untouched) || (stopOnboardingForm.commentsRcjtn.$touched ) )">
+                Please enter Comments for Stop Onboarding. It can’t be blank.
+            </div>
+        </form>
+        <form name="docuploadform" id="docuploadform" style="width: 100%;margin-top: -20px;" ng-submit="!isFileEditMode? uploadDocuments() : updateDocument()">
+            <div layout="column" layout-padding style="padding-left:0px;display:block;">
+                <h2 style="color: #688081 !important;font-size:14px;padding-left:0px;">Attachment(s) (Maximum of Three Files with total of 10 MB.)</h2>
+                <div class="small-file-drop-zone docUpload" id="file-drop-zone" ngf-drop ngf-select ng-model="file"
+                    ngf-multiple="true" 
+                    style="margin: 0px 0px 20px 0px;overflow: hidden;width:100%;" flex>
+
+                    <!-- <md-card class="upload-doc-card" ng-if="file && file.length" style="margin-top: 20px;" layout-wrap
+                        flex>
+                        <div class="{{vm.workflowDocCardClass}}" layout="row" layout-align="space-between center" flex>
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a">
+                                </md-icon>
+                                <p class="md-caption" style="white-space:nowrap;" md-truncate>{{ file[0].name
+                                    }}</p>
+                            </div>
+                            <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer" ng-click="removeFile($event);">
+                            </ng-md-icon>
+                        </div>
+                    </md-card> -->
+                </div>
+            </div>
+        </form>
+        <form name="docAttachedForm" id="docAttachedForm">
+            <div layout="row" style="clear:both;margin-top:10px">
+                <table class="tg" style="border: 0px solid #eaeaea;">
+                    <thead>
+                        <th class="tg-qmme" align="left" style="background-color: #eaeaea;">File Name</th>
+                        <th class="tg-qmme" align="center" style="background-color: #eaeaea;">File Size</th>
+                        <th class="tg-qmme" align="center" style="background-color: #eaeaea;"></th>
+                        <th class="tg-qmme" style="background-color: #eaeaea;">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="attachfile in attachedFiles">
+                            <td class="tg-yw4l" align="left">{{attachfile.name}}</td>
+                            <td class="tg-yw4l" align="center">{{attachfile.size / (1024 * 1024) | number: 2 }} MB</td>
+                            <td class="tg-yw4l" align="center"> </td>
+                            <td class="tg-yw4l" align="center">
+                                <a href ng-click="viewFile(attachfile)">
+                                    <i class="fa fa-eye" title="View"></i>
+                                </a> &nbsp;
+                                <a href ng-click="deleteAttachedFile($index, attachfile.size / (1024 * 1024) | number: 2 )">
+                                    <i class="fa fa-times" title="Delete"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!attachedFiles.length">
+                            <td class="tg-yw4l" align="center" colspan="4">No files added</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </md-content>
+
+    <footer layout='row' layout-align='end start' class="uploadDocsFooter" style="min-height: 60px;" flex>
+        <md-dialog-actions>
+            <md-button class="md-primary md-raised" style="text-transform:none" tabindex="3" ng-click="cnfmstopOnboarding(stopOnboardingForm.$valid)">Ok
+            </md-button>
+            <md-button class="md-secondary" tabindex="4" ng-click="closeDeleteModal()">Cancel
+            </md-button>
+        </md-dialog-actions>
+    </footer>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

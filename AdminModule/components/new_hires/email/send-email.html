@@ -1,0 +1,81 @@
+<md-dialog style="max-height:100%;display:inline-block;" >
+    <div aria-label="send email" style="width:600px;overflow-x:hidden;max-height:600px;" layout-padding flex>
+        <div layout="row" layout-align="space-between center" style="padding:10px;" flex>
+            <span class="md-title">Send Email</span>
+            <ng-md-icon icon="clear" size="14" style="cursor:pointer" ng-click="vm.closeDeleteModal()">
+            </ng-md-icon>
+        </div>
+        <md-divider></md-divider>
+        <span class="input-fields" style="font-size: 16px;">To: {{emailTo}}</span>
+        <!-- <md-input-container class="md-block" flex-gt-sm>
+        <label class="input-fields">New Hire Email</label>
+        <input type="email" 
+            ng-model="emailTo"
+            ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+            readonly>
+    </md-input-container> -->
+        <form name="newHireEmail" novalidate>
+            <md-input-container class="md-block" flex>
+                <label class="input-fields">Subject</label>
+                <input type="text" name="subject" maxlength="150" md-maxlength="150" ng-model="subject" tabindex="1" md-autofocus required
+                />
+                <div ng-if="(submitted && newHireEmail.subject.$untouched) || newHireEmail.subject.$touched" ng-messages="newHireEmail.subject.$error"
+                    role="alert">
+                    <div ng-message="required">Please enter Subject. It can’t be blank.</div>
+                </div>
+            </md-input-container>
+            <!-- <ng-quill-editor ng-model="tbody" max-length="1000" required name="hireEmail">
+            <ng-quill-toolbar>
+                <div id="ng-quill-toolbar" style="margin-top:-10px;border-bottom:none;">
+                    <span class="ql-formats">
+                        <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
+                        <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
+                        <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
+                    </span>
+                    <span class="ql-formats">
+                        <select class="ql-align" ng-attr-title="{{'Aligment'}}">
+                            <option selected></option>
+                            <option value="center"></option>
+                            <option value="right"></option>
+                            <option value="justify"></option>
+                        </select>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-list" value="ordered" ng-attr-title="{{'Ordered'}}"></button>
+                        <button class="ql-list" value="bullet" ng-attr-title="{{'Bullet'}}"></button>
+                    </span>                            
+                    <span class="ql-formats">
+                        <button class="ql-link" ng-attr-title="{{'Link'}}"></button>
+                        <button class="ql-image" ng-attr-title="{{'Image'}}"></button>
+                    </span>                            
+                </div>
+            </ng-quill-toolbar>                
+        </ng-quill-editor> -->
+            <ng-ckeditor ng-model="tbody" skin="moono-lisa" name="hireEmail" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+            <div ng-if="!tbody &&((submitted && newHireEmail.hireEmail.$untouched) || newHireEmail.hireEmail.$touched)" ng-messages="newHireEmail.hireEmail.$error"
+                role="alert" style="color:#dd2c00; font-size:12px;">
+                <div ng-message="required">Please enter Email Content. It can’t be blank.</div>
+            </div>
+            <div layout="row" layout-align="end center" style="margin-top:-10px;" layout-padding>
+                <!-- <span class="counter" style="margin-right:-15px;">{{counter()}} / 1000</span> -->
+                <span class="counter">{{ vm.htmlToPlaintext(tbody).length ? vm.htmlToPlaintext(tbody).length : '0'}} / 1000</span>
+            </div>
+
+        </form>
+
+    </div>
+    <footer layout='row' layout-align='end start' class="uploadDocsFooter" style="margin-top:-10px;" flex>
+        <md-dialog-actions>
+            <md-button class="md-primary md-raised" style="text-transform:none" tabindex="3" ng-click="vm.sendEmailToNewHire()">Send
+            </md-button>
+            <md-button class="md-secondary" tabindex="4" ng-click="vm.closeDeleteModal()">Cancel
+            </md-button>
+        </md-dialog-actions>
+    </footer>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

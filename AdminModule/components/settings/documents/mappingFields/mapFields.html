@@ -1,0 +1,109 @@
+<div layout="row" layout-align="start start" style="height:100%;overflow:hidden" flex ng-cloak>
+    <div class="div55" style="height:100%;" layout="column" flex>
+        <div layout="column" layout-align="start start" style="margin: 5px 0 0 10px;">
+            <a ui-sref="Settings.Documents" tabindex="1" style="display:table;">
+                <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_left" md-menu-align-target>
+                </ng-md-icon>
+                <span style="font-size:12px;color:#1b2c3c;margin-top:5px;">Documents</span>
+            </a>
+        </div>
+        <div md-force-height="'32px'" layout="row" layout-align="center center">
+            <md-button class="pagesMoveBtn" aria-label="First" ng-click="goFirst()" ng-show="loadPaginationResults">
+                {{ vm.first }}
+            </md-button>
+            <md-button class="pagesMoveBtn" aria-label="Previous" ng-click="prevPage(currentPage)" ng-show="loadPaginationResults">&lt;
+            </md-button>
+            <span ng-show="totalPages && loadPaginationResults">Page {{currentPage}}/{{totalPages}}</span>
+            <md-button class="pagesMoveBtn" aria-label="Next" ng-click="nextPage(currentPage)" ng-show="loadPaginationResults">&gt;
+            </md-button>
+            <md-button class="pagesMoveBtn" aria-label="Last" ng-click="goLast()" ng-show="loadPaginationResults">
+                {{ vm.last }}
+            </md-button>
+        </div>
+
+        <div id="pdfviewerDiv" style="height:400px;overflow-x:hidden;overflow-y:auto;" flex>
+            <pdfviewer id="viewer" src="{{file}}" on-page-load='pageLoaded(page,total)'></pdfviewer>
+            <!-- <object type="application/pdf" 
+                data={{file}} width="100%" height="100%">
+            </object> -->
+        </div>
+    </div>
+    <div style="border: 1px solid lightgrey;" layout-padding flex>
+        <div md-force-height="15" style="background-color:white;">
+            <span class="cust-heading">Field Mapping</span>
+        </div>
+        <md-divider></md-divider>
+        <md-input-container class="md-block" flex="50">
+            <label class="input-fields">Document *</label>
+            <md-select name="document" ng-model="docForMapping" md-container-class="mySelect">
+                <md-option ng-repeat="doc in vm.docsForMapping | filter : myFilter" tabindex="1" ng-value="doc.docid" title="{{ doc.docname }}">
+                    {{ doc.docname }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-content style="overflow-x:hidden;" ng-style="{'height': vm.docFieldsBoxHeight, 'margin-top': vm.docFieldsTableMarginTop}">
+            <table class="tg" style="table-layout:fixed;width:100%;display:block;">
+                <col style="width:260px">
+                <col style="width:40px">
+                <col style="width:250px">
+                <tr>
+                    <th class="tg-qmme" style="border: 1px solid lightgrey;border-right:none;" align=left>Document Fields</th>
+                    <th class="tg-qmme" style="border-left:none;">
+                        <md-icon md-svg-icon="images/icons/mapping1_icon.svg" align=right class="editBtnSvg" style="fill:#d75a5a;"></md-icon>
+                    </th>
+                    <th class="tg-qmme" align=left>Common Fields</th>
+                    <!-- <th class="tg-qmme" style="border: 1px solid lightgrey;" align=left>Common Fields</th> -->
+                </tr>
+                <tbody style="height:240px;overflow-y:auto;display:inline-block;">
+                    <tr ng-repeat="field in vm.docFields | orderBy : 'page' ">
+                        <td class="tg-yw4l" ng-value="field.name" align=left style="width:260px;" id="{{field.page}}">
+                            <span class="tg-yw4l">{{field.name}}</span>
+                        </td>
+                        <td class="tg-yw4l" align=left style="width:40px;">
+                            <md-button class="md-icon-button" ng-click="vm.gotoFieldPosition(field.name)">
+                                <md-icon md-svg-icon="images/icons/info_icon.svg" style="transform: scale(.6);cursor:pointer;">
+                                </md-icon>
+                            </md-button>
+                        </td>
+                        <td class="tg-yw4l" style="width:250px;">
+                            <div layout="row" layout-align="center center">
+                                <md-input-container class="md-block" ng-style="{'margin': vm.commonFieldsDropDownMargin}" flex>
+
+                                    <label></label>
+                                    <md-select name="commonFieldSelect" aria-label="commonfieldAriaLabel" class="md-no-underline" data-md-container-class="selectdemoSelectHeader" ng-model="field.commonFieldId">
+                                        <md-select-header class="demo-select-header">
+                                            <input ng-model="searchTerm" type="search" placeholder="Search for a common field.." class="demo-header-searchbox md-text"
+                                                ng-keydown="$event.stopPropagation()">
+                                        </md-select-header>
+                                        <md-optgroup label="item.NewhireFieldid">
+                                            <md-option ng-value="mdoptiondefaultval" ng-init="mdoptiondefaultval = 0">
+                                                <em>None</em>
+                                            </md-option>
+                                            <md-option ng-value="item.NewhireFieldid" ng-repeat="item in vm.commonFields |
+                                              filter:{fieldname: searchTerm}">{{item.fieldname}}</md-option>
+                                        </md-optgroup>
+                                        <!-- <md-option><em>None</em></md-option>
+                                        <md-option ng-repeat="item in vm.commonFields" 
+                                            ng-value="item.NewhireFieldid">{{item.fieldname}}
+                                        </md-option> -->
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-content>
+        <div layout="row" layout-align="end center" style="margin-top:-10px;" flex>
+            <md-button class='md-primary md-raised' tabindex="1" ng-click="vm.postFieldMapping()">Save
+            </md-button>
+            <md-button class='md-secondary' tabindex="2" ng-click="vm.cancelFieldMapping()">Cancel
+            </md-button>
+        </div>
+        <div loader="" class="LoaderDiv" ng-show="loading">
+            <div class="spinner">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+</div>

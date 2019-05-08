@@ -1,0 +1,349 @@
+<div class="initiate-candidate" layout="column" ng-style="{'height': vm.heightforCommonDetails}" ng-cloak class="md-inline-form">
+    <md-content style="overflow-y:auto;overflow-x:hidden;">
+        <div layout="column" class="new-hire-personal-info-div" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Contractor Information</span>
+                    <div style="padding-top:10px;">
+                        <form name="contractorInfoForm">
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Employer Name</label>
+                                    <input ng-model="vm.ContractorInfo.employername" type="text" tabindex="1" name="employerName" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                        required maxlength="100" spellcheck="false" md-maxlength="100" ob-autofocus>
+                                    <div ng-if="(submitted && contractorInfoForm.employerName.$untouched) || contractorInfoForm.employerName.$touched" ng-messages="contractorInfoForm.employerName.$error"
+                                        role="alert">
+                                        <div ng-message="required">Please enter Employer Name. It can't be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Employer Name is incorrect. Please enter the valid Employer Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Contractor First Name</label>
+                                    <input ng-model="vm.ContractorInfo.firstname" type="text" tabindex="2" name="contractorFirstName" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                        required maxlength="100" md-maxlength="100" disabled>
+                                    <div ng-if="(submitted && contractorInfoForm.contractorFirstName.$untouched) || contractorInfoForm.contractorFirstName.$touched"
+                                        ng-messages="contractorInfoForm.contractorFirstName.$error">
+                                        <div ng-message="required">Please enter Contractor First Name. It can't be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Contractor First Name is incorrect. Please enter the valid Contractor First Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Contractor Middle Name</label>
+                                    <input ng-model="vm.ContractorInfo.middlename" type="text" tabindex="3" name="contractorMiddleName" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                        maxlength="100" md-maxlength="100" disabled>
+                                    <div ng-if="(submitted && contractorInfoForm.contractorMiddleName.$untouched) || contractorInfoForm.contractorMiddleName.$touched"
+                                        ng-messages="contractorInfoForm.contractorMiddleName.$error" role="alert">
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Contractor Middle Name is incorrect. Please enter the valid Contractor Middle Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Contractor Last Name</label>
+                                    <input ng-model="vm.ContractorInfo.lastname" type="text" tabindex="4" name="contractorLastName" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                        required maxlength="100" md-maxlength="100" disabled>
+                                    <div ng-if="(submitted && contractorInfoForm.contractorLastName.$untouched) || contractorInfoForm.contractorLastName.$touched"
+                                        ng-messages="contractorInfoForm.contractorLastName.$error" role="alert">
+                                        <div ng-message="required">Please enter Contractor Last Name. It can't be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Contractor Middle Name is incorrect. Please enter the valid Contractor Middle Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <!-- <div layout="column" class="md-block" flex-gt-sm>
+                                    <label style="text-transform: none;font-size: 10px;color:#688081;padding-left:10px;">Gender *</label>
+                                    <md-radio-group layout="row" class="md-block" style="padding-top: 10px;" ng-model="vm.gender"
+                                        ng-change="vm.categoryChange(vm.newHire.catgid)">
+                                        <md-radio-button class="my-radio" tabindex="4" style="transform:scale(.8);outline:none" value="Male">
+                                            <span> Male </span>
+                                        </md-radio-button>
+                                        <md-radio-button class="my-radio" tabindex="4" style="transform:scale(.8);outline:none" value="Female">
+                                            <span> Female </span>
+                                        </md-radio-button>
+                                    </md-radio-group>
+                                </div> -->
+                                <div layout="row" class="md-block" flex-gt-sm flex="33">
+                                    <span style="text-transform: none;font-size: 14px;padding-left:4px;font-weight:bold;margin-top:30px;">Gender: </span>
+                                    <md-radio-group layout="row" tabindex="5" class="md-block" ng-model="vm.ContractorInfo.gender" style="margin-left:20px;"
+                                        disabled>
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none;margin-top:-15px;" value="2">
+                                        </md-radio-button>
+                                        <span style="margin-top:30px;margin-left:-10px"> Female </span>
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none;margin-top:-15px;margin-left:15px" value="1">
+                                        </md-radio-button>
+                                        <span style="margin-top:30px;"> Male </span>
+                                    </md-radio-group>
+                                </div>
+                                <div layout="column" class="md-block" flex-gt-sm flex="33">
+                                    <label style="text-transform: none;font-size: 11px;color:#688081;padding-left:3px;">Date of Birth *</label>
+                                    <md-input-container class="md-block" style="margin-top:4px;margin-left:-15px;">
+                                        <!-- <md-icon md-svg-icon="images/icons/calendar_icon.svg" class="calendarNewHireIconSvg"></md-icon> -->
+                                        <md-datepicker ng-model="vm.ContractorInfo.brtDate" md-placeholder="mm/dd/yyyy" tabindex="6" onkeydown="event.which === 9 ? 'return true' : 'return false'"
+                                            required style="margin-left:-15px;" name="dateofbirth" md-max-date="maxDate" md-open-on-focus
+                                            disabled></md-datepicker>
+                                        <div ng-if="(submitted && contractorInfoForm.dateofbirth.$untouched) || contractorInfoForm.dateofbirth.$touched" ng-messages="contractorInfoForm.dateofbirth.$error"
+                                            role="alert">
+                                            <div ng-message="required">{{errorMsgs.MSG041}}</div>
+                                            <!-- <div ng-message-exp="['pattern']">
+                                                Please enter the valid First Name.
+                                            </div> -->
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" class="md-block" flex-gt-sm flex="33"></div>
+
+                            </div>
+                            <div>
+                                <div layout="row" class="md-block">
+                                    <md-input-container flex="66">
+                                        <label class="input-fields">Address</label>
+                                        <input ng-model="vm.ContractorInfo.address" type="text" md-no-autogrow rows="2" tabindex="7" name="address" required maxlength="1000"
+                                            md-maxlength="1000" class="gplace" ng-autocomplete options="addrOptionsUS" ng-pattern="/^\b.+$/" details="details"
+                                            othermodels="updateCityStateCountryZip(cityParam, stateParam, zipParam)" autocomplete="off">
+                                        <div ng-if="(submitted && contractorInfoForm.address.$untouched) || contractorInfoForm.address.$touched" ng-messages="contractorInfoForm.address.$error"
+                                            role="alert">
+                                            <div ng-message="required">{{errorMsgs.MSG091}}</div>
+                                            <div ng-message-exp="['pattern']">
+                                                {{errorMsgs.MSG092}}
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container flex="33">
+                                        <label class="firstNameLabel input-fields">APT/STE #</label>
+                                        <input type="text" name="apartmentsuitenumber" ng-model="vm.ContractorInfo.apartmentsuitenumber" maxlength="50" md-maxlength="50"
+                                            ng-pattern="/^[A-Za-z0-9-#/\\ ]+$/" autocomplete="off">
+                                        <div ng-if="(submitted && contractorInfoForm.apartmentsuitenumber.$untouched) || contractorInfoForm.apartmentsuitenumber.$touched"
+                                            ng-messages="contractorInfoForm.apartmentsuitenumber.$error" role="alert">
+                                            <div ng-message="pattern">Please enter a valid APT/STE #.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout-gt-sm="row" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">City</label>
+                                    <!-- <md-select tabindex="8" ng-model="vm.ContractorInfo.city">
+                                        <md-option ng-repeat="city in vm.cityList" value="{{city.cityCode}}">
+                                            {{city.cityName}}
+                                        </md-option>
+                                    </md-select> -->
+                                    <input type="text" class="gplace" name="city" required ng-model="vm.ContractorInfo.city" tabindex="8" maxlength="50" md-maxlength="50"
+                                        ng-autocomplete options="options1" ng-pattern="/^\b.+$/" details="details" othermodels="updateState(stateParam)"
+                                        autocomplete="off">
+                                    <div ng-if="(submitted && contractorInfoForm.city.$untouched) || contractorInfoForm.city.$touched" ng-messages="contractorInfoForm.city.$error"
+                                        role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG255}}</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid City.</div>
+                                    </div>
+                                    <!-- <div ng-if="(submitted && eeoForm.Name.$untouched) || eeoForm.Name.$touched" ng-messages="contractorInfoForm.city.$error">
+                                        <div ng-message="required">Please select City. It can't be blank.</div>
+                                    </div> -->
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">State</label>
+                                    <!-- <md-select tabindex="9" ng-model="vm.ContractorInfo.state">
+                                        <md-option ng-repeat="state in vm.statesList" value="{{state.stateCode}}">
+                                            {{state.stateName}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="contractorInfoForm.state.$error">
+                                        <div ng-message="required">Please select state. It can't be blank.</div>
+                                    </div> -->
+                                    <input type="text" class="gplace" name="state" required ng-model="vm.ContractorInfo.state" tabindex="9" maxlength="50" md-maxlength="50"
+                                        ng-autocomplete options="options" ng-pattern="/^\b.+$/" details="details" autocomplete="off">
+
+                                    <div ng-if="(submitted && contractorInfoForm.state.$untouched) || contractorInfoForm.state.$touched" ng-messages="contractorInfoForm.state.$error"
+                                        role="alert">
+                                        <div ng-message="required">Please enter state. It can't be blank.</div>
+                                        <div ng-message-exp="['pattern']">Please enter the valid State.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Zip</label>
+                                    <input tabindex="10" required name="zipcode" ng-minlength="3" maxlength="12" md-maxlength="12" ng-model="vm.ContractorInfo.zipcode"
+                                        ng-pattern="/^\b[a-zA-Z0-9- ]{3,12}$/" autocomplete="off">
+                                    <div ng-if="(submitted && contractorInfoForm.zipcode.$untouched) || contractorInfoForm.zipcode.$touched" ng-messages="contractorInfoForm.zipcode.$error">
+                                        <div ng-message="required">Please enter Zip. It can't be blank.</div>
+                                        <div ng-message="pattern">Please enter a valid Zip.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Email</label>
+                                    <input type="email" ng-model="vm.ContractorInfo.email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                                        name="email" required maxlength="70" md-maxlength="70" tabindex="11" required disabled>
+                                    <div ng-if="(submitted && contractorInfoForm.email.$untouched) || contractorInfoForm.email.$touched" ng-messages="contractorInfoForm.email.$error"
+                                        role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG047}}</div>
+                                        <div ng-message-exp="['minlength', 'maxlength', 'email', 'pattern']">
+                                            {{errorMsgs.MSG048}}
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Cell Phone</label>
+                                    <input type="tel" name="mobileno" ng-model="vm.ContractorInfo.mobileno" md-maxlength="12" ui-mask="999-999-9999" ui-mask-placeholder
+                                        ui-options={addDefaultPlaceholder:false} required id="telephone" tabindex="12">
+                                    <div ng-if="(submitted && contractorInfoForm.mobileno.$untouched) || contractorInfoForm.mobileno.$touched" ng-messages="contractorInfoForm.mobileno.$error"
+                                        md-auto-hide="true">
+                                        <div ng-message="required">Please enter Cell Phone #. It can't be blank.</div>
+                                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                            Format of the Cell Phone # is incorrect. Please enter the valid Phone #.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Home Phone</label>
+                                    <input type="tel" name="homephone" ng-model="vm.ContractorInfo.homeno" md-maxlength="12" ui-mask="999-999-9999" ui-mask-placeholder
+                                        ui-options={addDefaultPlaceholder:false} id="telephone" tabindex="13">
+                                    <div ng-messages="contractorInfoForm.homephone.$error" md-auto-hide="true">
+                                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                            Format of the Phone # is incorrect. Please enter the valid Phone #.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Emergency Contact Name</label>
+                                    <input ng-model="vm.ContractorInfo.emergencycontactname" type="text" tabindex="14" name="emergencycontactname" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                        maxlength="100" md-maxlength="100" required>
+                                    <div ng-if="(submitted && contractorInfoForm.emergencycontactname.$untouched) || contractorInfoForm.emergencycontactname.$touched"
+                                        ng-messages="contractorInfoForm.emergencycontactname.$error" role="alert">
+                                        <div ng-message-exp="['pattern']">
+                                            Please enter the valid Emergency Contact Name.
+                                        </div>
+                                        <div ng-message="required">
+                                            Please enter Emergency Contact Name. It can't be blank.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Relationship</label>
+                                    <input ng-model="vm.ContractorInfo.relationship" type="text" tabindex="15" name="relationship" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                        maxlength="50" md-maxlength="50" required>
+                                    <div ng-if="(submitted && contractorInfoForm.relationship.$untouched) || contractorInfoForm.relationship.$touched" ng-messages="contractorInfoForm.relationship.$error"
+                                        role="alert">
+                                        <div ng-message-exp="['pattern']">
+                                            Please enter the valid Relationship.
+                                        </div>
+                                        <div ng-message="required">Please enter Relationship. It can't be blank.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Day Phone</label>
+                                    <input type="tel" name="dayphone" ng-model="vm.ContractorInfo.dayphoneno" md-maxlength="12" ui-mask="999-999-9999" ui-mask-placeholder
+                                        ui-options={addDefaultPlaceholder:false} id="telephone" tabindex="16">
+                                    <div ng-messages="contractorInfoForm.dayphone.$error" md-auto-hide="true">
+                                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                            Format of the Day Phone # is incorrect. Please enter the valid Phone #.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Evening Phone</label>
+                                    <input type="tel" name="evephone" ng-model="vm.ContractorInfo.evenphoneno" md-maxlength="12" ui-mask="999-999-9999" ui-mask-placeholder
+                                        ui-options={addDefaultPlaceholder:false} id="telephone" tabindex="17">
+                                    <div ng-messages="contractorInfoForm.evephone.$error" md-auto-hide="true">
+                                        <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                            Format of the Evening Phone # is incorrect. Please enter the valid Phone #.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="firstNameLabel">Tentative Start Date</label>
+                                    <input type="text" ng-model="vm.hrStDate" readonly>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="firstNameLabel">Tentative End Date</label>
+                                    <input type="text" ng-model="vm.ContractorInfo.hrEndDate" readonly>
+                                </md-input-container>
+
+                            </div>
+                            <div layout-gt-sm="row">
+                                <div layout="column" flex="33">
+                                    <!-- <label style="text-transform: none;font-size: 11px;color:#688081;padding-left:3px;">Hire Date *</label>
+                                    <md-input-container class="md-block" style="margin-top:4px;margin-left:-15px"> -->
+                                    <!-- <md-icon md-svg-icon="images/icons/calendar_icon.svg" class="calendarNewHireIconSvg"></md-icon> -->
+                                    <!-- <md-datepicker ng-model="vm.ContractorInfo.hrDate" md-placeholder="mm/dd/yyyy" tabindex="18" onkeydown="event.which === 9 ? 'return true' : 'return false'" style="margin-left:-15px" name="hiredate" md-open-on-focus></md-datepicker>
+                                        <div ng-messages="contractorInfoForm.hiredate.$error" role="alert">
+                                            <div ng-message="required">{{errorMsgs.MSG041}}</div>
+                                        </div>
+                                    </md-input-container> -->
+                                    <!-- <label style="overflow: hidden;height: 20px;margin-bottom: 35px;margin-left: 2px;">Tentative Start Date :
+                                        <span>{{convertDateFormat(vm.ContractorInfo.hrDate)}}</span>
+                                    </label> -->
+
+                                </div>
+                                <div class="" flex="33">
+                                    <!-- <label style="overflow: hidden;height: 20px;margin-bottom: 35px;margin-left: 2px;">Tentative End Date :
+                                        <span>{{vm.ContractorInfo.hrEndDate}}</span>
+                                    </label> -->
+                                    <!-- <md-input-container class="md-block">
+                                        <label class="firstNameLabel">Tentative Start Date</label>
+                                        <input type="text" ng-model="vm.hireInfotentstrtdate" readonly>
+                                    </md-input-container> -->
+                                </div>
+                            </div>
+                            <div>
+                                <md-input-container class="md-block" style="margin-top:-5px;">
+                                    <label class="input-fields">Notes</label>
+                                    <textarea ng-model="vm.ContractorInfo.notes" md-maxlength="1000" maxlength="1000" tabindex="19" md-select-on-focus></textarea>
+                                </md-input-container>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-content>
+
+</div>
+<md-divider></md-divider>
+<div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:0 20px" ng-style="{'height': vm.heightforCommonDetailsFooter}">
+    <div layout="row" layout-align="space-between center" flex>
+        <div>
+            <md-button class="addPageBtn primary" ng-disabled="" ng-click="vm.navigatePrevious()" style="color: white;" aria-label="Previous">
+                <ng-md-icon icon="arrow_back" tabindex="20" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <span>&nbsp; Previous</span>
+        </div>
+        <div>
+            <span>Skip &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-disabled="" ng-click="vm.navigateNext()" style="color: white;" aria-label="Next">
+                <ng-md-icon icon="skip_next" tabindex="21" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+        </div>
+        <div ng-if="vm.checkCandidateSign">
+            <span>Submit & Sign &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.submitAndSign(contractorInfoForm.$valid)" style="color: white;" aria-label="Skip">
+                <md-icon md-svg-icon="images/icons/signature_icon.svg" style="fill: white !important;margin: -5px 0 0 -6px;" class="signatureIconSvg"></md-icon>
+                <!-- <ng-md-icon icon="subdirectory_arrow_right" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon> -->
+            </md-button>
+        </div>
+        <div>
+            <span>Next &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.saveContractorInfo(contractorInfoForm.$valid)" style="color: white;" aria-label="Next">
+                <ng-md-icon icon="arrow_forward" tabindex="22" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+        </div>
+    </div>
+</div>
+<div class="LoaderDiv" id="loader" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

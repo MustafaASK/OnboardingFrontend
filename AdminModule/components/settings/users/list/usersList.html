@@ -1,0 +1,144 @@
+<div flex layout="column" layout-xs="column" style="height:100%;" layout-align="start top" layout-wrap ng-cloak>
+    <div layout="column" layout-padding flex>
+        <div layout="row" layout-xs="column" layout-align="start start" layout-padding>
+            <div layout="row" layout-align="start center" layout-padding>
+                <span class="child-page-header">Manage Users</span>
+                <md-button class="addPageBtn primary" 
+                    ui-sref="Settings.AddHRUser" 
+                    style="color: white;" 
+                    aria-label="Add HR User">
+                    <ng-md-icon icon="add" 
+                        tabindex="1"
+                        style="fill: white;margin: -2px 0 0 -5px;"
+                        size="18"></ng-md-icon>
+                </md-button>
+            </div>
+            <!-- Search and Filter elements -->
+            <div layout="row" layout-align="end center" flex>
+                <form name="filterbyForm" ng-submit="vm.filterUsersBy()">
+                    <div layout="row" 
+                        layout-align="start center" 
+                        class="filterBox">
+                        <md-icon md-svg-icon="images/icons/filter_icon.svg" 
+                            class="filterIconSvg"></md-icon>
+                        <md-input-container class="md-block" style="margin: -5px -10px 0 5px;" flex>
+                            <!-- <label class="input-fields">Filter by</label> -->
+                            <md-select name="filterby"
+                                class="md-no-underline" 
+                                aria-label="modifiedDateAriaLabel"
+                                ng-init="vm.filter = 'modifieddate'"
+                                ng-model="vm.filter" 
+                                md-container-class="filterSelect">
+                                <!-- <md-option><em>None</em></md-option> -->
+                                <md-option ng-repeat="item in vm.filters" 
+                                    ng-value="item.key">{{item.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </form>
+                <md-button class="md-icon-button" aria-label="Search" ng-click="vm.usersSearchBoxDisplay()">
+                    <md-icon md-svg-icon="images/icons/search_icon.svg" 
+                        class="searchIconSvg"
+                        ></md-icon>
+                </md-button>
+
+            </div>
+        </div>
+        <form name="searchForm" ng-show="vm.usersSearch" ng-submit="search()">
+            <md-input-container style="margin:-20px 0 -20px 10px;min-width:97%;">
+                <label class="input-fields"></label>
+                <input id="search-box" 
+                    name="searchby"
+                    type="search"
+                    style="border: 1px solid #44b3c2;border-radius: 2px;"
+                    class="md-no-underline" 
+                    ng-model="vm.query" 
+                    placeholder="Search users by their email or first name or last name" />
+                    
+                    <!-- ng-pattern="/^[a-zA-Z0-9-_@]+$/"  -->
+            </md-input-container>
+            <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+            </div>
+        </form>            
+
+        <!-- HR user data display -->
+        <div layout="row" id="usersList"
+            layout-xs="column" 
+            layout-align="{{layoutAlign}}" 
+            style="overflow-y:auto;margin-left: 30px;margin-top: 30px;" 
+            layout-wrap layout-padding flex>
+            <md-card ng-repeat="hruser in pagedItems[currentPage? currentPage-1 : 0] | orderBy: vm.filter : (vm.filter == 'createddate' || vm.filter == 'modifieddate' ? true : false)"
+                style="height:2.2in;width:2.3in">
+                <div align="right" style="cursor:pointer">
+                    <md-menu>
+                        <md-button class="md-icon-button" style="margin-right:-5px" ng-click="$mdMenu.open()">
+                            <md-icon md-svg-icon="images/icons/more_menu_icon.svg"
+                                md-menu-origin 
+                                class="moreMenuBtnSvg"
+                                style="fill:#44b3c2;cursor:pointer;">
+                            </md-icon>
+                        </md-button>
+                        <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
+                            <md-menu-item>
+                                <md-button class="edit-button" ui-sref="Settings.EditHRUser({id: {{hruser.userId}}})">
+                                    <md-icon md-svg-icon="images/icons/edit_icon.svg" 
+                                        class="editBtnSvg"></md-icon>                                    
+                                    Edit
+                                </md-button>
+                            </md-menu-item>
+                            <md-divider></md-divider>
+                            <md-menu-item>
+                                <md-button class="delete-button" ng-click="vm.showDeleteConfirm($event,hruser.userId,hruser.emailId)">
+                                    <md-icon md-svg-icon="images/icons/delete_icon.svg" 
+                                        class="deleteBtnSvg"></md-icon>                                    
+                                    Delete
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+                <div id="div-{{hruser.userId}}" class="profilePic__container">
+                    <!-- {{vm.get_pic_or_nickname(hruser.userId)}} -->
+                    {{hruser.nickname.toUpperCase()}}
+                    <!-- <img ng-if="hruser.profilepic" ng-src="{{vm.get_profile_pic(hruser.profilepic)}}"> -->
+                    <!-- Need to change the background pic when there is a profile picture -->
+                    <!-- <span ng-if="!hruser.profilepic">{{hruser.nickname.toUpperCase()}}</span> -->
+                </div>
+                <md-card-content>
+                    <!-- <md-tooltip md-direction="top">{{ hruser.emailId }}</md-tooltip> -->
+                    <p align="center" class="hyperLink" md-truncate>{{ hruser.emailId }}</p>
+
+                    <p align="center" class="md-subhead" md-truncate>{{ (hruser.client ? vm.getClientNames(hruser.client) : noClients) }}
+                        <md-tooltip>{{ (hruser.client ? vm.getClientNames(hruser.client) : 'Client Not Yet Assigned') }}</md-tooltip>
+                    </p>
+                </md-card-content>
+            </md-card>
+            <!-- <div style="height:0;width:2.13in;margin: 8px;"></div> -->
+            <div ng-if="vm.hrUsers.users.length == 0 && !vm.query" ui-view="NoUsers" style="width:100%;"></div>
+            <div layout="row" layout-align="center center" style="width:100%" ng-if="pagedItems.length == 0 && (vm.query || vm.query == '' ) " class="filter-message" flex>
+                <img src="images/no_results_img.png" style="padding-top: 20px;" />
+            </div>
+            <!-- <div style="height:0;width:2.13in;margin: 8px;"></div> -->
+            <!-- <div style="height:0;width:2.13in;margin: 8px;"></div> -->      
+        </div>
+
+        <div ng-if="pagedItems.length" layout="row" layout-xs="column">
+            <cl-paging flex 
+                cl-pages="vm.paging.total"  
+                cl-steps="6" 
+                cl-page-changed="vm.paging.onPageChanged()" 
+                cl-align="end center"
+                cl-current-page="vm.paging.current">
+            </cl-paging>
+        </div>
+    </div>
+
+
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>  

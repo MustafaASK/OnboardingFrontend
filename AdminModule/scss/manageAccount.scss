@@ -1,0 +1,243 @@
+// Variables
+$orange: #f1a94e;
+$chkBoxFocus: #f8a944;
+$deepOrange: #d75a5a;
+$redOrange: #B22222;
+$lightGrey: #f4f4f4;
+$veryLightGrey: #fcfcfc;
+$lightBlack: #555555;
+$font: "Segoe UI";
+$lightfont: "Segoe UI Light";
+$btnHover: #ba3535;
+$btnDisabled: #A1A6B0;
+$navColor: #d85d5b;
+$topMenuTxt: #1b2c3c;
+$sideMenuTxt: #d4d4d4;
+$inputLabel: #688081;
+;
+$cyanColor: #44b3c2;
+$inputDisabled: #dadada;
+$hyperLinkColor: #2283bb;
+$onboardingSideNav:#273748;
+$whitecolor: #fff;
+.myaccount-modal {
+    width: 70%;
+    md-input-container {
+        margin: 8px 0;
+    }
+    .template-area {
+        width: 142%;
+        height: 100%;
+        margin: 0px;
+        background-color: #F8F8F8;
+    }
+    .labelStyle {
+        color: #555555;
+        margin-left: 20px;
+        margin-top: 10px;
+        font-size: 23px;
+        font-family: "Segoe UI";
+    }
+    .toolbarStyle {
+        padding: 15px 0;
+        background-color: white;
+        border-bottom: 1px solid #B8B8B8;
+    }
+    .change-pwd-zone {
+        h3 {
+            margin-bottom: 4px;
+        }
+    }
+    .assigned-permission-zone {
+        h3 {
+            margin-top: 20px;
+        }
+    }
+    md-input-container .md-input[disabled] {
+        background-color: $lightGrey;
+    }
+    md-content.md-default-theme,
+    md-content {
+        color: #555;
+        background-color: $whitecolor;
+    }
+    md-content.bindedHtmlContent{
+        p{
+            margin:0;
+        }
+    }
+    md-button.close {
+        margin: 0;
+        font-weight: bold;
+    }
+    .user-profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        background-size: contain;
+        .thumb {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+        }
+        .userProfileSvg {
+            transform: scale(4.2);
+            display: flex;
+            position: relative;
+            top: 30%;
+        }
+    }
+    .upload-context {
+        padding: 0 10px;
+        .upload-pic-text {
+            padding: 0px 0 2px 8px;
+            margin: 0;
+        }
+        .upload-pic-desc {
+            font-size: 12px;
+            padding: 0px 0 8px 8px;
+            margin: 0;
+        }
+        .file-error {
+            padding: 0;
+            margin: 0;
+            color: #dd2c00;
+            font-size: 12px;
+        }
+    }
+    .change-pwd-link {
+        color: $hyperLinkColor;
+        font-weight: 100;
+    }
+    .profileAttachmentBtn {
+        min-height: 22px;
+        line-height: 22px;
+        height: 26px;
+        margin-top: 0px;
+    }
+    .dotted-list {
+        margin: 0;
+        li {
+            list-style-type: disc;
+            padding: 2px 0;
+        }
+        li:first-child {
+            padding-top: 0px;
+        }
+    }
+    table.tg {
+        width: 99%;
+        th {
+            background-color: #eaeaea;
+        }
+    }
+    .errorMsg {
+        color: #dd2c00;
+        font-size: 12px;
+    }
+    .custom-file-input {
+        color: transparent;
+    }
+    .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    .file-ipload-image {
+        /*color:transparent;*/
+        outline: none;
+    }
+    .custom-file-input::before {
+        content: 'Choose File';
+        color: #4e4e4e;
+        display: inline-block;
+        background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+        border: 1px solid #999;
+        border-radius: 3px;
+        padding: 5px 8px;
+        outline: none;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        cursor: pointer;
+        text-shadow: 1px 1px #fff;
+        font-size: 10pt;
+    }
+    .custom-file-input:hover::before {
+        border-color: $btnHover;
+        color: $btnHover;
+    }
+    .custom-file-input:active {
+        outline: 0;
+    }
+    .custom-file-input:active::before {
+        background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+        background: -moz-linear-gradient(top, #e3e3e3, #f9f9f9);
+    }
+    .colorthis {
+        color: red;
+    }
+}
+.myaccount-modal.my-account-changes{
+    .labelStyle {
+        margin-top: 0;
+    }
+    .toolbarStyle{
+        padding: 15px 0;        
+    }
+}
+
+.docupload-modal {
+    width: 45%;
+}
+
+.review-attached-modal {
+    width: 45%;
+    .table-container {
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .action-table tr td {
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        .step-drpdwn {
+            .selected-btn.md-button {
+                width: 120px;
+                border-radius: 5px;
+                color: #fff;
+                padding: 0px;
+                height: 28px;
+                min-height: 27px;
+                text-transform: capitalize !important;
+                /*position: relative;
+                top: 9px;*/
+                font-size: 13px;
+                .down-arrow {
+                    color: #fff;
+                    margin-left: 14px;
+                }
+            }
+            .selected-btn.md-button.pending {
+                background-color: #f0a94d
+            }
+            .selected-btn.md-button.completed {
+                background-color: #4ebb81
+            }
+            .selected-btn.md-button.rejected {
+                background-color: #ff5e62
+            }
+            .selected-btn.md-button.pending {
+                background-color: #f0a94d
+            }
+            .selected-btn.md-button.approved {
+                background-color: #4ebb81
+            }
+            .selected-btn.md-button.rejected {
+                background-color: #ff5e62
+            }
+            .selected-btn.md-button.replace {
+                background-color: #f0a94d
+            }
+        }
+    }
+}

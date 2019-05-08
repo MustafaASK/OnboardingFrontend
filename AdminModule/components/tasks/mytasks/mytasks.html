@@ -1,0 +1,321 @@
+<div layout="column" style="overflow:hidden" flex ng-cloak>
+    <div flex>
+        <div layout="row" layout-xs="column" class="mytasks-container" layout-align="start start" layout-wrap layout-padding flex>
+            <md-content layout="row" layout-align="start start" style="overflow-x:hidden;overflow-y:auto;margin: 0 0 0 -10px" ng-style="{ height : vm.taskDivMaxheight}" flex>
+                <div layout="column" layout-xs="column" style="width: 100%;" layout-align="start start">
+                    <!-- <div layout="column" style="overflow-y:auto;"> -->
+                    <table class="tg" id="tasks-table" style="width:100%;display:block;">
+                        <col width="75%">
+                        <col width="20%">
+                        <col width="5%">
+                        <tr>
+                            <div layout="row" layout-align="space-between center" style="width:100%;background-color:white;border: 1px solid#e0e0e0;border-bottom:none;" >
+                                <div layout="row" layout-align="start center" style="width:100%;padding-left:8px;" md-force-height="'60px'"  ng-if="(UserInfo.isAdmin || vm.rolesData.addflag)">
+                                    <md-button class="addPageBtn primary" aria-label="addNewTaskButton" ng-click="vm.addNewTask()" ng-disabled="vm.newTaskEnabled || vm.editTaskEnabled">
+                                        <ng-md-icon icon="add" aria-label="addNewTaskIcon" style="fill:white;margin:-2px 0 0 -5px;" size="18"></ng-md-icon>
+                                    </md-button>
+                                    <span class="reg16px444" style="margin-left: 10px;" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">Add New Task</span>
+                                </div>
+                                <form name="filterbyForm">
+                                    <div layout="row" layout-align="start center" class="filterBox" style="margin-right:10px;" ng-if="UserInfo.isAdmin || vm.rolesData.viewflag">
+                                        <md-icon md-svg-icon="images/icons/filter_icon.svg" class="filterIconSvg"></md-icon>
+                                        <md-input-container class="md-block" style="margin: 0 -10px 0 5px;" flex>
+                                            <!-- <label class="input-fields">Filter by</label> -->
+                                            <md-select name="filterby" class="md-no-underline" aria-label="filterLabel" ng-model="vm.filter" ng-change="filterChange(vm.filter)" md-container-class="filterSelect">
+                                                <!-- <md-option><em>None</em></md-option> -->
+                                                <md-option ng-repeat="item in vm.filters" ng-value="item.key">{{item.value}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </form>
+                            </div>
+                        </tr>
+                        <!-- Tasks Display -->
+                        <!-- </table>
+                        <table class="tg"> -->
+                        <tbody class="{{vm.tasksDisplayClass}}">  
+                            <tr id="row-{{task.taskid}}" 
+                                class="tg-rw5l" 
+                                ng-if="vm.mytasks.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)"
+                                ng-repeat="task in filteredTasks = (vm.mytasks | filter: vm.filter) track by task.taskid" 
+                                ng-click="vm.setSelected(task.taskid)"
+                                ng-blur="vm.setBlurBGClass(task.taskid)">
+                                <td id="task-{{task.taskid}}" 
+                                    class="tg-yw5l" 
+                                    width="75%" 
+                                    style="line-height: 20px;padding-left: 10px;cursor:pointer;">
+                                    <span id="tname-{{task.taskid}}" 
+                                        class="break" style="display:inline-block;">{{shortenTaskName_IE_FF(task.taskname)}}
+                                    </span>
+                                </td>
+                                <td id="status-{{task.taskid}}" class="tg-yw6l" width="20%" align=center style="cursor:pointer;">
+                                    <div id="sBox-{{task.taskid}}" class="taskStatusBox {{getClassByStatus(task)}}">
+                                        {{vm.get_taskstatus(task.taskstatus)}}
+                                    </div>
+                                </td>
+                                <td id="del-{{task.taskid}}" class="tg-yw6l" width="5%" align=left>
+                                    <md-icon ng-if="UserInfo.isAdmin || (vm.rolesData.deleteflag && task.createdby == UserInfo.ID)" md-svg-icon="images/icons/delete_icon.svg" class="delete-button" style="transform:scale(.6);" ng-click="vm.showDeleteConfirm($event, task.taskid, task.taskname)">
+                                    </md-icon>
+                                </td>
+                            </tr>
+                            <tr ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)">                                
+                                <div style="height:78.6%; width: 100%;" flex ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)">
+                                        <div layout="column" layout-align="center center" layout-padding flex>
+                                            <img src="images/workflow_img.png" style="padding-top: 25px;"/>
+                                            <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+                                            <div flex="5"></div>
+                                            <div align="center">
+                                                <md-button class="md-primary md-raised" aria-label="addNewTaskButton" ng-click="vm.addNewTask()" style="min-width:150px;" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">Add New Task
+                                                </md-button>
+                                            </div>
+                                            <div flex="5"></div>
+                                        
+                                            <div class="no-workflows">
+                                                <p class="pbold">You dont have permissions to view Tasks</p>
+                                                <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                                    commodo
+                                                </p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                            </tr>
+                            <!-- <tr ng-if="vm.mytasks.length == 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)">                                
+                                <div style="height:78.6%" flex ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)">
+                                        <div layout="column" layout-align="center center" layout-padding flex>
+                                            <img src="images/workflow_img.png"/> -->
+                                            <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+                                            <!-- <div flex="5"></div>
+                                            <div align="center">
+                                                <md-button class="md-primary md-raised" ng-click="vm.addNewTask()" style="min-width:150px;" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">Add New Task
+                                                </md-button>
+                                            </div>
+                                            <div flex="5"></div>
+                                        
+                                            <div class="no-workflows">
+                                                <p class="pbold">You dont have permissions to view Tasks</p>
+                                                <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                                    commodo
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </tr> -->
+                            <!-- Print empty rows upto 10 max -->
+                            <tr ng-if="temp.length >= filteredTasks.length && vm.rolesData.viewflag" ng-repeat="key in temp | limitTo: (filteredTasks.length - temp.length) track by $index">
+                                <td class="tg-yw5l" style="width:100% !important;line-height: 20px;padding-left: 10px;border-right:none;">&nbsp;
+                                </td>
+                                <td class="tg-yw5le" style="width:100% !important;line-height: 20px;padding-left: 10px;border-right:none;border-left:none;">&nbsp;
+                                </td>
+                                <td class="tg-yw5l" style="width:100% !important;line-height: 20px;padding-left: 10px;border-left:none;">&nbsp;
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- </div> -->
+                </div>
+            </md-content>
+            <!-- Tasks sidenav element -->
+            <md-content layout="column" class="taskEditArea" ng-if="UserInfo.isAdmin ||  vm.checkAddFlag">
+                <form name="editTaskForm">
+                    <div ng-show="!vm.newTaskEnabled" layout="column" ng-class="vm.taskSettingsAreaClass" layout-padding flex>
+                        <div layout="column" style="margin-top: -10px;" layout-padding>
+                            <div layout="row" layout-align="space-between center" style="margin-left:-10px;">
+                                <!-- <div> -->
+                                <div layout="row" layout-align="start center" md-force-height="'50px'" style="margin-top:-5px;width:100%">
+                                    <p id="taskName" ng-show="!vm.editTaskEnabled" class="light18px1b2c3c taskNameTxt">{{vm.editTaskInfo.taskName}}</p>
+                                    <md-input-container id="edit-task-name" ng-hide="!vm.editTaskEnabled" class="md-block taskNameInput" flex>
+                                        <label class="input-fields">Task name</label>
+                                        <input type="text" id="task-name" tabindex="1" name="taskName" maxlength="50" md-maxlength="50" ng-model="vm.editTaskInfo.taskName" required/>
+                                        <div ng-if="(submitted && editTaskForm.taskName.$untouched) || editTaskForm.taskName.$touched" ng-messages="editTaskForm.taskName.$error" role="alert">
+                                            <div ng-message="required">{{errorMsgs.MSG026}}</div>
+                                            <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG027}}</div>
+                                        </div>
+                                        <span id="created_by" class="light12px888888" style="margin:-25px 0 0 0px;">
+                                            Created by {{ get_createdName(vm.taskSelected.taskid)}} | {{ vm.createdDate | date: 'EEE, MMM dd, yyyy, hh:mm a' }}
+                                        </span>
+                                    </md-input-container>
+                                </div>
+                                <!-- </div> -->
+                                <div style="margin-right: -30px;">
+                                    <md-button class="md-icon-button" ng-hide="hideEditIcon()" ng-click="editTaskStarted()">
+                                        <md-icon md-svg-icon="images/icons/edit_icon.svg" class="pencilIconSvg">
+                                        </md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                            <span id="created_by" class="light12px888888" style="margin:-25px 0 0 -10px;" ng-show="!vm.editTaskEnabled" >
+                                Created by {{ get_createdName(vm.taskSelected.taskid)}} | {{ vm.createdDate  | date: 'EEE, MMM dd, yyyy, hh:mm a' }}
+                            </span>
+                        </div>
+                        <md-input-container flex-gt-sm ng-if="UserInfo.isAdmin">
+                            <label class="input-fields">Assigned To</label>
+                            <md-select id="assignees" ng-model="vm.editTaskInfo.assignedTo" tabindex="2" ng-disabled="!vm.editTaskEnabled" required>
+                                <md-option id="assigneeSelect" 
+                                    ng-repeat="member in vm.userNameList" 
+                                    ng-value="member.id"
+                                    title="{{member.emailid}}">
+                                    {{member.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm style=" margin-bottom: 0px;" ng-if="!UserInfo.isAdmin">
+                            <label class="input-fields">Assigned To *</label>
+                            <input type="text" tabindex="1" value="Self Assigned" readonly disabled/>
+                            <div ng-messages="newTaskForm.taskName.$error" role="alert">
+                                <div ng-message="required">{{errorMsgs.MSG026}}</div>
+                                <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG027}}</div>
+                            </div>
+                        </md-input-container>
+
+                        <div style="margin-top:-15px;">
+                            <span class="input-fields" style="font-size: 11px;color:#688081;">Completion Date *</span>
+                            <div layout="row" layout-align="start center" md-force-height="'50px'">
+                                <!-- <label style="text-transform: none;font-size: 10px;color:#688081;padding-left:3px;"></label> -->
+                                <!-- <md-icon md-svg-icon="images/icons/calendar_icon.svg" style="transform:scale(.9)"></md-icon> -->
+                                <md-input-container flex-gt-sm style="padding-top:20px; margin-left: -18px;">
+                                    <md-datepicker id="compDate" 
+                                        name="compDate" aria-label="dtpickerCompDate"
+                                        ng-model="vm.myDate" 
+                                        md-placeholder="mm/dd/yyyy"
+                                        ng-disabled="!vm.editTaskEnabled" 
+                                        md-min-date="currentDate"
+                                        tabindex="3"
+                                        md-open-on-focus 
+                                        required>
+                                    </md-datepicker>
+                                    <div ng-if="(submitted && editTaskForm.compDate.$untouched) || editTaskForm.compDate.$touched" ng-messages="editTaskForm.compDate.$error" role="alert">
+                                        <div ng-message="valid">{{errorMsgs.MSG029}}</div>
+                                        <div ng-message="mindate">Please enter the valid Completion Date.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <md-input-container flex-gt-sm>
+                            <label class="input-fields" style="margin-left: 5px;">Description</label>
+                            <textarea id="taskDesc" name="taskDesc" ng-model="vm.editTaskInfo.desc" maxlength="500" 
+                                md-maxlength="500" rows="2" rows="{{taskDescRows}}" tabindex="4" md-no-autogrow required
+                                ng-disabled="!vm.editTaskEnabled">
+                                <div ng-if="(submitted && editTaskForm.taskDesc.$untouched) || editTaskForm.taskDesc.$touched" ng-messages="editTaskForm.taskDesc.$error" role="alert">
+                                    <div ng-message="required">{{errorMsgs.MSG024}}</div>
+                                    <div ng-message-exp="['maxlength']">{{errorMsgs.MSG025}}</div>
+                                </div>
+                            </textarea>
+                        </md-input-container>
+
+                        <div layout="row" ng-style="{'padding-top': vm.statusElementsPaddingTop}">
+                            <label ng-class="vm.taskStatusLabelClass">Status: </label>
+                            <md-radio-group layout="row" layout-align="end start" ng-class="vm.taskStatusRadioClass" ng-disabled="!vm.editTaskEnabled"
+                                ng-model="vm.taskSelected.taskstatus">
+                                <md-radio-button class="my-radio"  tabindex="5" ng-value="1" style="outline:none">Open</md-radio-button>
+                                <md-radio-button class="my-radio"  tabindex="6" ng-value="4" style="outline:none">In Progress</md-radio-button>
+                                <md-radio-button class="my-radio"  tabindex="7" ng-value="3" style="outline:none">Completed</md-radio-button>
+                            </md-radio-group>
+                        </div>
+
+                    </div>
+                    <div layout="row" ng-show="vm.editTaskEnabled" md-force-height="'18px'" style="margin: 35px -10px 0 0;" layout-align="end end">
+                        <md-button class="md-primary md-raised" tabindex="8" style="max-height:15px;" ng-click="editTask(editTaskForm.$valid)">Save</md-button>
+                        <md-button class="md-secondary" style="max-height:15px;" tabindex="9" ng-click="cancelEditedTask()">Cancel</md-button>
+                    </div>
+                </form>
+
+                <!-- Elements for new Task -->
+                <form name="newTaskForm"  style="height:100%">
+                    <div ng-if="vm.newTaskEnabled" ng-class="vm.taskSettingsAreaClass" layout="column" layout-padding flex>
+                        <span class="light18px1b2c3c">New Task</span>
+                        <md-input-container flex-gt-sm style="margin-top: 5px;">
+                            <label class="input-fields" style="margin-left: 5px;">Task Name</label>
+                            <input type="text" name="taskName" ng-model="vm.newTask.name" tabindex="1" maxlength="50" md-maxlength="50" ob-autofocus
+                                required />
+                            <div ng-if="(submitted && newTaskForm.taskName.$untouched) || newTaskForm.taskName.$touched" ng-messages="newTaskForm.taskName.$error" role="alert">
+                                <div ng-message="required">{{errorMsgs.MSG026}}</div>
+                                <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG027}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm style="margin-top: -15px;" ng-if="UserInfo.isAdmin">
+                            <label class="input-fields">Assigned To</label>
+                            <md-select id="assignees" 
+                                name="assignees" 
+                                ng-model="vm.newTask.assignedTo" 
+                                tabindex="2" 
+                                required>
+                                <md-option id="assigneeSelect" 
+                                    ng-repeat="member in vm.userNameList track by member.id" 
+                                    ng-value="member.id"
+                                    title="{{member.emailid}}">
+                                    {{member.name}}
+                                </md-option>
+                            </md-select>
+
+                            <div ng-if="(submitted && newTaskForm.assignees.$untouched) || newTaskForm.assignees.$touched" ng-messages="newTaskForm.assignees.$error" role="alert">
+                                <div ng-message="required">{{errorMsgs.MSG028}}</div>
+                            </div>
+
+                        </md-input-container>
+                        <md-input-container flex-gt-sm style="margin-top: -15px; margin-bottom: 0px;" ng-if="!UserInfo.isAdmin">
+                            <label class="input-fields">Assigned To *</label>
+                            <input type="text" name="assignedTo" tabindex="1" value="Self Assigned" readonly disabled/>
+                            <div ng-if="(submitted && newTaskForm.assignedTo.$untouched) || newTaskForm.assignedTo.$touched" ng-messages="newTaskForm.assignedTo.$error" role="alert">
+                                <div ng-message="required">{{errorMsgs.MSG026}}</div>
+                                <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG027}}</div>
+                            </div>
+                        </md-input-container>
+                        <span class="input-fields" style="margin-top: -10px;">Completion Date *</span>
+                        <div layout="row" layout-align="start center" md-force-height="'40px'">
+                            <!-- <md-icon md-svg-icon="images/icons/calendar_icon.svg"></md-icon> -->
+                            <md-input-container flex-gt-sm style="padding-top:15px; margin-left: -18px;">
+                                <md-datepicker id="compDate" 
+                                    name="compDate" 
+                                    md-placeholder="mm/dd/yyyy"
+                                    md-min-date="currentDate" 
+                                    ng-model="vm.newTask.compDate"
+                                    tabindex="3"
+                                    md-open-on-focus
+                                    aria-label="compDateAriaLabel"
+                                    required>
+                                </md-datepicker>
+                                <div ng-if="(submitted && newTaskForm.compDate.$untouched) || newTaskForm.compDate.$touched" ng-messages="newTaskForm.compDate.$error" role="alert">
+                                    <div ng-message="required">{{errorMsgs.MSG029}}</div>
+                                    <div ng-message="mindate">Please enter valid Completion Date.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <md-input-container flex-gt-sm style="margin-top: 22px;">
+                            <label class="input-fields" style="margin-left:5px ">Description</label>
+                            <textarea id="taskDesc" 
+                                name="taskDesc" 
+                                ng-model="vm.newTask.desc" 
+                                maxlength="500" 
+                                md-maxlength="500" 
+                                rows="2" 
+                                tabindex="4"
+                                md-no-autogrow 
+                                required></textarea>
+                            <div ng-if="(submitted && newTaskForm.taskDesc.$untouched) || newTaskForm.taskDesc.$touched" ng-messages="newTaskForm.taskDesc.$error" role="alert">
+                                <div ng-message="required">{{errorMsgs.MSG024}}</div>
+                                <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG025}}</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </form>
+
+                <div layout="row" ng-if="vm.newTaskEnabled" ng-style="{margin: vm.saveCancelBtnsMargin}" layout-align="end end" flex>
+                    <md-button class="md-primary md-raised" style="max-height:20px;" tabindex="5" ng-click="saveNewTask(newTaskForm.$valid)">Save</md-button>
+                    <md-button class="md-secondary" style="max-height:20px;" tabindex="6" ng-click="undoNewTask()">Cancel</md-button>
+                </div>
+
+            </md-content>
+
+        </div>
+    </div>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</div>

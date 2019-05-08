@@ -1,0 +1,211 @@
+<div class="review-certify" ng-style="{'height': vm.heightforreviewCertify}">
+    <!-- <div layout="row" flex>
+        <div layout-align="start center" flex></div>
+        <div layout-align="end center" ng-if="vm.userSignedAtleastOnedoc">
+            <md-menu>
+                <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdMenu.open()">
+                    <ng-md-icon icon="security" class="md-icon-button" size="20" style="fill:#e46363;"></ng-md-icon>
+                    <md-tooltip>View Secured Details</md-tooltip>
+                </md-button>
+                <md-menu-content width="6" style="max-height:150vh;">
+                    <table style="padding:10px">
+                        <tbody>
+                            <div layout="row" layout-align="start center" style="padding-top:10px" flex>
+                                <span style="padding-left:10px;font-size:18px;font-weight:bold" flex>Secured Details</span>
+                                <ng-md-icon icon="close" layout-align="end center" class="md-icon-button" size="20" ng-click="$mdMenu.close()" style="float:right"></ng-md-icon>
+                            </div>
+                            <tr>
+                                <td>
+                                    <b>SSN :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.ssn}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Driving License ID :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.drivinglicenceid}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Account No 1 :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.accountone}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Routing No 1 :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.routingone}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Account No 2 :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.accounttwo}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Routing No 2 :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.routingtwo}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Date of Birth :</b>
+                                </td>
+                                <td>
+                                    {{vm.securedDetails.DOB}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-menu-content>
+            </md-menu>
+
+        </div>
+    </div> -->
+    <!-- This is Review and Certify page -->
+    <div layout="column" class="workflow-list" ng-repeat="step in vm.docs.steps | orderBy : 'workflowstepsequence' | filter:vm.checkAllDocsCompleted">
+        <div layout="row">
+            <div flex="5">
+                <button ng-class="{'completed':step.workflowstepstatus == 3}" class="smallFabBtn stepNum md-button md-ink-ripple" type="button"
+                    id="4144" drop-on-me="">
+                    <span ng-if="step.workflowstepstatus != 3">{{$index + 1}}</span>
+                    <i ng-if="step.workflowstepstatus == 3" class="fa fa-check"></i>
+                    <!-- {{step.workflowstepstatus}} -->
+                </button>
+            </div>
+            <div class="test-name" style="overflow: hidden;text-overflow: ellipsis;padding-right: 35px;" title="{{step.stepname}}">{{step.stepname}}</div>
+            <div flex></div>
+            <!-- <div flex="20" class="status-drpdown">
+                <md-menu class="step-drpdwn">
+                    <md-button aria-label="Open demo menu" class="md-icon-button selected-btn {{!checkStepDocStatusRejected(step) ? getSelectedColor(step.workflowstepstatus) : 'rejected'}}" ng-click="$mdMenu.open($event)" ng-disabled="step.workflowstepstatus == 3 || step.workflowstepstatus == 4 || disableAll">
+                        <span>{{!checkStepDocStatusRejected(step) ? getSelectedColor(step.workflowstepstatus) : 'Rejected'}}</span><span class="down-arrow"><i class="fa fa-caret-down" ng-if="(step.workflowstepstatus == 2 || step.workflowstepstatus == 5) && !disableAll"></i></span>
+                    </md-button>
+                    <md-menu-content width="2" class="stepstatuspopup">
+                        <md-menu-item ng-repeat="sts in vm.stepStatuses" ng-if="sts.status!=1">
+                            <md-button class="{{sts.data}}" ng-click="vm.showUploadDocsDialog($event, step, sts.data, 'step', step.newHireWorkFlowId)"> {{sts.data}} </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div> -->
+        </div>
+        <div layout-align="start start" class="layout-row doc-view" ng-class="{'no-doc-view123': !step.stepdocumentids.length}" layout-wrap >
+            <p style="margin: 0;padding-right: 48px; padding-left: 20px ;text-align: justify;word-wrap: break-word;overflow: hidden;" class="previewstep" ng-bind-html="trustAsHtml(step.workflowstepcomment)" ></p>
+        </div>
+        <div layout-align="start start" class="layout-row doc-view" ng-class="{'no-doc-view': !step.stepdocumentids.length}" layout-wrap ng-if="step.stepdocumentids.length">
+            <div class="documents-card" ng-repeat="doc in step.stepdocumentids" ng-class="{'disabled': doc.documentfilestatus !== 2}"
+                ng-if="((doc.documentSignStatus == 5) || (((doc.documentSignStatus == 0 || doc.documentSignStatus == 1) && (doc.documentfilestatus == 3 || doc.documentfilestatus == 4))))">
+                <!-- {{doc.documentfilestatus}} -->
+                <div class="doc-card-detail" id="div{{doc.stepdocumentid}}" ng-init="vm.addCanvasToCard($index, $parent.$index, doc.stepdocumentid, doc.documentid, (doc.settingId.indexOf(7) === -1 && doc.settingId.indexOf(15) === -1), step.newHireWorkFlowId)" style="height: 2in;">
+                    <div class="attached-docs-num" ng-if="doc.candidateattachfiles.length">
+                        <a href ng-click="openAttachedDocs($event, step, doc)">+ {{doc.candidateattachfiles.length}} files</a>
+                    </div>
+
+                    <a target="_blank" ng-if="doc.settingId.indexOf(7) === -1 && doc.settingId.indexOf(15) === -1" href="{{EchoDocsURL}}{{vm.newHireId}}/{{step.newHireWorkFlowId}}/{{doc.documentid}}.pdf">
+                        <canvas id="canvas{{doc.stepdocumentid}}" ng-class="{'disabled': doc.documentfilestatus !== 2}">
+                        </canvas>
+                    </a>
+                    <a target="_blank" ng-if="doc.settingId.indexOf(7) !== -1" href="{{DocsURL}}/{{doc.documentid}}.pdf">
+                        <canvas id="canvas{{doc.stepdocumentid}}" ng-class="{'disabled': doc.documentfilestatus !== 2}">
+                        </canvas>
+                    </a>
+                    <a target="_blank" ng-if="doc.settingId.indexOf(15) !== -1" href="{{DocsURL}}/{{doc.documentid}}.pdf">
+                        <canvas id="canvas{{doc.stepdocumentid}}" ng-class="{'disabled': doc.documentfilestatus !== 2}">
+                        </canvas>
+                    </a>
+                </div>
+                <md-divider></md-divider>
+
+                <div layout="row" class="documents-card-area" layout-align="space-between center" flex>
+                    <div layout="row" layout-align="start start" class="pdfviewblock">
+                        <md-icon md-svg-src="images/pdf.svg" class="docsPdfIconSvg"></md-icon>
+                        <p id="docname{{doc.stepdocumentid}}" class="docName" title="{{doc.documentname}}">{{vm.doc_name_short(doc.documentname, 22)}}</p>
+                    </div>
+                    <!-- ng-if="(doc.settingId.indexOf(2) !== -1 && !disableAll && step.workflowstepstatus != 3) && (doc.documentfilestatus == 1)" -->
+                    <!-- doc.settingId.indexOf(2) !== -1 && -->
+                    <!-- ( (doc.settingId.indexOf(2) !== -1 || doc.settingId.indexOf(9) !== -1) && !disableAll && step.workflowstepstatus != 3) && (doc.documentfilestatus == 1) -->
+                    <md-card-actions ng-if="(doc.settingId.indexOf(2) !== -1 || doc.settingId.indexOf(9) !== -1) && doc.documentfilestatus !== 2 && doc.documentfilestatus !== 3 && doc.documentfilestatus !== 4">
+                        <md-menu>
+                            <md-icon md-svg-icon="images/icons/more_menu_icon.svg" md-menu-origin ng-click="$mdMenu.open($event)" class="moreMenuBtnSvg"
+                                style="fill:#44b3c2;cursor:pointer;">
+                            </md-icon>
+                            <md-menu-content class="review-dropdown">
+                                <!-- <md-menu-item>
+                                            <md-button class="edit-button" ng-href="{{DocsURL}}{{doc.documentid}}.pdf" target="_blank">
+                                                View
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-divider></md-divider> -->
+                                <md-menu-item>
+                                    <md-button class="edit-button" ng-click="vm.approveit($event, doc, 'approve', 'doc', step.newHireWorkFlowId)">
+                                        Approve
+                                    </md-button>
+                                </md-menu-item>
+                                <md-divider></md-divider>
+                                <md-menu-item>
+                                    <md-button class="edit-button" ng-click="vm.showUploadDocsDialog($event, doc, 'reject', 'doc', step.newHireWorkFlowId)">
+                                        Reject & Update
+                                    </md-button>
+                                </md-menu-item>
+                                <md-divider></md-divider>
+                                <md-menu-item>
+                                    <md-button class="delete-button" ng-click="vm.showUploadDocsDialog($event, doc, 'replace', 'doc', step.newHireWorkFlowId)">
+                                        Reject & Replace
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-card-actions>
+                    <!-- doc.candidateattachfiles.length -->
+                    <div class="not-view-mode" style="padding-left:5px;" ng-if="doc.documentfilestatus == 2">
+                        <span>approved</span>
+                    </div>
+                    <div class="not-view-mode" style="padding-left:5px;" ng-if="doc.documentfilestatus == 3 || doc.documentfilestatus == 4" title="{{doc.documentfilestatus == 3 ? 'Rejected and Update' : 'Rejected and Replace'}}">
+                        <span>Rejected</span>
+                    </div>
+                    <!-- <div class="not-view-mode" ng-if="doc.documentfilestatus == 4"><span>replace</span></div>
+                    <div class="not-view-mode" ng-if="doc.documentfilestatus == 2"><span>approved</span></div>
+                    <div class="not-view-mode" ng-if="doc.documentfilestatus == 3"><span>rejected</span></div> -->
+
+                </div>
+            </div>
+            <div class="no-docs-msg" ng-if="!step.stepdocumentids.length">Found no documents</div>
+        </div>
+    </div>
+    <div ng-if="!vm.userSignedAtleastOnedoc && !vm.noDocsStepExist && !loading" class="no-steps-found">
+        <div class="no-attachment-text">
+            <p style="margin:0">There are No documents and No Steps available for Review and Certify.</p>
+            <!-- <p style="margin:0">Candidate does not completed even one Step</p> -->
+        </div>
+
+    </div>
+</div>
+<!-- <div layout="row" layout-align="end center" flex>
+    <md-button class='md-primary md-raised'
+        tabindex="5" ng-disabled="intiateonboard.$invalid"
+        ng-click="vm.certifyFinalIt()">Save
+    </md-button>
+    <md-button class='md-secondary' 
+        tabindex="6" 
+        ui-sref="NewHires">Cancel
+    </md-button>
+</div> -->
+<div class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

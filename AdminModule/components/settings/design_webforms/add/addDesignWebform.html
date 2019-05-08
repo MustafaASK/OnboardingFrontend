@@ -1,0 +1,121 @@
+<div layout="row" layout-align="start start" class="dyn-webform-area" style="height:100%;overflow:hidden" flex ng-cloak>
+    <div style="height:100%;" layout="column" flex ng-class="{'div55':toggleLayout, 'div100':!toggleLayout}">
+        <div layout="column" style="padding: 0 0 0 15px;background-color: white;height:30%">
+            <span class="header-color-design-webforms" style="padding-top: 10px">{{vm.webformDetails.webFormId ? 'Edit
+                Webform' : 'Add Webform'}}
+            </span>
+            <form id="addDesignWebform" name="addDesignWebform">
+                <div layout="row" flex style="padding: 20px 0px;">
+                    <md-input-container class="md-block" style="margin: 1px 0 0 0px;padding-bottom: 0; padding-top: 0;"
+                        flex="30">
+                        <label class="input-fields">Enter Webform Name</label>
+                        <input id="webformName" name="webformName" type="text" tabindex="1" ng-model="vm.webformDetails.webFormName"
+                            maxlength="100" md-maxlength="100" ob-autofocus required ng-change="changeAliasName();" />
+                        <div ng-if="(submitted && addDesignWebform.webformName.$untouched) || addDesignWebform.webformName.$touched"
+                            ng-messages="addDesignWebform.webformName.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG080}}</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" style="margin: 1px 0 0 0px;padding-bottom: 0; padding-top: 0;"
+                        flex="20">
+                        <label class="input-fields">Enter Alias Name</label>
+                        <input id="webformAlias" name="webformAlias" type="text" tabindex="1" ng-model="vm.webformDetails.aliasName"
+                            maxlength="10" md-maxlength="10" required />
+                        <div ng-if="(submitted && addDesignWebform.webformAlias.$untouched) || addDesignWebform.webformAlias.$touched"
+                            ng-messages="addDesignWebform.webformAlias.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG080}}</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" style="margin: 1px 0 0 0px;padding-bottom: 0; padding-top: 0;"
+                        flex="50">
+                        <label class="input-fields">Enter Webform Description</label>
+                        <input id="webformDesc" name="webformDesc" type="text" tabindex="1" ng-model="vm.webformDetails.webFormDesc"
+                            maxlength="500" md-maxlength="500" required />
+                        <div ng-if="(submitted && addDesignWebform.webformDesc.$untouched) || addDesignWebform.webformDesc.$touched"
+                            ng-messages="addDesignWebform.webformDesc.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG080}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+        <md-divider></md-divider>
+        <md-content class="dyn-webform-dropzone-area dyn-webform-dropzone-area-body" id="dropZone" layout="column"
+            style="padding: 5px 15px 15px 15px;height:70%;background-color:rgb(250,250,250)">
+            <div layout-align="end center" ng-if="vm.webformDetails.parentId">
+                <span  style="font-size:15px;float:right;text-align:right;margin-bottom: 6px;margin-top: 6px;">Enter number of {{vm.webformDetails.webFormName}} : 
+                    <md-input-container flex="10"  style="margin: -20px 5px -20px 5px;padding: 12px 0px 0px">
+                        <input id="recordsNumber" name="recordsNumber" type="number" ng-model="vm.webformDetails.noOfRecords" ng-blur="validateNoOfRecords()"
+                            min="1" max="{{vm.maxNumOfRecordsSubWebForms}}" style="height: 20px;margin-top: 8px;" />
+                    </md-input-container>
+                </span>
+            </div>
+            <dynamic-web-form allfields="vm.webformDetails.masterJsonData ? vm.webformDetails.masterJsonData.components : vm.webformDetails.jsonData.components"
+                style="display:contents;height:100%;" frompage="commonDetailPage" isnewhireform="vm.webformDetails.isNewHireForm"
+                typecommonfields="vm.typecommonfields"></dynamic-web-form>
+        </md-content>
+        <footer>
+            <md-divider></md-divider>
+            <!-- <div  layout-align='start center' style="padding-left:5px;">
+                <md-button class='md-primary md-raised' type="submit" id="saveBtn" tabindex="vm.tabOrder++" ng-click="">
+                    Preview
+                </md-button>
+            </div> -->
+            <div layout='row' layout-align='end center' flex style="background-color:#fff;padding-right:5px;">
+                <md-button class='md-primary md-raised' type="submit" id="saveBtn" tabindex="vm.tabOrder++" ng-click="vm.saveDesignWebformComponents(addDesignWebform.$valid)">
+                    Save
+                </md-button>
+                <md-button class='md-secondary' id="cancelBtn" tabindex="vm.tabOrder++" ui-sref="Settings.DesignWebforms">Cancel
+                </md-button>
+            </div>
+        </footer>
+
+    </div>
+    <div class="min-layout" ng-show="!toggleLayout">
+        <span class="arrow-icon-left" ng-click="toggleLayout = !toggleLayout">
+            <ng-md-icon class="md-mini" icon="chevron_left" md-menu-align-target></ng-md-icon>
+            <ng-md-icon class="md-mini" icon="chevron_left" md-menu-align-target style="left:0;"></ng-md-icon>
+        </span>
+        <span class="cust-heading">Layout</span>
+    </div>
+    <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-drag" layout-padding flex style="padding:0;"
+        ng-show="toggleLayout">
+        <div style="background: #f4f4f4;padding: 10px 0 10px 32px;height:5%">
+            <span class="arrow-icon-left" ng-show="toggleLayout" ng-click="toggleLayout = !toggleLayout">
+                <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_right" style="width:3px;min-width:3px;" md-menu-align-target>
+                </ng-md-icon>
+                <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_right" style="width:3px;min-width:3px;" md-menu-align-target>
+                </ng-md-icon>
+            </span>
+            <span class="cust-heading">Layout</span>
+        </div>
+        <md-divider style="padding: 0;"></md-divider>
+        <!-- <md-input-container class="md-block" flex="50">
+        </md-input-container> -->
+        <md-content style="overflow-x: hidden;padding: 5px 18px 5px 14px;background: #fff;height:89%" ng-style="{'height': vm.docFieldsBoxHeight, 'margin-top': vm.docFieldsTableMarginTop}">
+            <div ng-model="dragElements" class="sortable-stdFields">
+                <div draggable="true" class="dragElement-wrapper" ng-repeat="ele in dragElements" element-draggable
+                    data-index="{{$index}}" style="margin-bottom: 10px">
+                    <div class="drag-element">
+                        <md-icon md-svg-icon="images/icons/{{ele.Type}}_icon.svg" class="drag-svg-ico"></md-icon>{{ele.name}}
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="drag-drop-area-img">
+                <md-icon md-svg-icon="images/icons/drag-drop-svg.svg" class="drag-drop-area-img-svg"></md-icon>
+            </div> -->
+
+        </md-content>
+        <!-- <div layout="row" layout-align="end center" style="border-top: 1px solid #d6d6d6;background: #fff;" flex ng-show="toggleLayout">
+            <md-button class='md-primary md-raised' tabindex="1" ng-click="vm.commondynamicwebform();">Save
+            </md-button>
+            <md-button class='md-secondary' tabindex="2" ng-click="goback()">Cancel
+            </md-button>
+        </div> -->
+        <div loader="" class="LoaderDiv" ng-show="loading">
+            <div class="spinner">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+</div>

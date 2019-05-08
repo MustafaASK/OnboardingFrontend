@@ -1,0 +1,1116 @@
+$hyperLinkColor: #2283bb;
+$veryLightGrey: #fcfcfc;
+$font: 'Segoe UI';
+$lightfont: 'Segoe UI Light';
+$inputLabel: #688081;
+
+.motherOfAll {
+    overflow: hidden;
+    background-color: #fcfcfc;
+}
+
+.cust-button-color{
+    color:#d75a5a;
+}
+
+.cust-navi-bg-color{
+    color:#273748;
+}
+
+.cust-icons-color{
+    color:#f1a94e;
+}
+
+.cust-heading {
+    color:#1b2c3c;
+    font-size: 18px;
+}
+
+.cust-body-text-color{
+    color:#555555;
+}
+
+.hyperLink {
+    color: $hyperLinkColor;
+    overflow: hidden;
+}
+
+.taskNameHyperLink {
+    color: $hyperLinkColor;
+    margin-left: 5px;
+    cursor:pointer;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    width:400px;
+}
+
+.pbold {
+    font-weight: bold;
+}
+
+.splicon {
+    display: inline-block;
+    margin: 10px;
+    width: 16px;
+    height: 16px;
+  }
+
+.circleCross {
+    top:31px;
+    left:31px;
+    position:static;
+    cursor:pointer;
+    text-align:center;
+    color: #555555;
+    font-weight:bold;
+    width:20px;
+    height:20px;
+    // order:1px solid #000000;
+    border-radius:12px;
+    // box-shadow:3px 3px 3px #999999;
+    // background-color:#555555;
+    overflow:visible;
+}
+
+.uploadDocsBtn {
+    min-width: 80px;
+    cursor: pointer;
+    border: 1px solid #d7d7d7;
+    border-radius: 2px;
+    background-color: white;
+}
+
+
+.placeHolderBtnEmailTemplates {
+    min-width: 80px;
+    cursor: pointer;
+    border: 1px solid #d7d7d7;
+    border-radius: 2px;
+    background-color: #f4f4f4;
+    padding: 2px;
+    margin-bottom: 3px;
+}
+.placeHolderBtn {
+    min-width: 80px;
+    cursor: pointer;
+    border: 1px solid #d7d7d7;
+    border-radius: 2px;
+    background-color: #f4f4f4;
+}
+
+.uploadDocsBtnTxt {
+    color: #4e4e4e;
+    margin-right: 6px;
+    font-family: inherit;
+    text-transform:none;
+    text-justify: middle;
+}
+
+.placeHolderBtn:hover,
+.placeHolderBtnEmailTemplates:hover,
+.uploadDocsBtn:hover {
+    border: 1px solid #c64242;
+}
+
+.uploadDocsBtn:hover .uploadDocsBtnTxt {
+    color: #c64242;
+}
+
+.buttonsFooter,
+.uploadDocsFooter {
+    background-color: #f5f5f5;
+    border-top: 1px solid #e4e4e4;
+    width: 100%;
+}
+
+.mapFieldsBtn {
+    min-width: 125px;
+    font-family:'Segoe UI';
+    text-transform:none;
+}
+
+.mySelect md-select-menu {
+    margin-top: 40px;
+    margin-left: 50px;
+    max-width: 85%;
+}
+
+.filterSelect md-select-menu {
+    margin-top: 40px;
+    max-width: 95%;
+}
+
+.commonFieldSelect md-select-menu {
+    margin-top: 40px;
+    max-width: 100%;
+}
+
+.commonFieldBox {
+    border: 1px solid lightgrey;
+    width: 100%;
+    height: 30px;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.profilePic__container {
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    // cannot use table-cell because of IE 11
+    display: inline-block; 
+    color: #1b2c3c;
+    font-size: 24px;
+    font-family: 'Segoe UI Light';
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: -5% 0 0 30%;
+    padding: 10% 5%;
+    background-image: url(../images/grey.png);
+}
+
+.profilePic__container__newhires{
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    color: #1b2c3c;
+    font-size: 24px;
+    font-family: 'Segoe UI Light';
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 10% 0 0 5%;
+    padding: 10% 10%;
+    background-image: url(../images/grey.png);
+}
+
+.navItemSvg {
+    margin: 0 0 3px 0;
+    transform: scale(.9);
+    fill: white;
+}
+
+.navItemSvg80 {
+    margin: 0 0 3px 0;
+    transform: scale(.8) rotate(90deg);
+    fill: white;
+}
+
+.moreMenuBtnSvg {
+    transform: scale(.5);
+}
+
+.editBtnSvg {
+    transform: scale(.75);
+}
+.editBtnSvgBgv {
+    transform: scale(.75);
+    height: 18px;
+    width: 18px;
+    min-height: 18px;
+    min-width: 18px;
+}
+
+.deleteBtnSvg {
+    transform: scale(.75);
+    fill: #d75a5a;
+}
+.deleteBtnSvgBgv{
+    transform: scale(.75);
+    height: 18px;
+    width: 18px;
+    min-height: 18px;
+    min-width: 18px;
+}
+.editBtnSvg:hover ,.editBtnSvgBgv:hover, .deleteBtnSvgBgv:hover {
+    fill: #d75a5a;
+}
+.tdbgv{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dragIconSvg {
+    transform: scale(1.5);
+    cursor: move;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+.uploadBtnSvg {
+    transform: scale(.6);
+    // fill: #f1a94e;
+}
+
+.filterIconSvg,
+.searchIconSvg {
+    fill: #44b3c2;
+    transform: scale(.6);
+}
+.timerIconSvg{
+    fill:#9e9e9e;
+    transform:scale(.6);
+}
+.workflowFolderIconSvg {
+    transform:scale(.8);
+    fill:#f1a94e !important;
+}
+.signatureIconSvg {
+    transform: scale(.7);
+}
+
+.workflowPdfIconSvg {
+    fill:#d75a5a;
+    margin-top:20px;
+    transform:scale(.8);
+}
+
+.stepEditBtnSvg {
+    transform:scale(0.6);
+}
+
+.stepDelBtnSvg {
+    transform:scale(0.7);
+}
+
+
+.docsPdfIconSvg {
+    fill:#d75a5a !important;
+    transform:scale(.6);
+}
+
+.calendarNewHireIconSvg{
+    transform:scale(.6);
+}
+
+.pdfIconSvg-folders {
+    @extend .docsPdfIconSvg;
+    // margin-top:-3px;
+    transform:scale(.8);
+}
+
+.backIconIntroPages{
+    transform:scale(.8);
+    fill: #d75a5a;
+}
+
+.search-box {
+    border: 1px solid #44b3c2;
+    border-radius: 2px;
+}
+
+.pencilIconSvg {
+    transform: scale(.7);
+    color:#f1a94e;
+    cursor: pointer;
+
+    &:disabled {
+        color: #4e4e4e;
+    }
+}
+
+.smallFabBtn {
+    min-height: 35px;
+    height: 35px;
+    min-width: 0;
+    line-height: 15px;
+    width: 35px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+
+    &.stepNum {
+        background-color: #f4f4f4;
+        border: 1px solid #555555;
+    }
+}
+
+.pagesMoveBtn,
+.pageNumberBtn {
+    margin: 0 4px;
+    min-height: 30px;
+    height: 30px;
+    min-width: 0;
+    line-height: 15px;
+    padding: 4px;
+    width: 30px;
+    border-radius: 50%;
+    // box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.26);
+}
+
+.addPageBtn {
+    margin: 0 4px;
+    min-height: 30px;
+    height: 30px;
+    min-width: 0;
+    line-height: 15px;
+    padding: 8px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.addPageBtn.primary,
+.pageNumberBtn.primary,
+.smallFabBtn.primary {
+    background-color: #d75a5a;
+    color: white;
+}
+
+.pagesMoveBtn:hover,
+.addPageBtn.primary:focus,
+.pageNumberBtn.primary:focus,
+.smallFabBtn.primary:focus,
+.addPageBtn.primary:hover,
+.pageNumberBtn.primary:hover,
+.smallFabBtn.primary:hover {
+    background-color: #C64242;
+}
+
+.smallFabBtn.secondary {
+    background-color: #f1a94e;
+}
+
+.smallFabBtn.secondary:hover {
+    background-color: #c06f0d;
+}
+
+.workflow-def-step-card {
+    width: 585px !important;
+    max-width: 585px !important;
+    min-width: 585px !important;
+    height: 360px !important;
+    // min-height: 100px;
+    // max-height: 300px;
+}
+.workflow-step-card {
+    width: 585px !important;
+    max-width: 585px !important;
+    min-width: 585px !important;
+    height: 375px ;
+    // min-height: 100px;
+    // max-height: 300px;
+}
+.workflow-step-name-edit{
+    height: 585px !important ; 
+}
+
+.workflow-new-step-card {
+    width: 585px !important;
+    height: auto;
+}
+
+.workflow-docs-container {
+    overflow-x:hidden;
+    overflow-y:auto;
+    margin:-5px 0 0 -10px;
+    height:75px;
+    width:100%;
+}
+
+.workflow-dropzone-docs-container {
+    overflow-x:hidden;
+    overflow-y:auto;
+    margin:-10px 0 0 -10px;
+    height:125px;
+    width:100%;
+    overflow-y:auto;
+}
+
+.workflow-doc-card {
+    min-width:150px !important;
+    max-width:150px;
+    width:150px;
+    height:25px;
+    background:#f4f4f4;
+    box-shadow:none;
+    border:1px solid lightgrey;
+}
+
+.upload-doc-card {
+    min-width:300px !important;
+    max-width:400px;
+    width:400px;
+    height:25px;
+    background:#f4f4f4;
+    box-shadow:none;
+    border:1px solid lightgrey;
+    margin: auto;
+}
+.upload-doc-card-branding {
+    min-width:300px;
+    max-width:400px;
+    width:400px;
+    height:25px;
+    background:#f4f4f4;
+    box-shadow:none;
+    border:1px solid lightgrey;
+    margin: auto;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .upload-doc-card-branding {
+        min-width:200px;
+        max-width:280px;
+        width:250px;
+        height:25px;
+        background:#f4f4f4;
+        box-shadow:none;
+        border:1px solid lightgrey;
+        margin: auto;
+    }
+    .small-file-drop-zone {
+        background-color: $veryLightGrey;
+        background-image: url(../images/drag_drop.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 212px 73px;
+        border: 1px dashed #c8c9c9;
+        padding: 10px 10px 10px 10px;
+        width: 400px;
+        height: 150px;
+        overflow-y: auto;
+        // margin: -10px 10px 10px 10px;
+    }
+        
+    .small-file-drop-zone.newStep {
+        min-width: 325px;
+        width: 335px;
+        background-image: url(../images/drag_drop_doc.png);
+    }
+
+    .workflow-step-card {
+        width: 400px !important;
+        max-width: 400px !important;
+        min-width: 400px !important;
+        height: 300px !important;
+        min-height: 100px;
+        max-height: 300px;
+    }
+    .workflow-step-card-default {
+        width: 400px !important;
+        max-width: 400px !important;
+        min-width: 400px !important;
+        height: 350px !important;
+        min-height: 100px;
+        max-height: 350px;
+    }
+    
+    .workflow-new-step-card {
+        width: 400px !important;
+        height: auto;
+    }
+    
+    .workflow-docs-container {
+        width:340px;
+        margin-left:-10px;
+        overflow-x:hidden;
+        overflow-y:auto;
+    }
+
+    .stepIcons {
+        margin-top: -70px;
+        margin-right: 5px;
+        width:100%;
+    }
+
+    .stepEditBtnSvg {
+        margin-right:30px;
+    }
+
+    .taskNameHyperLink {
+        color: $hyperLinkColor;
+        margin-left: 5px;
+        cursor:pointer;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        width:270px;
+    }
+    
+}
+@media screen and (max-width: 1024px) {
+    .workflow-step-card{
+        max-height: 350px !important;
+        height: 350px !important;
+        .stepDelBtnSvg{
+            width: 33px;
+            margin: 0;padding: 0;
+        }
+    }
+    .workflow-step-name-edit{
+        max-height: 700px !important;
+        height: 690px !important;
+        .stepDelBtnSvg{
+            width: 33px;
+            margin: 0;padding: 0;
+        }
+    }
+}
+
+.wf-doc-icon-text {
+    margin-top: 0px;
+}
+
+.wf-doc-icon-text-moz {
+    margin-top: -8px;
+}
+
+.no-workflows {
+    border: 1px solid lightgrey;
+    width:80%;
+    text-align:center;
+    background:#f4f4f4;
+}
+
+.folders-sidenav {
+    // width: 35%;
+    min-width: 200px;
+    max-width: 400px;
+    width: 400px;
+}
+
+.uploadDocsTxt {
+    font-size: 18px;
+    color: #1b2c3c;
+}
+
+.reg14px444 {
+    font-family: $font;
+    font-size: 14px;
+    color: #444444;    
+}
+
+.reg16px444 {
+    font-family: $font;
+    font-size: 16px;
+    color: #444444;    
+}
+
+.light18px1b2c3c {
+    font-family: $lightfont;
+    font-size: 18px;
+    color: #1b2c3c;
+    white-space: nowrap;
+}
+
+.light12px888888 {
+    font-family: $lightfont;
+    font-size: 12px;
+    color: #888888;
+    white-space: nowrap;
+}
+
+.light10px888888 {
+    font-family: $lightfont;
+    font-size: 10px;
+    color: #888888;
+    white-space: nowrap;
+}
+
+.dashboard-tasks {
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: 5px;
+}
+
+.dashboard-tasks-FF {
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: 3px;
+}
+
+.folderName {
+    font-size: 16px;
+    color: #444444;
+    cursor: pointer;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.itemName {
+    font-size:20px;
+    color:#d75a5a;
+    width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;    
+  }
+
+  
+.folderDocsTxt {
+    font-size: 12px;
+    color: #8e8e8e;
+    margin: -10px 0 0 -3px;
+}
+
+.folderDocsTxt-IE {
+    font-size: 12px;
+    color: #8e8e8e;
+    margin: -25px 0 0 -3px !important;
+}
+
+.folderDocsTxt-FF {
+    margin: -23px 0 0 -3px !important;    
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+.document-list {
+    color: #444444;
+    font-size: 14px;
+}
+
+.edit-button,
+.delete-button {
+    color: #888888;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.delete-button:hover,
+.edit-button:hover {
+    color: #d75a5a;
+}
+
+canvas.selected,
+canvas:hover {
+    border-color: #f1a94e;
+}
+
+.filterBox {
+    border: 1px solid lightgrey;
+    min-width:160px;
+    max-height:30px;
+    border-radius: 3px;
+    background-color: white;
+}
+.filterBoxNewHires{
+    border: 1px solid lightgrey;
+    min-width:160px;
+    max-height:30px;
+    border-radius: 3px;
+    background-color: white;
+}
+
+@media screen and (max-width: 1024px) {
+    .filterBoxNewHires{
+        border: 1px solid lightgrey;
+        min-width:135px;
+        max-height:30px;
+        border-radius: 3px;
+        background-color: white;
+    }
+}
+
+
+.mytasks-container {
+    height: 493px;
+    margin: 5px 20px 10px 20px;
+    // border: 1px solid #e0e0e0;
+    padding-top: 2px;
+}
+
+.task {
+    font-size: 14px;
+    font-family: $font;
+    color: #444444;
+    background-color: #f6f6f6;
+    cursor: pointer;
+}
+
+.taskStatusBox {
+    border-radius: 2px;
+    height: 23px;
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+    color: #ffffff;
+    display: table-cell;
+    font-size: 11px;
+    font-weight: bold;
+    vertical-align: middle;
+    font-family: $font;
+
+    &.pending {
+        background-color: #fec107;
+    }
+
+    &.completed {
+        background-color: #00c292;
+    }
+
+    &.initiated {
+        background-color: #49a3d7;
+    }
+}
+
+.taskStatusBar {
+    height: 35px;
+    min-width: 5px;
+    max-width: 5px;
+    width: 5px;
+    display: table-cell;
+    margin-right: 5px;
+
+    &.pending {
+        background-color: #fec107;
+    }
+
+    &.completed {
+        background-color: #00c292;
+    }
+
+    &.initiated {
+        background-color: #49a3d7;
+    }
+}
+
+/* Tooltip text */
+.taskStatusBar .tooltiptext {
+    visibility: hidden;
+    width: 90px;
+    background-color: #888888;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 3px;
+    font-size:10px;
+    height:12px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.taskStatusBar:hover .tooltiptext {
+    visibility: visible;
+}
+
+md-list.make-scrollable {
+    height: 100%; //Or any other height you wish
+    overflow-y: auto;
+}
+
+.folders-display-area {
+    overflow-y:auto;
+    height:auto;
+}
+
+.templates-display-area {
+    margin-left: 30px;
+    height:100%;
+    overflow-y:auto;
+    background:transparent !important;
+}
+
+.taskEditArea {
+    width: 420px;
+    height: 510px;
+    margin: 10px 0 0 10px;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    overflow: hidden;
+}
+
+.task-settings-area {
+    border: 1px solid lightgrey;
+    background: white;
+    height: 430px;
+}
+
+.task-settings-area-IE {
+    border: 1px solid lightgrey;
+    background: white;
+    height: 420px;
+}
+
+.task-settings-area-FF {
+    border: 1px solid lightgrey;
+    background: white;
+    height: 430px;
+}
+
+.taskNameInput {
+    margin:50px 0 25px 0;
+    width:350px !important;
+}
+
+.taskNameTxt {
+    font-size:20px;
+    width: 330px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;    
+  }
+
+
+.taskStatusRadio {
+    margin-top: -20px;
+    transform:scale(.8);
+}
+
+.taskStatusRadio-IE {
+    transform:scale(.8);
+}
+
+.taskStatusLabel {
+    text-transform: none;
+    font-size: 13px;
+    color: $inputLabel;
+    margin-top: -20px;
+}
+
+.taskStatusLabel-IE {
+    text-transform: none;
+    font-size: 13px;
+    color: $inputLabel;
+}
+
+.div55 {
+    min-width: 53% !important;
+    max-width: 53%;
+    width: 53%;
+}
+
+.template-area {
+    margin: 5px 8px 0 8px;
+    border: 1px solid lightgrey;
+    height: 380px; 
+    width:98%;
+    background-color: white;
+}
+
+// md-sidenav, 
+// md-sidenav.md-locked-open, 
+// md-sidenav.md-closed.md-locked-open-add-active {
+//     min-width: 200px !important;
+//     width: 85vw !important;
+//     max-width: 400px !important;
+// } 
+
+// @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//     /* IE10+ CSS styles go here */
+//     .folderDocsTxt {
+//         font-size: 12px;
+//         color: #8e8e8e;
+//         margin: -20px 0 0 -3px;
+//     }    
+// }
+.newhireStatusBox {
+    border-radius: 2px;
+    height: 20px;
+    min-width: 75px;
+    max-width: 75px;
+    text-align: center;
+    color: #ffffff;
+    display: inline-block;
+    padding-top: 2px;
+    font-size: 11px;
+    font-weight: lighter;
+    vertical-align: middle;
+    font-family: $font;
+
+    &.newhire{
+        background-color: #7f75b0;
+    }
+
+    &.initiated{
+        background-color: #49a3d7;
+    }
+
+    &.accepted{
+        background-color: #0194b9;
+    }
+
+    &.rejected{
+        background-color:#ed4444;
+    }
+
+    &.noresponse{
+        background-color: #858584;
+    }
+
+    &.pending{
+        background-color: #fe8707;;
+    }
+
+    &.review{
+        background-color: #d577ac;
+    }
+
+    &.inprogress{
+        background-color:#fec107;
+    }
+
+    &.hrrejected{
+        background-color: #fc6a6a;
+    }
+
+    &.completed{
+        background-color: #00c292;
+    }
+}
+
+.dashboardNewhireStatusBox {
+    border-radius: 2px;
+    height: 20px;
+    min-width: 75px;
+    max-width: 75px;
+    text-align: center;
+    color: #ffffff;
+    display: table-cell;
+    // padding-top: 2px;
+    font-size: 11px;
+    font-weight: lighter;
+    vertical-align: middle;
+    font-family: $font;
+
+    &.newhire{
+        background-color: #7f75b0;
+    }
+
+    &.initiated{
+        background-color: #49a3d7;
+    }
+
+    &.accepted{
+        background-color: #0194b9;
+    }
+
+    &.rejected{
+        background-color:#ed4444;
+    }
+
+    &.noresponse{
+        background-color: #858584;
+    }
+
+    &.pending{
+        background-color: #fe8707;;
+    }
+
+    &.review{
+        background-color: #d577ac;
+    }
+
+    &.inprogress{
+        background-color:#fec107;
+    }
+
+    &.hrrejected{
+        background-color: #fc6a6a;
+    }
+
+    &.completed{
+        background-color: #00c292;
+    }
+}
+
+.brandingColorBox {
+    border-radius: 2px;
+    height: 40px;
+    width: 205px;
+    display: inline-block;
+    vertical-align: middle;
+    padding:10px 5px 10px 5px;
+}
+
+.dashboard-section-heading {
+    font-family: $lightfont;
+    font-size: 15px;
+    font-weight: bold;
+    color: #555555;
+}
+.subline-heading{
+    color:#1b2c3c;
+    font-size: 14px;
+}
+
+
+.dashboard-area {
+    background-color:#ffffff;
+    overflow: hidden;
+}
+
+.ql-container.ql-snow {
+    min-height: 100px !important;
+}
+
+.email-temp-quill .ql-container.ql-snow {
+        height: 200px !important;
+        overflow: auto;
+    }
+.email-temp-temp-area.template-area{
+    height: 420px;
+}
+
+md-input-container.textarea[md-no-autogrow].md-input {
+    height: inherit;
+    overflow-y:auto;
+}
+
+.pdfViewer {
+    border: 0px;
+    padding: 0px;
+    overflow: hidden;
+    margin: 0px;
+}
+
+.counter {
+    color: #555555;
+    font-size: 12px;
+    padding: 6px 15px;
+    text-align: right;
+  }
+
+.userProfileMenu {
+    overflow: hidden;
+    max-height: 23vh;
+    margin-bottom: -5px;
+}
+
+.userProfileMenu-FF {
+    overflow: hidden;
+    max-height: 23vh;
+    margin-bottom: 0px;
+}
+
+.userProfileMenu-IE {
+    overflow: initial !important;
+    -ms-overflow-style: none;
+    max-height: 22vh;
+    height: 100%;
+    margin-bottom: 0px;
+}
+
+// break arbitrarily for non-CJK text (other than Chinese–Japanese–Korean).
+.break {
+    word-break: break-all;
+}
+.new-hire-personal-info-div{
+    md-radio-button.md-default-theme[disabled], md-radio-button[disabled], md-radio-group.md-default-theme[disabled], md-radio-group[disabled],
+    md-datepicker[disabled] .md-input,
+    [disabled] md-input-container.md-default-theme .md-input, [disabled] md-input-container .md-input, md-input-container.md-default-theme .md-input[disabled], md-input-container .md-input[disabled],
+    md-checkbox.md-default-theme[disabled] .md-label, md-checkbox[disabled] .md-label{
+        color: #444444;
+    }
+    md-datepicker[disabled] .md-button:hover{
+        md-icon{
+            fill: #9e9e9e !important;
+        }
+    }
+}

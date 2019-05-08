@@ -1,0 +1,22 @@
+<!-- When there are no folders for the user -->
+<div flex>
+    <div layout="column" layout-align="center center" layout-padding flex>
+        <img src="images/folder_img.png"/>
+        <!-- <md-icon md-svg-src='images/folder_img.svg' style="width:298px;height:223px;"></md-icon> -->
+        <!-- <div flex="5"></div> -->
+        <div align="center">
+            <md-button class="md-primary md-raised" ng-if="(UserInfo.isAdmin || vm.rolesData.addflag)" ui-sref="Settings.AddFolder" style="min-width:150px;">Create Folder
+            </md-button>
+        </div>
+        <!-- <div flex="5"></div> -->
+        
+        <div class="no-workflows">
+            <p class="pbold">No Folders created yet</p>
+    
+            <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo
+            </p> -->
+        </div>
+    </div>
+</div>

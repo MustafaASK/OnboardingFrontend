@@ -1,0 +1,157 @@
+<div layout="column" layout-fill layout-padding flex>
+
+    <main flex>
+        <div class="add-user-details-container">
+            <span class="cust-heading">{{pageTitle}}</span>
+            <form name="editUsrForm" novalidate>
+                <div layout="row" layout-gt-sm="row" flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="input-fields">Email ID</label>
+                        <input type="email" id="usremail" name="usremail" tabindex="vm.tabOrder" ng-model="vm.hrUserData.emailId"
+                            ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                            ng-blur="vm.validateEmailId()" maxlength="70" md-maxlength="70" ng-disabled="vm.hruserid"
+                            ob-autofocus required>
+
+                        <div ng-if="(submitted && editUsrForm.usremail.$untouched) || editUsrForm.usremail.$touched"
+                            ng-messages="editUsrForm.usremail.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG004}}</div>
+                            <div ng-message-exp="['maxlength', 'pattern']">
+                                {{errorMsgs.MSG005}}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="input-fields">First Name</label>
+                        <input type="text" id="usrfname" name="usrfname" tabindex="vm.tabOrder++" maxlength="100"
+                            ng-pattern="/^\b[A-Za-z0-9 ]+$/" md-maxlength="100" ng-model="vm.hrUserData.firstName"
+                            required />
+
+                        <div ng-if="(submitted && editUsrForm.usrfname.$untouched) || editUsrForm.usrfname.$touched"
+                            ng-messages="editUsrForm.usrfname.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG002}}</div>
+                            <div ng-message-exp="['pattern']">{{errorMsgs.MSG109}}</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="input-fields">Last Name</label>
+                        <input type="text" id="usrlname" name="usrlname" tabindex="vm.tabOrder++" maxlength="100"
+                            ng-pattern="/^\b[A-Za-z0-9 ]+$/" md-maxlength="100" ng-model="vm.hrUserData.lastName"
+                            required />
+
+                        <div ng-if="(submitted && editUsrForm.usrlname.$untouched) || editUsrForm.usrlname.$touched"
+                            ng-messages="editUsrForm.usrlname.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG003}}</div>
+                            <div ng-message-exp="['pattern']">
+                                {{errorMsgs.MSG110}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-gt-sm="row" flex>
+                    <md-input-container class="md-block" flex="33">
+                        <label class="input-fields">Phone Number</label>
+                        <input type="tel" id="usrtel" name="usrtel" tabindex="vm.tabOrder++" md-maxlength="12" ng-model="vm.hrUserData.phoneNo"
+                            ng-pattern="/^(?!0+)[0-9()-\d]*$/" required ui-mask="999-999-9999"
+                            ui-mask-placeholder ui-options={addDefaultPlaceholder:false} required />
+                        <div ng-if="(submitted && editUsrForm.usrtel.$untouched) || editUsrForm.usrtel.$touched"
+                            ng-messages="editUsrForm.usrtel.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG006}}</div>
+                            <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                {{errorMsgs.MSG007}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="33">
+                        <label class="input-fields">Job Title</label>
+                        <input type="text" name="jobtitle" required ng-model="vm.hrUserData.jobtitle" ng-pattern="/^\b[A-Za-z0-9@#&*()\-_'/,. ]+$/"
+                        tabindex="vm.tabOrder++" maxlength="100"  md-maxlength="100">
+                        <div ng-if="(submitted && editUsrForm.jobtitle.$untouched) || editUsrForm.jobtitle.$touched"
+                            ng-messages="editUsrForm.jobtitle.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG040}}</div>
+                            <div ng-message-exp="['pattern']">Please enter a valid Job Title.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="33">
+                        <label class="input-fields">Assign Clients</label>
+                        <md-select id="companyName" name="companyName" ng-model="vm.hrUserData.clientIds"
+                            md-container-class="mySelect" multiple >
+                            <md-optgroup label="Clients">
+                                <md-option ng-repeat="client in vm.clients" tabindex="vm.tabOrder++" ng-value="client.clientId">
+                                    {{ client.clientName }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+
+        <div class="add-user-permissions-container">
+            <span class="cust-heading">Assign Permissions</span>
+            <div layout="row" style="margin-top: 12px;" layout-padding flex>
+                <table class="tg">
+                    <col width="400">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <tr>
+                        <th class="tg-qmme" align=left>Module</th>
+                        <th class="tg-qmme">View</th>
+                        <th class="tg-qmme">Add</th>
+                        <th class="tg-qmme">Edit</th>
+                        <th class="tg-qmme">Delete</th>
+                    </tr>
+                    <tr ng-repeat="permissions in vm.permissionsMasterList">
+                        <td class="tg-yw4l" align=left ng-model="permissions.permissionid">
+                            {{ permissions.name }}</td>
+                        <td class="tg-yw4l" align=center>
+                            <md-checkbox ng-if="permissions.permissionid != 7 && permissions.permissionid != 8" name="nh_view"
+                                class="orange" aria-label="viewFlagAriaLabel" ng-model="permissions.viewFlag" ng-change="vm.editDeleteCheck(permissions)">
+                            </md-checkbox>
+                            <span ng-if="permissions.permissionid == 7 || permissions.permissionid == 8">N/A</span>
+                        </td>
+                        <td class="tg-yw4l" align=center>
+                            <md-checkbox name="nh_add" class="orange" aria-label="addFlagAriaLabel" ng-model="permissions.addFlag"
+                                ng-checked="permissions.addFlag == true">
+                            </md-checkbox>
+                            <!-- <span ng-if="permissions.permissionid == 2">N/A</span> -->
+                        </td>
+                        <td class="tg-yw4l" align=center>
+                            <md-checkbox name="nh_edit" ng-if="permissions.permissionid != 7 && permissions.permissionid != 8"
+                                class="orange" aria-label="editFlagAriaLabel" ng-model="permissions.editFlag" ng-change="vm.viewChecked(permissions)">
+                            </md-checkbox>
+                            <span ng-if="permissions.permissionid == 7 || permissions.permissionid == 8">N/A</span>
+                        </td>
+                        <td class="tg-yw4l" align=center>
+                            <md-checkbox name="nh_del" ng-if="permissions.permissionid != 7 && permissions.permissionid != 8"
+                                class="orange" aria-label="deleteFlagAriaLabel" ng-model="permissions.deleteFlag"
+                                ng-change="vm.viewChecked(permissions)">
+                            </md-checkbox>
+                            <span ng-if="permissions.permissionid == 7 || permissions.permissionid == 8">N/A</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <md-divider></md-divider>
+    </main>
+
+    <footer>
+        <div layout='row' layout-align='end center' flex>
+            <md-button class='md-primary md-raised' type="submit" id="saveBtn" tabindex="vm.tabOrder++" ng-click="vm.saveHrUser(editUsrForm.$valid)">{{(!isEdit
+                ? 'Save' : 'Update')}}
+            </md-button>
+            <md-button class='md-secondary' id="cancelBtn" tabindex="vm.tabOrder++" ui-sref="Settings.ManageUsers">Cancel
+            </md-button>
+        </div>
+    </footer>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</div>

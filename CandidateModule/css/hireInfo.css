@@ -1,0 +1,760 @@
+.initiate-onboarding {
+  color: #555; }
+  .initiate-onboarding .left-panel-info {
+    background-color: #ffffff;
+    border: 0px solid darkgrey;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1); }
+    .initiate-onboarding .left-panel-info .workflow-docs-container {
+      min-height: 70px; }
+      .initiate-onboarding .left-panel-info .workflow-docs-container .no-attachment-text {
+        text-align: center;
+        width: 100%;
+        position: relative;
+        top: 34%;
+        color: #555; }
+    .initiate-onboarding .left-panel-info .userProfileSvg {
+      height: 65px;
+      width: 80px;
+      padding: 0px 5px 0 0; }
+    .initiate-onboarding .left-panel-info .profile-info .profile-text {
+      margin: 0;
+      font-weight: 100;
+      color: #555;
+      font-size: 19px;
+      text-transform: capitalize;
+      width: 175px;
+      white-space: nowrap;
+      overflow: hidden !important;
+      text-overflow: ellipsis; }
+    .initiate-onboarding .left-panel-info .profile-info .profile-tab {
+      padding: 10px 0; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab span {
+        padding: 2px 10px;
+        color: #fff;
+        font-size: 12px; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .newhire {
+        background-color: #7f75b0; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .initiated {
+        background-color: #49a3d7; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .accepted {
+        background-color: #0194b9; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .rejected {
+        background-color: #ed4444; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .noresponse {
+        background-color: #858584; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .pending {
+        background-color: #fe8707; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .review {
+        background-color: #d577ac; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .inprogress {
+        background-color: #fec107; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .hrrejected {
+        background-color: #fc6a6a; }
+      .initiate-onboarding .left-panel-info .profile-info .profile-tab .completed {
+        background-color: #00c292; }
+    .initiate-onboarding .left-panel-info .profile-info .pencilIconSvg {
+      right: 0;
+      position: absolute;
+      top: 20px; }
+    .initiate-onboarding .left-panel-info .pers-info-head {
+      font-size: 16px;
+      font-weight: bold;
+      color: #555; }
+    .initiate-onboarding .left-panel-info md-input-container {
+      margin: 0; }
+  .initiate-onboarding .right-tab-info .menu-tab .md-button.md-primary:active,
+  .initiate-onboarding .right-tab-info .menu-tab .md-button.md-primary:focus {
+    background-color: #fff !important;
+    color: #ba3535 !important; }
+  .initiate-onboarding .right-tab-info .menu-tab .md-button:hover {
+    background-color: inherit !important; }
+  .initiate-onboarding .right-tab-info .menu-tab .md-button.md-active:hover {
+    color: #d75a5a !important; }
+  .initiate-onboarding .right-tab-info .md-nav-bar {
+    background-color: #fff;
+    border-bottom: 0px solid darkgrey;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1); }
+  .initiate-onboarding .right-tab-info md-tabs-canvas {
+    background-color: #fff; }
+  .initiate-onboarding .right-tab-info .initiate-onboard {
+    height: 510px;
+    overflow-y: auto;
+    margin: 10px;
+    background-color: #ffffff;
+    border: 0px solid darkgrey;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    /*
+            animation:*/ }
+    .initiate-onboarding .right-tab-info .initiate-onboard .preview-btn {
+      border: 1px solid #d7d7d7;
+      color: #4e4e4e;
+      padding: 7px 13px 7px 12px;
+      line-height: 0;
+      height: auto;
+      min-height: auto; }
+      .initiate-onboarding .right-tab-info .initiate-onboard .preview-btn i {
+        color: #4aa4d8;
+        padding: 0 5px 0 0px; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .preview-btn:hover {
+      border: 1px solid #d7d7d7;
+      box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+      color: #4e4e4e; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .workflow-step-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important; }
+      .initiate-onboarding .right-tab-info .initiate-onboard .workflow-step-card md-input-container .md-input {
+        border: none; }
+      .initiate-onboarding .right-tab-info .initiate-onboard .workflow-step-card .workflow-docs-container {
+        min-height: 75px;
+        height: auto; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .onboard-headings {
+      padding: 10px 0; }
+      .initiate-onboarding .right-tab-info .initiate-onboard .onboard-headings h3 {
+        padding: 0;
+        /* margin: 5px 0 ;                 */
+        color: #555;
+        font-size: 16px; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .preview-btn-headings {
+      padding: 14px 0 10px 0;
+      text-align: right; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .input-fields-label {
+      position: relative;
+      top: 10px;
+      font-size: 12px; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .md-errors-spacer {
+      display: none; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .onboard-subject {
+      margin: 0 18px; }
+      .initiate-onboarding .right-tab-info .initiate-onboard .onboard-subject .md-errors-spacer {
+        display: none; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .sub-divider {
+      height: 24px;
+      margin-top: 10px; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .text-center {
+      text-align: center; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .subject-box {
+      border: none; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .text-left {
+      text-align: left;
+      color: #9e9e9e; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .template-area {
+      height: auto;
+      /*464px; */
+      border: none;
+      margin: 0px;
+      padding: 0 8px; }
+      .initiate-onboarding .right-tab-info .initiate-onboard .template-area .no-steps-text {
+        text-align: center;
+        color: #555;
+        background-color: #fafafa;
+        padding: 25px 0;
+        border: 1px solid #ddd;
+        width: 94%;
+        margin: 0 auto; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .ql-container.ql-snow {
+      min-height: 100px !important;
+      /*, .workflow-list*/
+      max-height: 200px !important;
+      overflow-y: auto; }
+    .initiate-onboarding .right-tab-info .initiate-onboard md-input-container {
+      margin: 15px 0 9px 0;
+      padding-right: 2px; }
+      .initiate-onboarding .right-tab-info .initiate-onboard md-input-container textarea {
+        max-width: 100%;
+        max-height: 200px;
+        overflow-y: auto; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .ql-container {
+      font-size: 15px; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .ql-container.ql-snow {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-right: none;
+      border-left: none;
+      color: #444; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .ql-toolbar.ql-snow {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: none;
+      border-right: none;
+      border-left: none; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .desc-block {
+      margin-top: 0px; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .desc-block > p {
+      max-width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      margin: 0; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .required-border {
+      border-color: #dd2c00; }
+    .initiate-onboarding .right-tab-info .initiate-onboard md-input-container > md-select {
+      min-width: 200px;
+      width: 200px;
+      text-transform: capitalize; }
+      .initiate-onboarding .right-tab-info .initiate-onboard md-input-container > md-select .md-select-value {
+        min-height: 30px; }
+      .initiate-onboarding .right-tab-info .initiate-onboard md-input-container > md-select span:not(.md-select-icon) {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; }
+    .initiate-onboarding .right-tab-info .initiate-onboard p.htmlView a {
+      color: #0000ee; }
+    .initiate-onboarding .right-tab-info .initiate-onboard div.vertical-line {
+      min-height: 100px !important;
+      height: auto; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .slideDown.ng-hide {
+      height: 0;
+      transition: height 0.35s ease;
+      overflow: hidden;
+      position: relative; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .slideDown {
+      height: 141px;
+      transition: height 0.35s ease;
+      overflow: hidden;
+      position: relative; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .slideDown.ng-hide-remove,
+    .initiate-onboarding .right-tab-info .initiate-onboard .slideDown.ng-hide-add {
+      /* remember, the .hg-hide class is added to element
+                when the active class is added causing it to appear
+                as hidden. Therefore set the styling to display=block
+                so that the hide animation is visible */
+      display: block !important; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .slideDown.ng-hide-add {
+      animation-name: hide;
+      -webkit-animation-name: hide;
+      animation-duration: .5s;
+      -webkit-animation-duration: .5s;
+      animation-timing-function: ease-in;
+      -webkit-animation-timing-function: ease-in; }
+    .initiate-onboarding .right-tab-info .initiate-onboard .slideDown.ng-hide-remove {
+      animation-name: show;
+      -webkit-animation-name: show;
+      animation-duration: .5s;
+      -webkit-animation-duration: .5s;
+      animation-timing-function: ease-out;
+      -webkit-animation-timing-function: ease-out; }
+  .initiate-onboarding .right-tab-info .review-certify {
+    height: 550px;
+    overflow-y: auto;
+    margin: 10px;
+    background-color: #ffffff;
+    border: 0px solid darkgrey;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    padding: 15px 0 0px 10px; }
+    .initiate-onboarding .right-tab-info .review-certify .no-steps-found {
+      height: 70px;
+      background-color: #fafafa;
+      margin: 0 10px 0 0px; }
+      .initiate-onboarding .right-tab-info .review-certify .no-steps-found .no-attachment-text {
+        text-align: center;
+        width: 100%;
+        position: relative;
+        top: 30%;
+        color: #555; }
+    .initiate-onboarding .right-tab-info .review-certify .workflow-list .completed.stepNum {
+      color: #fff;
+      background-color: #4ebb81;
+      border: 0px solid #4ebb81; }
+    .initiate-onboarding .right-tab-info .review-certify .doc-card-detail {
+      position: relative; }
+    .initiate-onboarding .right-tab-info .review-certify .attached-docs-num {
+      background-color: #43b3c1;
+      position: absolute;
+      width: 37%;
+      /* opacity: 01; */
+      text-align: center;
+      color: #fff;
+      /* top: 0; */
+      right: 0;
+      padding: 3px 0; }
+      .initiate-onboarding .right-tab-info .review-certify .attached-docs-num a {
+        color: #fff; }
+    .initiate-onboarding .right-tab-info .review-certify .doc-view {
+      margin-left: 25px;
+      border-left: 1px solid #688081;
+      padding-left: 20px; }
+    .initiate-onboarding .right-tab-info .review-certify .no-doc-view {
+      margin-left: 25px;
+      border-left: 1px solid #688081;
+      padding-left: 20px;
+      min-height: 230px;
+      display: table;
+      text-align: center;
+      width: 97%; }
+      .initiate-onboarding .right-tab-info .review-certify .no-doc-view .no-docs-msg {
+        width: 100%;
+        display: table-cell;
+        vertical-align: middle; }
+    .initiate-onboarding .right-tab-info .review-certify .documents-card {
+      border-radius: 2px 2px 2px 2px;
+      color: rgba(0, 0, 0, 0.87);
+      background-color: white;
+      border-radius: 2px;
+      box-sizing: border-box;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      margin: 8px 20px;
+      box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12); }
+      .initiate-onboarding .right-tab-info .review-certify .documents-card .documents-card-area .pdfviewblock {
+        overflow: hidden; }
+        .initiate-onboarding .right-tab-info .review-certify .documents-card .documents-card-area .pdfviewblock .docName {
+          white-space: nowrap;
+          overflow: hidden !important;
+          text-overflow: ellipsis; }
+      .initiate-onboarding .right-tab-info .review-certify .documents-card .documents-card-area .not-view-mode {
+        padding: 0 5px 0 0;
+        text-transform: capitalize;
+        font-weight: bold; }
+    .initiate-onboarding .right-tab-info .review-certify canvas:hover {
+      border: none;
+      box-shadow: 0px 0px 3px 1px #f1a94e, 0px 0px 1px 0px #f1a94e, 0px 0px 1px 0px #f1a94e; }
+    .initiate-onboarding .right-tab-info .review-certify canvas:active,
+    .initiate-onboarding .right-tab-info .review-certify canvas:focus {
+      outline: 0px solid #d75a5a; }
+    .initiate-onboarding .right-tab-info .review-certify canvas.disabled:hover {
+      border: none; }
+    .initiate-onboarding .right-tab-info .review-certify .test-name {
+      line-height: 15px;
+      vertical-align: middle;
+      text-align: left;
+      padding: 15px 0 0px 24px;
+      font-size: 16px;
+      text-transform: capitalize; }
+    .initiate-onboarding .right-tab-info .review-certify .status-drpdown {
+      text-align: right;
+      margin-right: 25px; }
+      .initiate-onboarding .right-tab-info .review-certify .status-drpdown .step-drpdwn .selected-btn.md-button {
+        width: 120px;
+        border-radius: 5px;
+        color: #fff;
+        padding: 0px;
+        height: 28px;
+        min-height: 27px;
+        text-transform: capitalize !important;
+        position: relative;
+        top: 9px;
+        font-size: 13px; }
+        .initiate-onboarding .right-tab-info .review-certify .status-drpdown .step-drpdwn .selected-btn.md-button .down-arrow {
+          color: #fff;
+          margin-left: 14px; }
+      .initiate-onboarding .right-tab-info .review-certify .status-drpdown .step-drpdwn .selected-btn.md-button.pending {
+        background-color: #f0a94d; }
+      .initiate-onboarding .right-tab-info .review-certify .status-drpdown .step-drpdwn .selected-btn.md-button.completed {
+        background-color: #4ebb81; }
+      .initiate-onboarding .right-tab-info .review-certify .status-drpdown .step-drpdwn .selected-btn.md-button.rejected {
+        background-color: #ff5e62; }
+    .initiate-onboarding .right-tab-info .review-certify .status-options {
+      margin: 0; }
+      .initiate-onboarding .right-tab-info .review-certify .status-options .md-select-value,
+      .initiate-onboarding .right-tab-info .review-certify .status-options md-select .md-select-value {
+        /*color: #fff;
+                    text-transform: capitalize;
+                    padding: 0 5px;
+                    border-bottom-width: 0;
+                    border-bottom-color: none;
+                    min-height: 25px;*/
+        color: #fff;
+        /* text-transform: capitalize; */
+        padding: 0px 4px;
+        border-bottom-width: 0px;
+        border-bottom-color: none;
+        min-height: 22px;
+        border: none;
+        border-width: none; }
+        .initiate-onboarding .right-tab-info .review-certify .status-options .md-select-value .md-select-icon,
+        .initiate-onboarding .right-tab-info .review-certify .status-options md-select .md-select-value .md-select-icon {
+          width: 12px;
+          color: #fff;
+          margin: 4px 4px 0 4px; }
+        .initiate-onboarding .right-tab-info .review-certify .status-options .md-select-value .md-text,
+        .initiate-onboarding .right-tab-info .review-certify .status-options md-select .md-select-value .md-text {
+          height: 22px;
+          text-align: left;
+          padding-left: 7px;
+          display: block; }
+    .initiate-onboarding .right-tab-info .review-certify .status-options.md-input-focused md-select-value {
+      border: none;
+      border-bottom-color: none;
+      border-bottom-width: 0; }
+  .initiate-onboarding .right-tab-info .initiate-email ng-quill-editor.ng-invalid.ng-touched:not(.ng-pristine) .ql-container {
+    border: 1px dashed red; }
+  .initiate-onboarding .right-tab-info .initiate-email .onboard-subject {
+    margin: 0 18px; }
+    .initiate-onboarding .right-tab-info .initiate-email .onboard-subject .md-errors-spacer {
+      display: none; }
+  .initiate-onboarding .right-tab-info .initiate-email .subject-box {
+    border: none;
+    font-size: 14px;
+    color: #555;
+    padding-bottom: 2px;
+    padding-left: 12px; }
+  .initiate-onboarding .right-tab-info .initiate-email .text-left {
+    text-align: left;
+    color: #9e9e9e;
+    padding-bottom: 10px;
+    font-size: 2px; }
+  .initiate-onboarding .right-tab-info .initiate-email .sub-divider {
+    height: 24px;
+    margin-top: 10px; }
+  .initiate-onboarding .right-tab-info .initiate-email .ql-container.ql-snow {
+    min-height: 100px !important;
+    /*, .workflow-list*/
+    max-height: 200px !important;
+    overflow-y: auto; }
+  .initiate-onboarding .right-tab-info .initiate-email div.wrapper {
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 250px;
+    width: 815px; }
+  .initiate-onboarding .right-tab-info .initiate-email table {
+    width: 815px; }
+  .initiate-onboarding .right-tab-info .initiate-email th {
+    background-color: #F8F8F8; }
+  .initiate-onboarding .right-tab-info .initiate-email table,
+  .initiate-onboarding .right-tab-info .initiate-email th,
+  .initiate-onboarding .right-tab-info .initiate-email td {
+    border-top: 1px solid #ccc;
+    border-collapse: collapse;
+    padding: 10px 10px;
+    border-bottom: 1px solid #ccc; }
+  .initiate-onboarding .right-tab-info .initiate-email td.subjectmsg {
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  .initiate-onboarding .right-tab-info .initiate-email table thead th {
+    text-align: left;
+    background: #fafafa;
+    color: #555;
+    font-size: 14px; }
+  .initiate-onboarding .right-tab-info .initiate-email .template-area {
+    margin: 8px 8px 0 8px;
+    border: 1px solid lightgrey;
+    height: 530px;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    width: 96%;
+    background-color: white; }
+  .initiate-onboarding .right-tab-info .initiate-email md-input-container {
+    padding-right: 20px; }
+  .initiate-onboarding .right-tab-info .initiate-email .onboard-headings h3 {
+    padding: 0;
+    /* margin: 5px 0 ;                 */
+    color: #555;
+    font-size: 16px; }
+  .initiate-onboarding .right-tab-info .initiate-email .sub-divider {
+    height: 24px;
+    margin-top: 10px; }
+  .initiate-onboarding .right-tab-info .initiate-email .input-fields-label {
+    position: relative;
+    top: 10px;
+    font-size: 14px; }
+  .initiate-onboarding .right-tab-info .initiate-email .required-border {
+    border-color: #dd2c00; }
+  .initiate-onboarding .right-tab-info .initiate-email .ql-container {
+    font-size: 15px; }
+  .initiate-onboarding .right-tab-info .initiate-email .ql-container.ql-snow {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: none;
+    border-left: none;
+    color: #444; }
+  .initiate-onboarding .right-tab-info .initiate-email .ql-toolbar.ql-snow {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: none;
+    border-right: none;
+    border-left: none; }
+  .initiate-onboarding .right-tab-info .initiate-activities .no-steps-found {
+    height: 70px;
+    background-color: #fafafa;
+    margin: 0 10px 0 0px; }
+    .initiate-onboarding .right-tab-info .initiate-activities .no-steps-found .no-attachment-text {
+      text-align: center;
+      width: 100%;
+      position: relative;
+      top: 30%;
+      color: #555; }
+  .initiate-onboarding .right-tab-info .initiate-activities .template-area {
+    margin: 8px 8px 0 8px;
+    border: 1px solid lightgrey;
+    height: 540px;
+    padding-top: 10px;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    width: 96%;
+    background-color: white; }
+  .initiate-onboarding .right-tab-info .initiate-activities .onboard-headings h3 {
+    padding: 0;
+    /* margin: 5px 0 ;                 */
+    color: #555;
+    font-size: 16px; }
+  .initiate-onboarding .right-tab-info .initiate-activities .listone {
+    margin-top: 1px;
+    padding-left: 20px;
+    padding-top: 5px; }
+  .initiate-onboarding .right-tab-info .initiate-activities .onboarding-list {
+    box-shadow: 0px 0px 1px 1px lightgrey;
+    padding: 10px;
+    width: 770px;
+    height: 50px;
+    margin-top: 10px;
+    border-radius: 3px;
+    list-style: none; }
+  .initiate-onboarding .right-tab-info .initiate-activities .image {
+    width: 50px;
+    height: 50px; }
+  .initiate-onboarding .right-tab-info .initiate-activities .listColumn {
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-right: 0px;
+    padding-bottom: 3px; }
+  .initiate-onboarding .right-tab-info .initiate-schedule {
+    /*  md-button.md-icon-button {
+               margin: 0 2px;
+               height: 5px;
+                min-width: 0;
+                line-height: 24px;
+                padding: 8px;
+                width: 40px;
+        
+            }*/ }
+    .initiate-onboarding .right-tab-info .initiate-schedule ng-quill-editor.ng-invalid.ng-touched:not(.ng-pristine) .ql-container {
+      border: 1px dashed red; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .dtp-clear {
+      display: none; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .subject-box {
+      border: none;
+      font-size: 14px;
+      color: #555;
+      padding-bottom: 0px;
+      padding-left: 12px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .sub-divider {
+      height: 24px;
+      margin-top: 10px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .input-fields-label {
+      position: relative;
+      top: 10px;
+      font-size: 14px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .required-border {
+      border-color: #dd2c00; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .text-left {
+      text-align: left;
+      color: #9e9e9e;
+      padding-bottom: 10px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .template-area {
+      margin: 8px 8px 0 8px;
+      border: 1px solid lightgrey;
+      height: 530px;
+      padding-top: 10px;
+      box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+      width: 96%;
+      background-color: white; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .md-datepicker-input-container {
+      width: auto !important;
+      margin-left: -5px; }
+      .initiate-onboarding .right-tab-info .initiate-schedule .md-datepicker-input-container .md-datepicker-input {
+        min-width: 90px;
+        max-width: 90px; }
+      .initiate-onboarding .right-tab-info .initiate-schedule .md-datepicker-input-container .md-datepicker-triangle-button {
+        display: none; }
+    .initiate-onboarding .right-tab-info .initiate-schedule md-time-picker .md-button.md-icon-button {
+      width: 31px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule md-time-picker md-hours-minutes {
+      width: 35px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule md-time-picker .md-up-arrow,
+    .initiate-onboarding .right-tab-info .initiate-schedule md-time-picker .md-down-arrow {
+      display: none; }
+    .initiate-onboarding .right-tab-info .initiate-schedule md-time-picker .time-colon {
+      padding-left: 0px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule md-time-picker md-input-container {
+      padding: 0px;
+      margin: 20px 0; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .onboard-headings {
+      padding: 0;
+      /* margin: 5px 0 ;                 */
+      color: #9e9e9e;
+      font-size: 14px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .onboard-subject {
+      margin: 0 18px;
+      margin-left: 0px; }
+      .initiate-onboarding .right-tab-info .initiate-schedule .onboard-subject .md-errors-spacer {
+        display: none; }
+    .initiate-onboarding .right-tab-info .initiate-schedule md-input-container {
+      padding-right: 20px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .required-border {
+      border-color: #dd2c00; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .ql-container.ql-snow {
+      min-height: 170px !important;
+      /*, .workflow-list*/
+      max-height: 250px !important;
+      overflow-y: auto; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .ql-container {
+      font-size: 15px;
+      overflow-y: auto; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .ql-container.ql-snow {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-right: none;
+      border-left: none;
+      color: #444; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .ql-toolbar.ql-snow {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: none;
+      border-right: none;
+      border-left: none; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .md-datepicker-button {
+      display: inline-block !important;
+      margin-left: -5px;
+      /*margin-right: -12px;*/ }
+    .initiate-onboarding .right-tab-info .initiate-schedule .headingstyle {
+      margin: 0;
+      color: #555; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .labelstyle {
+      color: #9e9e9e;
+      text-transform: capitalize;
+      font-size: 18px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .class {
+      margin-top: -14px; }
+    .initiate-onboarding .right-tab-info .initiate-schedule .inputstyle {
+      padding-bottom: 6px; }
+
+md-menu-content.review-dropdown md-menu-item {
+  min-height: auto;
+  height: auto;
+  text-transform: capitalize; }
+
+md-select-menu md-content md-option.pending:hover,
+md-select-menu md-content md-option.pending:focus,
+md-select-menu md-content md-option.rejected:hover,
+md-select-menu md-content md-option.rejected:focus,
+md-select-menu md-content md-option.completed:hover,
+md-select-menu md-content md-option.completed:focus {
+  background: #fff; }
+
+md-option.pending[selected],
+md-option.rejected[selected],
+md-option.completed[selected] {
+  color: #fff !important; }
+
+md-select.pending {
+  text-transform: capitalize;
+  color: #fff;
+  background-color: #f0a94d !important;
+  border-radius: 5px;
+  width: 110px; }
+
+md-select.rejected {
+  text-transform: capitalize;
+  color: #fff;
+  background-color: #ff5e62 !important;
+  border-radius: 5px;
+  width: 110px; }
+
+md-select.completed {
+  text-transform: capitalize;
+  color: #fff;
+  background-color: #4ebb81 !important;
+  border-radius: 5px;
+  width: 110px; }
+
+md-option.pending {
+  text-transform: capitalize;
+  color: #fff;
+  height: auto; }
+  md-option.pending .md-text {
+    background-color: #f0a94d !important;
+    border-radius: 5px;
+    width: 104px;
+    text-align: center;
+    margin: 2px 0; }
+
+md-option.completed {
+  text-transform: capitalize;
+  color: #fff;
+  height: auto; }
+  md-option.completed .md-text {
+    background-color: #4ebb81 !important;
+    border-radius: 5px;
+    width: 104px;
+    text-align: center;
+    margin: 2px 0; }
+
+md-option.rejected {
+  text-transform: capitalize;
+  color: #fff;
+  height: auto; }
+  md-option.rejected .md-text {
+    background-color: #ff5e62 !important;
+    border-radius: 5px;
+    width: 104px;
+    text-align: center;
+    margin: 2px 0; }
+
+.stepstatuspopup {
+  background-color: #fff;
+  color: #fff;
+  padding: 5px; }
+  .stepstatuspopup md-menu-item {
+    margin: 0px 5px;
+    padding: 0;
+    height: 28px;
+    min-height: 31px; }
+    .stepstatuspopup md-menu-item .md-button {
+      min-height: 10px;
+      line-height: 10px;
+      padding: 0 24px;
+      height: 27px;
+      border-radius: 5px;
+      text-transform: capitalize !important;
+      font-size: 14px; }
+    .stepstatuspopup md-menu-item .pending {
+      background-color: #f0a94d !important;
+      color: #fff; }
+    .stepstatuspopup md-menu-item .completed,
+    .stepstatuspopup md-menu-item .approved {
+      background-color: #4ebb81 !important;
+      color: #fff; }
+    .stepstatuspopup md-menu-item .rejected,
+    .stepstatuspopup md-menu-item .reject {
+      background-color: #ff5e62 !important;
+      color: #fff; }
+    .stepstatuspopup md-menu-item .replace {
+      background-color: #f0a94d !important;
+      color: #fff; }
+
+.myaccount-modal.comments-modal.candidate-letter-modal {
+  width: 70.5%; }
+  .myaccount-modal.comments-modal.candidate-letter-modal .comments-modal-title {
+    text-transform: capitalize; }
+  .myaccount-modal.comments-modal.candidate-letter-modal iframe.maxhigh {
+    width: 98%;
+    height: 96.5%;
+    padding: 0px 0px;
+    border: 3px solid #aaa; }
+
+.bgv-modal .educationhistory ._md-datepicker-floating-label > md-datepicker .md-datepicker-button {
+  position: relative;
+  left: 15px; }
+
+.bgv-modal .emphistory ._md-datepicker-floating-label > md-datepicker .md-datepicker-button {
+  position: relative;
+  left: 15px; }
+
+.bgv-modal .dp-changes ._md-datepicker-floating-label > md-datepicker .md-datepicker-button {
+  position: relative;
+  left: 17px;
+  margin-left: 6px; }
+
+.bgv-modal .dp-changes1 ._md-datepicker-floating-label > md-datepicker .md-datepicker-button {
+  position: relative;
+  left: 17px; }
+
+.bgv-modal md-radio-group md-radio-button .md-label {
+  font-size: 14px;
+  margin-top: 0px; }
+
+@media screen and (max-width: 1024px) {
+  .initiate-onboarding .right-tab-info .initiate-activities .onboarding-list {
+    width: 530px; } }

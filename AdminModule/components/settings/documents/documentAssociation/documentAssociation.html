@@ -1,0 +1,43 @@
+<div style="width:550px;margin-bottom: -15px;">
+    <div layout="row" layout-align="start start" style="padding:10px;">
+        <h3 style="width:40%;padding-left:20px">Documents Association</h3>
+        <div style="width:60%" layout="row" layout-align="end end">
+            <ng-md-icon icon="clear" size="14" tabindex="3" style="margin:8px 0 -20px 0;cursor:pointer;padding:10px" ng-click="vm.cancel()"></ng-md-icon>
+        </div>
+    </div>
+</div>
+<md-content style="background-color:white;">
+    <div layout="column" layout-align="center center">
+        <table style="width:80%;padding-bottom:20px;">
+            <tbody>
+                <tr>
+                    <td>
+                        <p>
+                            <b>Associated Folders</b>
+                            <!-- <b>({{ vm.folderAndWfAssociated.FolderDetails.length }})</b> :</p> -->
+                    </td>
+                    <td>
+                        <p>
+                            <b>Associated Workflows</b>
+                            <!-- <b>({{ vm.folderAndWfAssociated.WorkflowDetails.length }})</b> :</p> -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: baseline">
+                        <li ng-show="vm.folderAndWfAssociated.FolderDetails.length > 0" ng-repeat=" objFoldersAssociated  in  vm.folderAndWfAssociated.FolderDetails" style="list-style-type:disc"> {{ objFoldersAssociated.foldername }}</li>
+                        <li ng-show="vm.folderAndWfAssociated.FolderDetails.length <= 0"><i>No Folders Associated</i></li>
+                    </td>
+                    <td style="vertical-align: baseline">
+                        <li ng-show="vm.folderAndWfAssociated.WorkflowDetails.length > 0" ng-repeat=" objFoldersAssociated  in  vm.folderAndWfAssociated.WorkflowDetails" style="list-style-type:disc"> {{ objFoldersAssociated.workflowname }}</li>
+                        <li ng-show="vm.folderAndWfAssociated.WorkflowDetails.length <= 0"><i>No Workflows Associated</i></li>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</md-content>
+<md-divider></md-divider>
+<div layout="row" layout-align="end center" style="background-color:rgb(250,250,250);height:60px;padding:10px" ng-style="{'padding':vm.paddingforfooter}" flex>
+    <md-button class="md-primary md-raised" tabindex="2" ng-click="vm.cancel()">Close</md-button>
+</div>

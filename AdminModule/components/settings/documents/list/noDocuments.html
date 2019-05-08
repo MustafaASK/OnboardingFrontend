@@ -1,0 +1,23 @@
+<!-- When there are no documents for the user -->
+<div flex ng-cloak>
+    <div layout="column" layout-align="center center" layout-padding flex>
+        <img src="images/documents_img.png"/>
+        <!-- <md-icon md-svg-src='images/document_img.svg' style="width:298px;height:223px;"></md-icon> -->
+        <div flex="5"></div>
+        <div align="center">
+            <md-button class="md-primary md-raised" ng-if="(UserInfo.isAdmin || vm.rolesData.addflag)" ng-click="vm.showUploadDocsDialog($event)" style="min-width:150px;">Upload Document
+            </md-button>
+        </div>        
+        <div class="no-workflows">
+            <p class="pbold">No Documents uploaded yet</p>
+            <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo
+            </p> -->
+        </div>
+    </div>
+    <!-- <div align="center">
+        <md-button class="md-primary md-raised" ng-click="" style="min-width:150px;">Upload Documents
+        </md-button>
+    </div> -->
+</div>

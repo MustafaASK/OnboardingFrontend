@@ -1,0 +1,13 @@
+<div layout="column" style="margin: 30px;padding: 20px;" layout-gt-sm="row" flex-gt-sm class="dashboard-container">
+    <div flex-gt-sm="20" layout="column" flex ></div>
+    <div flex-gt-sm="60" layout="column" flex style="height: 85%;">
+        <div layout="row" layout-align="space-between start">
+            <span class="dashboard-section-heading" style="margin: 5px 0 10px 10px;">RECENT CANDIDATE ONBOARDING STATUS</span>
+            <md-icon style="margin-top: 6px;margin-bottom: 0;margin-right: 20px;cursor:pointer" md-svg-icon="images/icons/xlsx_92_icon.svg" class="workflowFolderIconSvg" aria-label="xlxs" ng-click="vm.getExcelDownload()" title="Download Report from here"></md-icon>
+        </div>
+        <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options"
+            chart-legend="true" chart-click="onClick" chart-dataset-override="colors" style="margin-top:10px;width:85%;height:75%;"
+            flex></canvas>
+    </div>
+    <div flex-gt-sm="20" layout="column" flex ></div>
+</div>

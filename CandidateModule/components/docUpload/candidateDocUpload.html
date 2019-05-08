@@ -1,0 +1,82 @@
+<md-dialog class="myaccount-modal docupload-modal">
+    <md-toolbar>
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;" layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+            <h2>Upload Documents</h2>
+            <span flex></span>
+            <md-button class="md-icon-button close" ng-click="answer()">X
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content layout-padding>
+        <form name="docuploadform" id="docuploadform" ng-submit="!isFileEditMode? uploadDocuments() : updateDocument()">
+            <div layout="row" layout-align="start center" layout-padding>
+                <div class="small-file-drop-zone docUpload" id="file-drop-zone" ngf-drop ngf-select ng-model="file" ngf-multiple="true" ngf-pattern="'application/pdf'" ngf-accept="'.pdf'" style="margin: 20px;overflow: hidden;" flex>
+
+                    <md-card class="upload-doc-card" ng-if="file && file.length" style="margin-top: 20px;" layout-wrap flex>
+                        <div class="{{vm.workflowDocCardClass}}" layout="row" layout-align="space-between center" flex>
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a">
+                                </md-icon>
+                                <p class="md-caption" style="white-space:nowrap;" md-truncate>{{ file[0].name }}</p>
+                            </div>
+                            <!-- this.parentElement.parentElement.remove() -->
+                            <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer" ng-click="removeFile($event);">
+                            </ng-md-icon>
+                        </div>
+                    </md-card>
+                </div>
+            </div>
+            <!-- <div layout="row" layout-align="start center" layout-padding>
+                <label for="profile_pic">Choose file to upload</label>
+                <input type="file" style="margin:0 auto" file-model="file">
+            </div> -->
+            <md-divider class="sub-divider" style="padding: 8px;margin: 0 16px;"></md-divider>
+            <div layout="row" layout-padding flex style="padding:0 8px">
+                <md-input-container class="md-block" style="width:100%;" flex>
+                    <label class="input-fields">Comments</label>
+                    <textarea ng-model="formData.comments" md-maxlength="150" rows="2" md-select-on-focus required></textarea>
+                    <div ng-messages="docuploadform.comments.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="end top"  ng-if="!isSubDoc" flex >
+                    <md-button class="md-primary md-raised" ng-click="isSubDoc ? updateDocument() : (!isFileEditMode? uploadDocuments() : updateDocument())">{{!isFileEditMode? 'Upload' : 'Update'}}</md-button>
+                    
+            </div>
+            <!-- <div layout="row" style="margin-bottom:15px; float:right">
+                <md-button class="md-primary md-raised" ng-click="isFileEditMode ? update() : add()">{{isFileEditMode? 'Update' : 'Add'}}</md-button>
+            </div> -->
+            <div layout="row" style="clear:both;margin-top:10px" ng-if="!isSubDoc">
+                <table class="tg">
+                    <thead>
+                        <th class="tg-qmme" align="left">File Name</th>
+                        <th class="tg-qmme" align="center">Comments</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="attachfile in attachedFilesList">
+                            <td class="tg-yw4l" align="left">{{attachfile.candidatedocname}}</td>
+                            <td class="tg-yw4l" align="center">{{attachfile.candidatedoccomments}}</td>
+                            <td class="tg-yw4l" align="left"><a href ng-click="editDoc($index, attachfile)"><i class="fa fa-edit"></i></a> &nbsp; <a href ng-click="showStepDeleteConfirm($event, attachfile.candidatedocid)"><i class="fa fa-times"></i></a></td>
+                        </tr>
+                        <tr ng-if="!attachedFilesList.length">
+                            <td class="tg-yw4l" align="center" colspan="3">No files added</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <md-button type="submit" class="md-primary md-raised">{{!isFileEditMode? 'Save' : 'Update'}}</md-button> -->
+
+        </form>
+    </md-content>
+    <md-divider></md-divider>
+    <footer class="edit-intro-footer">
+        <div layout="row" layout-align="end center" flex>
+            <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+            <md-button class="md-primary md-raised" ng-if="isSubDoc" ng-click="isSubDoc ? updateDocument() : (!isFileEditMode? uploadDocuments() : updateDocument())">{{!isFileEditMode? 'Upload' : 'Update'}}</md-button>
+            <md-button class="md-secondary" ng-click="answer()">Close</md-button>
+        </div>
+    </footer>
+</md-dialog>

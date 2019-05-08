@@ -1,0 +1,72 @@
+<div layout-gt-sm="column" ng-cloak class="md-inline-form" ng-style="{'height': vm.heightForCandidateIntro }" flex>
+  <md-content class="templateBody" style="overflow-y:hidden; ">
+    <!-- <md-toolbar style="height:11%">
+    <div layout-gt-sm="row" class="toolbarStyle" flex>
+      <div class="labelStyle" flex="20">Introduction</div>
+      <span flex></span>
+      <div layout="row" flex="10"> -->
+    <!-- ng-if="CandidateInfo.statusid != 3" -->
+    <!-- <md-button ng-hide="isInContractorEdit || isInEEOEdit || isInBgvEdit || isInPayrollEdit" class="md-raised md-primary" ng-click="vm.go()">
+            Get Started
+        </md-button>
+      </div>
+    </div>
+  </md-toolbar> -->
+    <md-toolbar flex layout="row" layout-xs="column" style="background-color:white;height: 11%;overflow:hidden;">
+      <div layout="column" layout-padding flex>
+        <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+          <div class="labelStyle">Introduction</div>
+        </div>
+      </div>
+      <div layout="row" layout-align="end end" style="margin: 5px 20px 7px 0;">
+        <md-button class="md-raised md-primary" ng-click="vm.go()">
+          Get Started
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <div class="cardStyle" ng-if="vm.clientIntro">
+      <!-- <div class="divStyle"> <md-title><h3 class="logoStyle">Logo</h3></md-title></div> -->
+      <img ng-if="vm.clientIntro.HeroUrl" ng-src="{{UploadsURL}}{{vm.clientIntro.HeroUrl}}" class="imageStyle">
+      <img ng-if="!vm.clientIntro.HeroUrl" ng-src="images/bg_image.jpg" class="imageStyle">
+      <md-divider></md-divider>
+      <br>
+      <!-- <md-headline><h1 class="headingStyle"><b ng-bind-html="trustAsHtml()">{{}}</b></h1></md-headline> -->
+      <p class="paragraphStyle" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px" ng-bind-html="trustAsHtml()"></p>
+      <br>
+      <md-divider></md-divider>
+      <div layout-gt-sm="column" class="secondDivStyle">
+        <div layout-gt-sm="row"></div>
+        <div layout-gt-sm="row">
+          <div class="paragraphDiv">
+
+            <div class="videoDiv">
+              <video class="videoDiv" ng-if="vm.clientIntro.ArticalUrl" controls="true" ng-src="{{UploadsURL}}{{vm.clientIntro.ArticalUrl}}"
+                width="340" height="190" type="video/*">
+              </video>
+            </div>
+            <!-- <div> <h1 class="headingArticle">{{vm.clientIntro.ArticalTitle}}</h1></div> -->
+            <div class="articleParagraph" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px" ng-bind-html="trustAsHtmlForArticle()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="cardStyle">
+        <span>There is no Default Intro Page</span>
+      </div> -->
+
+
+
+
+</div>
+
+</md-content>
+</div>
+<div class="LoaderDiv" id="loader123" ng-show="loading">
+  <div class="spinner">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</div>

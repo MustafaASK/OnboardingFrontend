@@ -1,0 +1,265 @@
+
+<!--
+<div class="myaccount-modal" layout-gt-sm="column" class="md-inline-form">
+    <md-content class="template-area">
+        <md-toolbar>
+            <div layout="row" class="toolbarStyle" flex  layout-align="space-between center" layout-wrap flex>
+              <div class="labelStyle" flex="20">My Account</div>
+              
+            </div>
+        </md-toolbar>
+  
+        <div layout-gt-sm="column" layout-padding style="margin:10px;border:1px solid lightgrey;background-color:white;box-shadow:1px 1px 1px 0px lightgrey;padding-left:20px;padding-top:40px">
+            <form name="myAccountForm" id="myAccountForm" >
+                <div layout-gt-sm="row" flex>
+                    <md-input-container flex="50">
+                        <label  class="input-fields">First Name</label>
+                        <input ng-model="vm.userInfo.firstName" name="firstName" ng-pattern="/^[a-zA-Z ]*$/" required maxlength="100" md-autofocus>
+                        <div ng-messages="myAccountForm.firstName.$error" role="alert">
+                        <div ng-message="required">Please enter First Name. It can’t be blank.</div>
+                            <div ng-message-exp="['pattern']">
+                                Please enter the valid First Name.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <div flex="4"></div>
+                    <md-input-container  flex="50">
+                        <label class="input-fields">Last Name</label>
+                        <input ng-model="vm.userInfo.lastName" name="lastName" ng-pattern="/^[a-zA-Z ]*$/" required maxlength="100" >
+                        <div ng-messages="myAccountForm.lastName.$error" role="alert">
+                            <div ng-message="required">Please enter Last Name. It can’t be blank.</div>
+                            <div ng-message-exp="['pattern']">
+                                Please enter the valid Last Name.
+                            </div>
+                        </div>
+                    </md-input-container>
+               </div>
+         
+               <div layout-gt-xs="row">
+                    <md-input-container flex="50">
+                        <label class="input-fields">Email Id</label>
+                        <input ng-model="vm.userInfo.emailId" name="email" disabled>
+                    </md-input-container>
+                    <div flex="4"></div>
+                    <md-input-container  flex="50">
+                        <label class="input-fields">Phone</label>
+                        <input type="tel" name="usrtel" ng-model="vm.userInfo.phoneNo" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999" ui-mask-placeholder
+                        ui-options={addDefaultPlaceholder:false} required  />
+                        <div ng-messages="myAccountForm.usrtel.$error" md-auto-hide="true">
+                            <div ng-message="required">Please enter Phone #. It can’t be blank.</div>
+                            <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                Format of the Phone # is incorrect. Please enter the valid Phone #.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>  
+                <div layout-gt-sm="row">                    
+                    <div class="user-profile-pic" > 
+                        <img ng-if="fileThumb" ngf-thumbnail="fileThumb" class="thumb">
+                        <md-icon ng-if="!fileThumb" md-svg-icon="images/icons/user_icon.svg" class="userProfileSvg"></md-icon>
+                    </div>
+                    <div layout-padding class="upload-context">
+                        <p class="upload-pic-text">Upload Photo</p>
+                        <p class="upload-pic-desc">You can upload JPEG, GIF or PNG file (File size limit is 300 KB)</p>
+                        <input type="file" ngf-select ng-model="fileup" name="file" class="file-ipload-image">
+                        <p class="file-error" ng-show="vm.filetypeerror">File type should be JPEG, GIF or PNG</p>
+                        <p class="file-error" ng-show="vm.filesizeerror">File is too large. Max is 300KB</p>
+                    </div>
+                </div> 
+                <div layout-gt-xs="row" class="change-pwd-zone">
+                    <h3><a href class="change-pwd-link" ng-click="vm.changePwdVisibility = !vm.changePwdVisibility">Change Password</a></h3>
+                </div>
+                <div layout-gt-xs="row" ng-if="vm.changePwdVisibility">
+                    <md-input-container flex="50">
+                        <label class="input-fields">New Password</label>
+                        <input type="password" ng-model="vm.userInfo.password" name="password">
+                    </md-input-container>
+                    <div flex="5"></div>
+                    <md-input-container  flex="50">
+                        <label class="input-fields">Confirm Password</label>
+                        <input type="password" ng-model="vm.userInfo.confirmPassword" name="confirmPassword" compare-to="vm.userInfo.password">
+                        <div class="errorMsg" ng-show="myAccountForm.confirmPassword.$touched && myAccountForm.confirmPassword.$error.compareTo">Password and Confirm Password should be same</div>
+                    </md-input-container>
+                </div>  
+                <div layout-gt-xs="row">
+                    <h3>Assigned Clients</h3>
+                </div> 
+                <div layout-gt-xs="row" class="assigned-permission-zone">
+                    <ul class="dotted-list">
+                        <li ng-repeat="client in vm.clients" ng-bind="vm.getClientName(client)"></li>
+                    </ul>
+                    <p if="!vm.clients.length" style="margin:0">None</p>
+                </div>                
+                <div layout-gt-xs="row">
+                    <h3>Assigned Permissions</h3>
+                </div> 
+                <div layout-gt-xs="row">
+                    <table class="tg">                            
+                        <tr>
+                            <th class="tg-qmme" align="left">Module</th>
+                            <th class="tg-qmme">View</th> 
+                            <th class="tg-qmme">Add</th>
+                            <th class="tg-qmme">Edit</th> 
+                            <th class="tg-qmme">Delete</th>
+                        </tr>
+                        <tr ng-repeat="permission in vm.userInfo.permissions">
+                            <td class="tg-yw4l" align="left" ng-bind="vm.getPermissionName(permission.permissionid)"></td>
+                            <td class="tg-yw4l" align="center" ng-bind="permission.ViewFlag ? 'Yes' : 'No'"></td> 
+                            <td class="tg-yw4l" align="center" ng-bind="permission.AddFlag ? 'Yes' : 'No'"></td>
+                            <td class="tg-yw4l" align="center" ng-bind="permission.permissionid == 7 ? 'NaN' : (permission.editFlag ? 'Yes' : 'No')"></td> 
+                            <td class="tg-yw4l" align="center" ng-bind="permission.permissionid == 7 ? 'NaN' : (permission.deleteFlag ? 'Yes' : 'No')"></td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <md-divider></md-divider>
+        <footer class="edit-intro-footer">
+            <div layout="row" layout-align="end center" flex style="background-color:white">
+                <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+                <md-button class="md-primary md-raised" ng-click="vm.updateHrUser(myAccountForm.$valid)">Update</md-button>
+                <md-button class="md-secondary" ng-click="vm.cancel()">Cancel</md-button>
+            </div>
+        </footer>
+
+    </md-content>
+
+</div>-->
+
+
+               
+       anil my account dialog
+
+       <!--<md-dialog class="myaccount-modal">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;" layout="row" layout-align="space-between center"
+                layout-padding layout-wrap flex>
+                <h2>My Account</h2>
+                <span flex></span>
+                <md-button class="md-icon-button close" ng-click="vm.cancel()">X
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-divider></md-divider>
+        <md-content layout-padding>
+                <form name="myAccountForm" id="myAccountForm"  >
+                <div layout-gt-xs="row" flex>
+                    <md-input-container flex="50">
+                        <label class="input-fields">First Name</label>
+                        <input ng-model="vm.userInfo.firstName" name="firstName" ng-pattern="/^[a-zA-Z ]*$/" required maxlength="100" md-autofocus>
+                        <div ng-messages="myAccountForm.firstName.$error" role="alert">
+                            <div ng-message="required">Please enter First Name. It can’t be blank.</div>
+                            <div ng-message-exp="['pattern']">
+                                Please enter the valid First Name.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <div flex="5"></div>
+                    <md-input-container  flex="50">
+                        <label class="input-fields">Last Name</label>
+                        <input ng-model="vm.userInfo.lastName" name="lastName" ng-pattern="/^[a-zA-Z ]*$/" required maxlength="100" >
+                        <div ng-messages="myAccountForm.lastName.$error" role="alert">
+                            <div ng-message="required">Please enter Last Name. It can’t be blank.</div>
+                            <div ng-message-exp="['pattern']">
+                                Please enter the valid Last Name.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex="50">
+                        <label class="input-fields">Email Id</label>
+                        <input ng-model="vm.userInfo.emailId" name="email" disabled>
+                    </md-input-container>
+                    <div flex="5"></div>
+                    <md-input-container  flex="50">
+                        <label class="input-fields">Phone</label>
+                        <input type="tel" name="usrtel" ng-model="vm.userInfo.phoneNo" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999" ui-mask-placeholder
+                        ui-options={addDefaultPlaceholder:false} required  />
+                        <div ng-messages="myAccountForm.usrtel.$error" md-auto-hide="true">
+                            <div ng-message="required">Please enter Phone #. It can’t be blank.</div>
+                            <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                Format of the Phone # is incorrect. Please enter the valid Phone #.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>                
+                <div layout-gt-sm="row">                    
+                    <div class="user-profile-pic" > 
+                             <md-icon md-svg-icon="images/icons/user_ico.svg" class="filterIconSvg"></md-icon> 
+                            <img ng-if="fileThumb" ngf-thumbnail="fileThumb" class="thumb">
+                             <img ng-if="fileThumb" ng-src="{{fileThumb}}" class="thumb">{{fileThumb}} 
+                            <md-icon ng-if="!fileThumb" md-svg-icon="images/icons/user_icon.svg" class="userProfileSvg"></md-icon>
+                    </div>
+                    <div layout-padding class="upload-context">
+                        <p class="upload-pic-text">Upload Photo</p>
+                        <p class="upload-pic-desc">You can upload JPEG, GIF or PNG file (File size limit is 300 KB)</p>
+                         <div  layout-align="start center">
+                            <label for="profileAttachment" class="md-button md-secondary profileAttachmentBtn">Choose File</label>
+                            <input id="profileAttachment" class="model-popup-file-upload ng-hide" type="file"
+                                name="file" ng-model="fileup"/>
+                        </div> -->
+                        <!-- accept="image/*" 
+                        <input type="file" ngf-select ng-model="fileup" name="file" class="file-ipload-image">
+                        <p class="file-error" ng-show="vm.filetypeerror">File type should be JPEG, GIF or PNG</p>
+                        <p class="file-error" ng-show="vm.filesizeerror">File is too large. Max is 300KB</p>
+                        
+                    </div>
+                </div> 
+                <div layout-gt-xs="row" class="change-pwd-zone">
+                    <h3><a href class="change-pwd-link" ng-click="vm.changePwdVisibility = !vm.changePwdVisibility">Change Password</a></h3>
+                </div>
+                <div layout-gt-xs="row" ng-if="vm.changePwdVisibility">
+                    <md-input-container flex="50">
+                        <label class="input-fields">New Password</label>
+                        <input type="password" ng-model="vm.userInfo.password" name="password">
+                    </md-input-container>
+                    <div flex="5"></div>
+                    <md-input-container  flex="50">
+                        <label class="input-fields">Confirm Password</label>
+                        <input type="password" ng-model="vm.userInfo.confirmPassword" name="confirmPassword" compare-to="vm.userInfo.password">
+                        <div class="errorMsg" ng-show="myAccountForm.confirmPassword.$touched && myAccountForm.confirmPassword.$error.compareTo">Password and Confirm Password should be same</div>
+                    </md-input-container>
+                </div>                
+                <div layout-gt-xs="row">
+                    <h3>Assigned Clients</h3>
+                </div>           
+                <div layout-gt-xs="row" class="assigned-permission-zone">
+                    <ul class="dotted-list">
+                        <li ng-repeat="client in vm.clients" ng-bind="vm.getClientName(client)"></li>
+                    </ul>
+                </div>                
+                <div layout-gt-xs="row">
+                    <h3>Assigned Permissions</h3>
+                </div> 
+                <div layout-gt-xs="row">
+                        <table class="tg">                            
+						  <tr>
+                                <th class="tg-qmme" align="left">Module</th>
+                                <th class="tg-qmme">View</th> 
+                                <th class="tg-qmme">Add</th>
+                                <th class="tg-qmme">Edit</th> 
+                                <th class="tg-qmme">Delete</th>
+                              </tr>
+                              <tr ng-repeat="permission in vm.userInfo.permissions">
+                                <td class="tg-yw4l" align="left" ng-bind="vm.getPermissionName(permission.permissionid)"></td>
+                                <td class="tg-yw4l" align="center" ng-bind="permission.ViewFlag ? 'Yes' : 'No'"></td> 
+                                <td class="tg-yw4l" align="center" ng-bind="permission.AddFlag ? 'Yes' : 'No'"></td>
+                                <td class="tg-yw4l" align="center" ng-bind="permission.permissionid == 7 ? 'NaN' : (permission.editFlag ? 'Yes' : 'No')"></td> 
+                                <td class="tg-yw4l" align="center" ng-bind="permission.permissionid == 7 ? 'NaN' : (permission.deleteFlag ? 'Yes' : 'No')"></td>
+                              </tr>
+                        </table>
+
+                </div>
+            </form>
+    </md-content>
+        <md-divider></md-divider>
+        <footer class="edit-intro-footer">
+            <div layout="row" layout-align="end center" flex>
+                <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+                <md-button class="md-primary md-raised" ng-click="vm.updateHrUser(myAccountForm.$valid)">Update</md-button>
+                <md-button class="md-secondary" ng-click="vm.cancel()">Cancel</md-button>
+            </div>
+        </footer>
+    </md-dialog>
+-->

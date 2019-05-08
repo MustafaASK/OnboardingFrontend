@@ -1,0 +1,55 @@
+<!-- <md-dialog aria-label="Edit Page" style="width:500px;height:1200px"> -->
+<md-dialog style="width:1000px" ng-style="{'display': vm.DisplayModal}">
+    <md-toolbar>
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;" layout="row" layout-align="space-between center"
+            layout-padding layout-wrap flex>
+            <h2>{{vm.modalHeader}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="vm.cancelEditIntro()">
+                <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                </ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <!-- <md-content ng-if="vm.isLogo" ng-disabled="!vm.isLogoEnabled">
+        <div class="upload-logo-section">
+            <label for="logoPic" class="md-button md-raised ">Choose File</label>
+            <input id="logoPic" class="model-popup-file-upload ng-hide" type="file" required accept="image/*" image="vm.logoImage" file-model="vm.files.logoURL"
+                name="file_document" ng-disabled="!vm.isLogoEnabled" />
+        </div>
+    </md-content> -->
+    <md-content ng-if="vm.isBanner" style="background-color:white;">
+        <span layout-padding>Upto size 2MB</span>
+        <div class="upload-banner-section">
+            <label for="bannerPic" class="md-button md-secondary">Choose File</label>
+            <input id="bannerPic" class="model-popup-file-upload ng-hide" type="file" required accept="image/*" image="vm.heroImage"
+                file-model="vm.heroUrl" name="file_document_1" />
+            <span>{{vm.heroUrl.file.name}}</span>
+        </div>
+    </md-content>
+    <form name="addUsrForm_heading" ng-if="vm.isHeading" style="padding:10px 10px 10px 20px;">
+        <ng-ckeditor ng-model="vm.IntroPageData.headText" skin="moono-lisa" name="heading" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+            remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+    </form>
+    <form name="addUsrForm_article" ng-if="vm.isArticle" style="padding:10px 10px 10px 20px;">
+        <ng-ckeditor ng-model="vm.IntroPageData.articleText" skin="moono-lisa" name="article" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+            remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+        <md-content class="md-block md-content-overflow" style="background-color:white">
+            <span layout-padding>Choose video files of .mp4 & .m4v upto size 10MB</span>
+            <div>
+                <label for="articleVideo" class="md-button md-secondary">Choose File</label>
+                <input id="articleVideo" class="model-popup-file-upload ng-hide" type="file" required accept="video/mp4,video/x-m4v" file-model="vm.articleUrl"
+                    name="file_document" />
+                <span>{{vm.articleUrl.file.name}}</span>
+            </div>
+        </md-content>
+    </form>
+    <md-divider></md-divider>
+    <footer class="edit-intro-footer">
+        <div layout="row" layout-align="end center" flex>
+            <md-button class="md-primary md-raised" ng-click="vm.saveEditIntro()" ng-disabled="addUsrForm_heading.$invalid || addUsrForm_article.$invalid">{{vm.isHeader || vm.isBanner ? 'Upload':'Save'}}</md-button>
+            <md-button class="md-secondary" ng-click="vm.cancelEditIntro()">Cancel</md-button>
+        </div>
+    </footer>
+</md-dialog>

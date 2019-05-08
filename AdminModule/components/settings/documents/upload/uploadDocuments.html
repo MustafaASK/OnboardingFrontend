@@ -1,0 +1,146 @@
+<md-dialog class="" style="max-height:95%;max-width:640px;min-width:640px;overflow:hidden;" ng-style="{'height': vm.heightofDialog}">
+    <md-toolbar>
+        <div md-force-height="'50px'" style="background-color:white;color:#555555;" layout="row" layout-align="space-between center"
+            layout-padding layout-wrap flex>
+            <span align=left class="uploadDocsTxt">Upload Document (upto size 10MB)</span>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="vm.cancelUploadDocs()">
+                <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                </ng-md-icon>
+            </md-button>
+        </div>
+        <md-divider style="background-color: #f4f4f4" />
+    </md-toolbar>
+
+    <!-- Document drag and drop feature -->
+    <md-content style="background-color: white;height:80%;overflow-y:auto" ng-style="{'height': vm.heightofDialogContent}">
+        <form id="uploadDocs" name="uploaddocform">
+            <div layout="row" layout-align="start center" layout-padding>
+                <div class="small-file-drop-zone docUpload" id="file-drop-zone" ngf-drop ngf-select ng-model="file"
+                    ngf-multiple="true" ngf-pattern="'application/pdf'" ngf-accept="'.pdf'" style="margin: 20px;" flex>
+
+                    <md-card id="upload-doc-card" class="upload-doc-card" ng-if="file" style="margin-top: 20px;"
+                        layout-wrap flex>
+                        <div class="{{vm.workflowDocCardClass}}" layout="row" layout-align="space-between center" flex
+                            ng-click="vm.clearFile()">
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-svg-src="images/pdf.svg" aria-label="pdfIconAriaLabel" style="transform:scale(.5);fill:#d75a5a">
+                                </md-icon>
+                                <p class="md-caption" style="white-space:nowrap;" md-truncate>{{ file[0].name }}</p>
+                            </div>
+                            <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer;" ng-click="vm.clearFile()">
+                            </ng-md-icon>
+                        </div>
+                    </md-card>
+                </div>
+            </div>
+
+            <div layout="column" layout-align="start start" ng-style="{'margin': vm.marginDisplayName}" layout-padding
+                flex>
+                <span class="reg16px444 pbold" style="margin-bottom: -25px;">Document Display Name*</span>
+                <md-input-container class="md-block" style="width:100%;" flex>
+                    <input id="doc_name" name="doc_name" type='text' aria-label="docNameAriaLabel" maxlength="100"
+                        md-maxlength="100" tabindex="1" ng-model='vm.docname' required />
+                    <div ng-if="(submitted && uploaddocform.doc_name.$untouched) || uploaddocform.doc_name.$touched"
+                        ng-messages="uploaddocform.doc_name.$error" role="alert">
+                        <div ng-message="required">Please enter the Document Display Name.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div id="settings" layout-padding flex>
+                <span class="reg16px444 pbold">Settings</span>
+                <div layout="row" flex>
+
+                    <!-- <md-radio-group tabindex="3" ng-model="vm.readDynamic" ng-change="vm.removeAllVal()">
+                        <md-radio-button ng-value="vm.rOnlyId" aria-label="hrcId" >{{vm.rOnlyName}}</md-radio-button>
+                        <md-radio-button ng-value="vm.dynamicWebFormId" aria-label="hrcUploadDocId" >Dynamic Webforms</md-radio-button>
+                    </md-radio-group> -->
+                    <table>
+                        <col width="200">
+                        <col width="200">
+                        <col width="200">
+                        <tr>
+                            <!-- <md-radio-group tabindex="4" ng-model="vm.eav" ng-disabled="vm.rOnly">
+                                <md-radio-button ng-value="vm.eavId" aria-label="eavId" ng-disabled="vm.rOnly">{{vm.eavName}}</md-radio-button>
+                                <md-radio-button ng-value="vm.eavId" aria-label="eavId" ng-disabled="vm.rOnly">{{vm.eavName}}</md-radio-button>
+                                <md-radio-button ng-value="vm.eavId" aria-label="eavId" ng-disabled="vm.rOnly">{{vm.eavName}}</md-radio-button>
+                            </md-radio-group> -->
+                            <td>
+                                <md-checkbox ng-model="vm.rOnly" tabindex="1" ng-true-value='1' ng-false-value='0'
+                                    aria-label="external agency verification" ng-change="vm.removeAllVal();vm.dynamicWebForm=false;vm.handSign = false;">{{vm.rOnlyName}}</md-checkbox>
+                            </td>
+                            <td>
+                                <md-checkbox ng-model="vm.dynamicWebForm" tabindex="1" ng-true-value='1' ng-false-value='0'
+                                    aria-label="dynamic webform" ng-change="vm.rOnly = false;vm.handSign = false;vm.removeAllVal();">{{vm.dynamicWebFormName}}</md-checkbox>
+                            </td>
+                            <td>
+                                <md-checkbox ng-model="vm.handSign" tabindex="1" ng-true-value='1' ng-false-value='0'
+                                    aria-label="hand sign" ng-change="vm.removeAllVal();vm.hrc = vm.hrcUploadDocId;vm.dynamicWebForm = false;vm.rOnly = false;">{{vm.handSignName}}</md-checkbox>
+                                <!-- ng-click="vm.hrc = vm.hrcUploadDocId" -->
+                            </td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <div layout="row" flex class="upload-doc-multi-opt">
+                    <div flex="50" class="radio-tabs" style="margin:0">
+                        <md-radio-group tabindex="3" ng-model="vm.hrc" ng-disabled="vm.rOnly">
+                            <md-radio-button ng-value="vm.hrcId" aria-label="hrcId" ng-disabled="vm.rOnly || vm.handSign">{{vm.hrcName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.hrcUploadDocId" aria-label="hrcUploadDocId" ng-disabled="vm.rOnly || vm.handSign">{{vm.hrcUploadDocName}}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                    <div flex="50" class="radio-tabs">
+                        <md-radio-group tabindex="4" ng-model="vm.eav" ng-disabled="vm.rOnly">
+                            <md-radio-button ng-value="vm.eavId" aria-label="eavId" ng-disabled="vm.rOnly || vm.handSign">{{vm.eavName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.drTestAuthId" aria-label="drTestAuthId" ng-click="vm.selectCso()" ng-disabled="vm.rOnly || vm.handSign">{{vm.drTestAuthName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.payrollPackageId" aria-label="payrollPackageId" ng-disabled="vm.rOnly || vm.handSign">{{vm.payrollPackageName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.eeoFormId" aria-label="eeoFormId" ng-disabled="vm.rOnly || vm.handSign">{{vm.eeoFormName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.contractorId" aria-label="contractorId" ng-disabled="vm.rOnly || vm.handSign">{{vm.contractorName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.clientSpecificationId" aria-label="clientSpecificationId" ng-disabled="vm.rOnly || vm.handSign">{{vm.clientSpecificationName}}</md-radio-button>
+                            <md-radio-button ng-value="vm.w4FormsId" aria-label="w4FormsId" ng-disabled="vm.rOnly || vm.handSign">{{vm.w4FormsName}}</md-radio-button>
+                            <!-- <md-radio-button ng-value="vm.handSignId" aria-label="handSignId" ng-disabled="vm.rOnly" ng-click="vm.hrc = vm.hrcUploadDocId">{{vm.handSignName}}</md-radio-button> -->
+                            <!-- vm.contractorId  vm.contractorName -->
+                        </md-radio-group>
+                    </div>
+                </div>
+
+                <span class="reg16px444 pbold">Rules</span>
+                <div layout="row" flex>
+                    <table>
+                        <col width="200">
+                        <col width="230">
+                        <tr>
+                            <td>
+                                <md-checkbox ng-model="vm.crh" tabindex="5" ng-true-value='1' ng-false-value='0'
+                                    aria-label="candidate response hrs">{{vm.crhName}}</md-checkbox>
+                            </td>
+                            <td>
+                                <md-checkbox ng-model="vm.dta" tabindex="6" ng-true-value='1' ng-false-value='0'
+                                    aria-label="drug test attendance sla hrs">{{vm.dtaName}}</md-checkbox>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </md-content>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+    <div layout='row' md-force-height="'60px'" layout-align='end center' class="uploadDocsFooter" flex>
+        <md-dialog-actions>
+            <md-button class="md-primary md-raised" style="text-transform:none" tabindex="7" ng-click="vm.uploadDocuments()">Save
+            </md-button>
+            <md-button class="md-primary md-raised mapFieldsBtn" style="text-transform:none;" tabindex="8" ng-disabled="vm.rOnly || vm.eav == 14 || vm.eav == 15 || vm.dynamicWebForm || vm.handSign"
+                ng-click="vm.uploadDocuments('true')">Save & Map Fields
+            </md-button>
+            <md-button class="md-secondary" tabindex="9" ng-click="vm.cancelUploadDocs()">Cancel
+            </md-button>
+        </md-dialog-actions>
+    </div>
+
+</md-dialog>

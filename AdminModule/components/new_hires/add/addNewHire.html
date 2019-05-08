@@ -1,0 +1,93 @@
+<div layout="column" flex style="overflow:hidden;">
+    <div layout="row" ng-style="{'height': vm.heightforNewHireHeader}" layout-xs="column" layout-align="start center"
+        style="background-color:white;" ng-class="{'smallNewHiereHight': vm.isAccountManagerSavedNewHire == true, 'largeNewHiereHight': vm.isAccountManagerSavedNewHire == false} ">
+        <div layout="column" style="padding:20px 0px 20px 20px" ng-if="!vm.isAccountManagerSavedNewHire">
+            <div layout="row" layout-xs="column" layout-align="start top" style="padding-left:5px;">
+                <span class="header-color">{{vm.editNewHireId ? 'Edit New Hire':'Create New Hire'}}</span>
+                
+                <md-content style="background-color:lightgray;width: 130px;height: 20px;padding: 0px 0px 0px 4px;border: 2px solid lightgray;margin-left: 20px;margin-top:5px;border-radius:5px;overflow: hidden;">
+                    <span tabindex="1" ng-keypress="selectNewhire()" ng-disabled="" style="padding-left:5px;background-color:white;border-radius:3px;width:50px;font-size:12px;"
+                        ng-style="{'background-color':vm.newHireToggleColor}">
+                        <a ng-style="{'color':vm.newHireToggleTextColor}">&nbsp;New Hire&nbsp;&nbsp</a>
+                    </span>
+                    <span tabindex="2" ng-keypress="selectRehire()" style="padding-left:5px;background-color:white;border-radius:3px;width:50px;font-size:12px;"
+                        ng-style="{'background-color':vm.reHireToggleColor}">
+                        <a ng-style="{'color':vm.reHireToggleTextColor}">&nbsp;Re Hire&nbsp;&nbsp;&nbsp;</a>
+                    </span>
+                </md-content>
+            </div>
+            <a ng-if="!isAccountManager" ng-mousedown ="vm.closeAddNewHire()" style="display:table;margin-top:5px;">
+                <ng-md-icon class="md-mini backIconIntroPages" tabindex="3" icon="chevron_left" style="color: #d75a5a;margin-right: -3px;margin-bottom: 1px;"
+                    md-menu-align-target>
+                </ng-md-icon>
+                <span style="font-size:12px;color:#1b2c3c">New Hires</span>
+            </a>
+        </div>
+        <div layout="column" style="padding:20px 0px 20px 20px" ng-if="vm.isAccountManagerSavedNewHire">
+            <div layout="row" layout-xs="column" layout-align="start top" style="padding-left:5px;">
+                <span class="header-color">New Hire</span>
+                <md-button class="addPageBtn primary" ui-sref="AddNewHire" aria-label="Add Report" ng-click="vm.isAccountManagerSavedNewHire=false">
+                    <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                </md-button>
+            </div>
+        </div>
+    </div>
+    <md-divider></md-divider>
+    <form name="dynWebForm" style="display:contents" 
+     class="web-preview-modal "   novalidate>
+        <!-- <md-content ng-if="!vm.isAccountManagerSavedNewHire" style="overflow-y:auto;overflow-x:hidden;" ng-style="{'height': vm.heightforNewHireMdContent}">
+
+        </md-content> -->
+        <md-content class="letter-body-start new-hire-personal-info-container new-hire-personal-info-area" layout-padding ng-style="{'height': vm.heightforNewHireMdContent}" style="margin:15px;padding:10px;">
+            <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-body" id="dropZone" layout="row"  style="overflow-y:auto;overflow-x:hidden;">
+                <div flex class="sortable-stdFields-body" id="sortable-formbuilder-ul">
+
+                    <div ng-include="'/components/shared/controlsView.html'"></div>
+                </div>
+
+            </div>
+        </md-content>
+        <md-content ng-if="isAccountManager && vm.isAccountManagerSavedNewHire" style="overflow-y:auto;overflow-x:hidden;">
+
+            <div flex="" layout="row" layout-xs="column" style="overflow-y: auto; height: 480px;" layout-align="start start"
+                class="layout-xs-column layout-align-start-start layout-row flex">
+                <!-- ngIf: vm.newHires.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag) -->
+                <!-- ngIf: vm.newHires.length == 0 && (UserInfo.isAdmin || vm.rolesData.viewflag) -->
+                <!-- ngIf: (!UserInfo.isAdmin && !vm.rolesData.viewflag) -->
+                <md-content layout="row" layout-align="start center" style="padding:10px;" layout-wrap="" flex="" class="layout-wrap ng-scope _md layout-align-start-center layout-row flex">
+                    <div layout="column" layout-align="center center" layout-padding="" flex="" class="layout-padding layout-align-center-center layout-column flex">
+                        <img src="images/workflow_img.png">
+                        <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+                        <div flex="5" class="flex-5"></div>
+                        <!-- ngIf: vm.workflows.length == 0 -->
+                        <div flex="5" class="flex-5"></div>
+
+                        <div class="no-workflows">
+                            <p class="pbold">Detail Notification has been sent to HR User, and HR Admin.</p>
+                            <p class="md=caption">Please
+                                <a style="color:#008fb1;cursor: pointer;" ng-click="vm.logout()">Click Here</a> to
+                                logout
+                            </p>
+                        </div>
+                    </div>
+                </md-content>
+                <!-- end ngIf: (!UserInfo.isAdmin && !vm.rolesData.viewflag) -->
+            </div>
+        </md-content>
+
+        <div layout="column" ng-if="!vm.isAccountManagerSavedNewHire" layout="start center" style="height:150px;background-color:white;"
+            ng-style="{'height': vm.heightforNewHireSave}">
+            <md-divider></md-divider>
+            <div layout="row" layout-align="end center" style="margin-right:20px;" flex>
+                <md-button type="submit" class="md-raised md-primary" tabindex="68" ng-click="validateForm(dynWebForm)">{{!isEdit ? 'Save': 'Update'}}</md-button>
+                <md-button class="md-secondary md-raised" tabindex="69" ng-mousedown ="vm.closeAddNewHire()"  ng-if="!isAccountManager">Cancel</md-button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

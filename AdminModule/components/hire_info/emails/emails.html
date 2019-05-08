@@ -1,0 +1,110 @@
+<div class="initiate-email" style="overflow-x:hidden">
+
+    <md-content class="template-area" layout-padding>
+        <form name="intiateonboard" id="intiateonboard" novalidate ng-submit="doSubmitForm(intiateonboard)" >
+            <div layout="row">
+                <div flex="10" class="text-left">
+                    <label class="input-fields-label">Subject
+                        <span>*</span>
+                    </label>
+                </div>
+                <md-divider class="sub-divider"></md-divider>
+                <md-input-container flex class="onboard-subject">
+                    <input ng-model="formData.subject" class="subject-box" aria-label="subject" name="subject" required ob-autofocus tabindex="1" md-maxlength="100"
+                        maxlength="100">
+
+                </md-input-container>
+
+            </div>
+            <md-divider ng-class="{'required-border': intiateonboard.subject.$touched && !intiateonboard.subject.$pristine && intiateonboard.subject.$error.required}"></md-divider>
+            <div ng-if="(submitted && intiateonboard.subject.$untouched) || intiateonboard.subject.$touched" ng-messages="intiateonboard.subject.$error"
+                role="alert" style="font-size: 12px; color: rgb(221, 44, 0);">
+                <div ng-message="required">Please enter Subject. It can’t be blank.</div>
+                <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG027}}</div>
+            </div>
+            <!-- <md-divider></md-divider> -->
+
+            <div>
+                <!-- <ng-quill-editor required ng-model="formData.body" name="initiateemail" tabindex="2" 
+                on-editor-created="editorCreated(editor)" required>
+                <ng-quill-toolbar>
+                    <div id="ng-quill-toolbar" style="border-bottom:none;border-top:none">
+                        <span class="ql-formats">
+                            <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
+                            <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
+                            <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-align" ng-attr-title="{{'Aligment'}}">
+                                <option selected></option>
+                                <option value="center"></option>
+                                <option value="right"></option>
+                                <option value="justify"></option>
+                            </select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="ordered" ng-attr-title="{{'Ordered'}}"></button>
+                            <button class="ql-list" value="bullet" ng-attr-title="{{'Bullet'}}"></button>
+                        </span>                            
+                        <span class="ql-formats">
+                            <button class="ql-link" ng-attr-title="{{'Link'}}"></button>
+                            <button class="ql-image" ng-attr-title="{{'Image'}}"></button>
+                        </span>                            
+                    </div>
+                </ng-quill-toolbar>                
+                </ng-quill-editor> -->
+                <ng-ckeditor ng-model="formData.body" skin="moono-lisa" name="initiateemail" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                    remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+                <!-- {{formData.body}} -->
+                <div layout="row" layout-align="space-between start" style="background-color: #e4e4e4;" flex>
+                    <div layout="row" layout-align="start center" style="background-color: #e4e4e4;" md-force-height="'30px'" layout-padding
+                        flex>
+                    </div>
+                    <span class="counter">{{ vm.htmlToPlaintext(formData.body).length ? vm.htmlToPlaintext(formData.body).length : '0'}} / 1000</span>
+                </div>
+                <div style="font-size: 12px;color: #dd2c00;" ng-if="!formData.body && ( (submitted && intiateonboard.initiateemail.$untouched) || intiateonboard.initiateemail.$touched )"
+                    ng-messages="intiateonboard.initiateemail.$error" role="alert">
+                    <div ng-message="required">Please enter Email Template. It can’t be blank.</div>
+                </div>
+            </div>
+            <br>
+
+
+            <div layout="row" layout-align="end center" flex>
+                <md-button class='md-primary md-raised' type="submit" tabindex="3">Send</md-button>
+                <md-button class='md-secondary' tabindex="4" ui-sref="NewHires">Cancel</md-button>
+            </div>
+
+            <div class="onboard-headings" flex="25">
+                <h3>Email History</h3>
+            </div>
+
+
+            <div class="wrapper" style="width:100%">
+                <table style="width:100%">
+                    <thead>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Subject</th>
+                    </thead>
+                    <tr ng-repeat="item in emailLogList">
+                        <td>{{item.SentDate | date : 'EEE, MMM dd, yyyy, hh:mm a' }}</td>
+                        <td>{{item.categoryname}}</td>
+                        <td class="subjectmsg" title="{{item.subject}}">{{item.subject}}</td>
+                    </tr>
+                    <tr ng-if="!emailLogList.length">
+                        <td colspan="3" align="center">No Data Found</td>
+                    </tr>
+                </table>
+            </div>
+
+
+        </form>
+    </md-content>
+
+</div>
+<div class="LoaderDiv" ng-if="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

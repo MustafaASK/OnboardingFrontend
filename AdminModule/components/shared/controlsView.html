@@ -1,0 +1,462 @@
+<div ng-repeat="field in formFields track by $index" ng-switch on="field.Type" class="input-contain {{field.Type}} sortable-field flex-{{getFieldSettingPar('Width',field).value}}"
+    data-index="{{$index}}">
+    <!-- {{getFieldSettingPar('Width',field).value}} -->
+    <md-input-container class="form-group" ng-switch-when="text" ng-if="field.isShow = isControlShow(field.name)" >
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <input type="text" name="text_{{$index}}" id="text_{{$index}}" minlength="{{getFieldSettingPar('Min Length',field).value}}"
+        md-minlength="{{getFieldSettingPar('Min Length',field).value}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+        md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}"
+        ng-model="field.changedValue" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+        ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}"
+        newmodel="field.value" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" currentfield="field" allfields="getDependentModel(field)"
+        ng-if="getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Enable Google Maps',field).value">
+    <input type="text" name="text_{{$index}}" id="text_{{$index}}" minlength="{{getFieldSettingPar('Min Length',field).value}}"
+        md-minlength="{{getFieldSettingPar('Min Length',field).value}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+        md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}"
+        ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+        ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" 
+        ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Enable Google Maps',field).value">
+    <input type="text" name="text_{{$index}}" id="text_{{$index}}" minlength="{{getFieldSettingPar('Min Length',field).value}}"
+        md-minlength="{{getFieldSettingPar('Min Length',field).value}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+        md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-minlength="{{getFieldSettingPar('Min Length',field).value}}"
+        ng-model="field.value" class="form-control gplace" ng-required="getFieldSettingPar('Required',field).value"
+        ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" ng-autocomplete ng-if="getFieldSettingPar('Enable Google Maps',field).value && !getFieldSettingPar('Mask Data',field).value" options="usaAddressOptions"
+        othermodels="updateCityStateCountryZip(cityParam, stateParam, zipParam)" currentfield="field" allfields="formFields">
+    <!-- ng-if="getFieldSettingPar('Enable Google Maps',field).value" options="usaAddressOptions" -->
+        <div ng-if="(submitted && dynWebForm['text_'+$index].$untouched) || dynWebForm['text_'+$index].$touched"
+            ng-messages="dynWebForm['text_'+$index].$error" role="alert">
+            <div ng-message-exp="['minlength']">
+                This should have minimum {{getFieldSettingPar('Min Length',field).value}} charecters
+            </div>
+            <div ng-message="convertStarsDynamic">This value should be same as {{getDependentModelName(field)}}</div>
+            <div ng-message="invalidPattern">Invalid pattern</div>
+            <div ng-message="required">This is required</div>
+            <div ng-message-exp="['max']">
+                This should have maximum {{getFieldSettingPar('Max Length',field).value}} charecters
+            </div>
+        </div>
+    </md-input-container>
+    <md-input-container class="form-group" ng-switch-when="number" ng-if="field.isShow = isControlShow(field.name)">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <!-- <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+                md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value"
+                class="form-control" value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value"
+                ng-disabled="getFieldSettingPar('Readonly',field).value" ng-min="getFieldSettingPar('Min',field).value"
+                ng-max="getFieldSettingPar('Max',field).value" ng-if="!getFieldSettingPar('Mask Data',field).value">
+            <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="50" md-maxlength="50"
+                ng-model="field.value" class="form-control" value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value"
+                ng-disabled="getFieldSettingPar('Readonly',field).value" newmodel="field.changedValue"
+                convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}"
+                ng-if="getFieldSettingPar('Mask Data',field).value"> -->
+        <!-- /***no Dependency -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-min="getFieldSettingPar('Min',field).value"
+            ng-max="getFieldSettingPar('Max',field).value" ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && !getFieldSettingPar('Dependency Validation',field).isDependent.value"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 1 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-max="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) - 1"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 2 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-max="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 3 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-min="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) + 1"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 4 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-min="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 5 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-min="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)"
+            ng-max="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)" ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- ng-min="getFieldSettingPar('Min',field).value" -->
+        <!-- ng-max="getFieldSettingPar('Max',field).value" -->
+        <input type="text" name="text_{{$index}}" id="text_{{$index}}"
+         maxlength="{{getFieldSettingPar('Max',field).value}}" minlength="{{getFieldSettingPar('Min',field).value}}"
+        ng-model="field.changedValue" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+        ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}"
+        newmodel="field.value" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" currentfield="field" allfields="getDependentModel(field)"
+        ng-if="getFieldSettingPar('Mask Data',field).value">
+        <!-- <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="50" md-maxlength="50" class="form-control"
+            value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+            ng-model="field.changedValue" newmodel="field.value" convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}"
+            patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" ng-if="getFieldSettingPar('Mask Data',field).value"
+            mapping-value-change-check mappingid="{{field.mappingId}}"> -->
+        <input type="text" name="text_{{$index}}" id="text_{{$index}}" class="form-control" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-model="field.value" maxlength="50" md-maxlength="50" ng-if="getFieldSettingPar('Readonly',field).value">
+
+        <div ng-if="(submitted && dynWebForm['text_'+$index].$untouched) || dynWebForm['text_'+$index].$touched"
+            ng-messages="dynWebForm['text_'+$index].$error" role="alert">
+            <div ng-message-exp="['min']">
+                {{getFieldSettingPar('Dependency Validation',field).isDependent.value ? 'This should be ' + ( (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=' ? ' greater than or equal to ' : (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==' ? ' equal to ' : ' greater than ')) + getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) ) : 'This should be greater than '+ getFieldSettingPar('Min',field).value}}
+                <!-- {{getFieldSettingPar('Dependency Validation',field).isDependent.value ? ('Thisshould be '+ ((getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=' ? 'greater than or equal to ' : 'greater than ') getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) ) : 'Thisshould be greater than'+ getFieldSettingPar('Min',field).value }} -->
+                <!-- {{field.labelName}} should be greater than {{!getFieldSettingPar('Dependency Validation',field).isDependent.value ? getFieldSettingPar('Min',field).value : getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)}} -->
+            </div>
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">Invalid pattern</div>
+            <div ng-message-exp="['max']">
+                {{getFieldSettingPar('Dependency Validation',field).isDependent.value ? 'This should be ' + ( (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=' ? ' less than or equal to ' : (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==' ? ' equal to ' : ' less than ') ) + getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) ) : 'This should be less than '+ getFieldSettingPar('Max',field).value}} <!-- {{field.labelName}} should be less than
+                    {{!getFieldSettingPar('Dependency Validation',field).isDependent.value ? getFieldSettingPar('Max',field).value : getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)}}
+                    -->
+            </div>
+        </div>
+    </md-input-container>
+    <md-input-container class="form-group" ng-switch-when="numberwithdecimal" ng-if="field.isShow = isControlShow(field.name)">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <!-- <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+                md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value"
+                class="form-control" value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value"
+                ng-disabled="getFieldSettingPar('Readonly',field).value" ng-min="getFieldSettingPar('Min',field).value"
+                ng-max="getFieldSettingPar('Max',field).value" ng-if="!getFieldSettingPar('Mask Data',field).value">
+            <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="50" md-maxlength="50"
+                ng-model="field.value" class="form-control" value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value"
+                ng-disabled="getFieldSettingPar('Readonly',field).value" newmodel="field.changedValue"
+                convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}"
+                ng-if="getFieldSettingPar('Mask Data',field).value"> -->
+        <!-- <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control" 
+                ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl" ng-min="getFieldSettingPar('Min',field).value" ng-max="getFieldSettingPar('Max',field).value" ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value"
+                mapping-value-change-check mappingid="{{field.mappingId}}"> -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-min="getFieldSettingPar('Min',field).value" ng-max="getFieldSettingPar('Max',field).value" ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && !getFieldSettingPar('Dependency Validation',field).isDependent.value"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 1 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-max="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) - 1"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 2 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-max="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)" ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 3 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-min="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) + 1"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 4 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-min="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)" ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+        <!-- /*** 5 -->
+        <input type="number" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-min="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)" ng-max="getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Readonly',field).value && getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==')"
+            mapping-value-change-check mappingid="{{field.mappingId}}">
+     
+            <input type="text" name="text_{{$index}}" id="text_{{$index}}"
+            maxlength="{{getFieldSettingPar('Max',field).value}}" minlength="{{getFieldSettingPar('Min',field).value}}"
+           ng-model="field.value" class="form-control" ng-required="getFieldSettingPar('Required',field).value"
+           ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}"
+           newmodel="field.changedValue" patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" currentfield="field" allfields="getDependentModel(field)"
+           ng-if="getFieldSettingPar('Mask Data',field).value">
+        <!-- <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="50" md-maxlength="50" class="form-control"
+            value="{{field.value}}" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value"
+            ng-model="field.changedValue" newmodel="field.value" convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}"
+            patternmodel="{{(getFieldSettingPar('Field Type',field).value).toLowerCase()}}" ng-if="getFieldSettingPar('Mask Data',field).value"
+            mapping-value-change-check mappingid="{{field.mappingId}}"> -->
+        <input type="text" name="text_{{$index}}" id="text_{{$index}}" class="form-control" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            ng-model="field.value" maxlength="50" md-maxlength="50" ng-if="getFieldSettingPar('Readonly',field).value">
+
+        <div ng-if="(submitted && dynWebForm['text_'+$index].$untouched) || dynWebForm['text_'+$index].$touched"
+            ng-messages="dynWebForm['text_'+$index].$error" role="alert">
+            <div ng-message-exp="['min']">
+                {{getFieldSettingPar('Dependency Validation',field).isDependent.value ? 'This should be '+ ( (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=' ? ' greater than or equal to ' : (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==' ? ' equal to ' : ' greater than ')) + getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) ) : 'This should be greater than '+ getFieldSettingPar('Min',field).value}} </div>
+            <div ng-message="required">This is required</div>
+            <div ng-message-exp="['max']">{{getFieldSettingPar('Dependency Validation',field).isDependent.value ? 'This should be '+ ( (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=' ?' less than or equal to ' : (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==' ? ' equal to ' : ' less than ') ) + getNumberValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value) ) : 'This should be less than '+ getFieldSettingPar('Max',field).value}} </div>
+         </div> 
+    </md-input-container>
+    <md-input-container class="form-group" ng-switch-when="email" ng-if="field.isShow = isControlShow(field.name)">
+                    <label for="{{field.labelName}}">{{field.labelName}}</label>
+                    <input type="text" name="text_{{$index}}" id="text_{{$index}}" maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+                        md-maxlength="{{getFieldSettingPar('Max Length',field).value}}" ng-model="field.value" class="form-control"
+                        ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+                        ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" ng-blur="vm.validateEmailId(field)">
+                    <div ng-if="(submitted && dynWebForm['text_'+$index].$untouched) || dynWebForm['text_'+$index].$touched"
+                        ng-messages="dynWebForm['text_'+$index].$error" role="alert">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message-exp="['pattern']">
+                            Please enter valid email
+                        </div>
+                    </div>
+    </md-input-container>
+    <md-input-container class="form-group" ng-switch-when="phone-number" ng-if="field.isShow = isControlShow(field.name)">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <input type="tel" name="text_{{$index}}" id="text_{{$index}}" ng-model="field.value" class="form-control"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value  || isDisabledControl"
+            md-maxlength="12" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999" ui-mask-placeholder ui-options={addDefaultPlaceholder:false}>
+        <div ng-if="(submitted && dynWebForm['text_'+$index].$untouched) || dynWebForm['text_'+$index].$touched"
+            ng-messages="dynWebForm['text_'+$index].$error" role="alert">
+            <div ng-message-exp="['min']">
+                Duration of Contract should be greater than 0
+            </div>
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">Invalid pattern</div>
+            <div ng-message-exp="['max']">
+                Duration of Contract should not be greater than 99
+            </div>
+        </div>
+    </md-input-container>
+    <!-- <md-input-container class="form-group" ng-switch-when="date" style="margin-left:-17px;">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="!getFieldSettingPar('Dependency Validation',field).isDependent.value"></md-datepicker>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value" ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<')" md-min-date="getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value)"  mdw-maxw-datew="appCtrl.maxDate"></md-datepicker>
+        <div ng-if="(submitted && dynWebForm['date_'+$index].$untouched) || dynWebForm['date_'+$index].$touched" ng-messages="dynWebForm['date_'+$index].$error" role="alert">
+            <div ng-message="required">This is required</div>
+            <div ng-message="mindate">Date is too early!</div>
+        </div>
+    </md-input-container> -->
+    <md-input-container class="form-group" ng-switch-when="date" style="margin-left:-17px;" ng-if="isControlShow(field.name)">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="!getFieldSettingPar('Dependency Validation',field).isDependent.value"></md-datepicker>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="(getFieldSettingPar('Readonly',field).value || isDisabledControl) || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value == 'currentdate' && getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==')"
+            ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && ((getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<') || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=') || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>') || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=') || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '=='))"
+            md-min-date="field.mindate" md-max-date="field.maxdate"  dynamic-date-validation="getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, -1)" currentfield="field"></md-datepicker>
+        
+        <!-- || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value == 'above18years')  || (getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value == 'above15years') -->
+            <!-- <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<')"
+            md-max-date="field.maxdate" ng-init="field.maxdate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, -1)"></md-datepicker>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '<=')"
+            md-max-date="field.maxdate" ng-init="field.maxdate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0)"></md-datepicker>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>')"
+            md-min-date="field.mindate" ng-init="field.mindate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, +1)"></md-datepicker>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '>=')"
+            md-min-date="field.mindate" ng-init="field.mindate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0)"></md-datepicker>
+        <md-datepicker name="date_{{$index}}" id="date_{{$index}}" md-placeholder="mm/dd/yyyy" ng-model="field.value"
+            ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="getFieldSettingPar('Dependency Validation',field).isDependent.value && (getFieldSettingPar('Dependency Validation',field).dependencyObjs[0].value == '==')"
+            md-min-date="field.mindate" md-max-date="field.maxdate" ng-init="field.mindate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0); field.maxdate = getDateValue(getFieldSettingPar('Dependency Validation',field).dependencyObjs[1].value, 0)"></md-datepicker> -->
+        <div ng-if="(submitted && dynWebForm['date_'+$index].$untouched) || dynWebForm['date_'+$index].$touched"
+            ng-messages="dynWebForm['date_'+$index].$error" role="alert">
+            <div ng-message="required">This is required</div>
+            <div ng-message="mindate">Date is too early!</div>
+        </div>
+    </md-input-container>
+    <!-- <div class="form-group" ng-switch-when="dropdown" ng-class="field.Active ? 'active-field' : '' "> margin-bottom:20px;-->
+    <md-input-container class="form-group" ng-switch-when="dropdown" ng-if="isControlShow(field.name)">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <!-- <select class="form-control" size="{{getFieldSettingPar('Radio Choice',field).Possiblevalue.length}}"
+            style="height:auto; overflow-y:auto;" ng-disabled="getFieldSettingPar('Readonly',field).value">
+            <option ng-repeat="val in getFieldSettingPar('Radio Choice',field).Possiblevalue">
+                {{val.name}}
+            </option>
+        </select> -->
+        <!-- (field.value ? field.value : (getFieldSettingPar('Radio Choice',field).Possiblevalue[0].value)) -->
+        <!-- {{getFieldSettingPar('Select first option as default',field).value}} -->
+        <md-select ng-model="field.value" name="dropdown_{{$index}}" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" ng-init="field.value = (!field.value && getFieldSettingForDefault('Select first option as default',field).value ? getFieldSettingPar('Radio Choice',field).Possiblevalue[0].value : field.value)"
+            ng-if="getFieldSettingPar('Radio Choice',field).sourceTypeValue == 'Custom List'" >
+            <md-option ng-repeat="val in getFieldSettingPar('Radio Choice',field).Possiblevalue" value="{{val.value}}">
+                {{val.name}}
+            </md-option>
+        </md-select>
+        <md-select ng-model="field.value" name="dropdown_{{$index}}" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" ng-init="databasalist = (getFieldSettingPar('Radio Choice',field).sourceTypeUrl == 'clients' ? clientsList : (getFieldSettingPar('Radio Choice',field).sourceTypeUrl == 'jobcategory' ? jobCategoryList : sourceProfile)); field.value = (!field.value && getFieldSettingForDefault('Select first option as default',field).value ? databasalist[0].value : field.value)"
+            ng-if="getFieldSettingPar('Radio Choice',field).sourceTypeValue == 'Database'">
+            <md-option ng-repeat="val in databasalist" value="{{val.value}}">
+                {{val.name}}
+            </md-option>
+        </md-select>
+        <div class="md-errors-spacer">
+            <div class="md-char-counter"></div>
+        </div>
+        <div ng-if="(submitted && dynWebForm['dropdown_'+$index].$untouched) || dynWebForm['dropdown_'+$index].$touched"
+            ng-messages="dynWebForm['dropdown_'+$index].$error" role="alert">
+            <div ng-message="required">This is required</div>
+        </div>
+    </md-input-container>
+    <div class="form-group attachment-section" ng-switch-when="attachment" ng-class="field.Active ? 'active-field' : '' "
+         ng-if="field.isShow = isControlShow(field.name)">
+        <span class="input-as-label attachment-label">{{field.labelName}}</span>
+        <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+
+        <div name="docuploadform" id="docuploadform" style="width: 100%;margin-top: 0px;">
+            <div layout="column" layout-padding style="padding-left:0px;display:block;">
+                <div class="small-file-drop-zone docUpload" name="fileupload" ng-model="field.value" id="file-drop-zone"
+                    ngf-drop ngf-select ngf-multiple="true" style="margin: 0px 0px 20px 0px;overflow: hidden;width:100%;"
+                    file-upload-validation="field.attachedFiles" ng-disabled="isDisabledControl" flex>
+                </div>
+                <!-- ng-required="getFieldSettingPar('Required',field).value" -->
+            </div>
+        </div>
+        <div ng-if="(submitted && dynWebForm['fileupload_'+$index].$untouched) || dynWebForm['fileupload_'+$index].$touched" ng-messages="dynWebForm['fileupload_'+$index].$error" role="alert">
+                
+                <div ng-message="required">This is required</div>
+            </div>
+
+        <div layout="row" style="clear:both;margin-top:10px">
+            <table class="tg" style="box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);">
+                <thead>
+                    <th class="tg-qmme" align="left" style="background-color: #eaeaea;" width="30%;">File
+                        Name</th>
+                    <th class="tg-qmme" align="left" style="background-color: #eaeaea;" width="60%">File
+                        Description</th>
+                    <!-- <th class="tg-qmme" align="center" style="background-color: #eaeaea;">File Size</th> -->
+                    <th class="tg-qmme" style="background-color: #eaeaea;" colspan="1" width="10%">Actions</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="saveddoc in field.attachedFiles">
+                        <td class="tg-yw4l" align="left" title="{{saveddoc.documentname}}">{{saveddoc.name}}</td>
+                        <td class="tg-yw4l" align="left" title="{{saveddoc.description}}">
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Description</label>
+                                <input type="text" md-maxlength="500" maxlength="500" name="attachmentdesc_{{$parent.$index}}{{$index}}"
+                                    tabindex="49" ng-model="saveddoc.description" ng-disabled="isDisabledControl" required ng-pattern="/^\b.+$/">
+
+                                <div ng-if="(submitted && dynWebForm['attachmentdesc_'+($parent.$index)+$index].$untouched) || dynWebForm['attachmentdesc_'+($parent.$index)+$index].$touched"
+                                    ng-messages="dynWebForm['attachmentdesc_'+($parent.$index)+$index].$error" role="alert">
+
+                                    <div ng-message="required">This is required</div>
+                                    <div ng-message-exp="['pattern']">
+                                        Please enter a valid description
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </td>
+                        <!-- <td class="tg-yw4l" align="center">{{attachedFiles[0].size / (1024 * 1024)
+                                                |
+                                                number: 2 }} MB</td> -->
+                        <td class="tg-yw4l" align="center">
+                            <a href tabindex="47" ng-click="viewSavedFile(saveddoc)">
+                                <i class="fa fa-eye" title="View"></i>
+                            </a> &nbsp;
+                            <!-- showStepDeleteConfirm(saveddoc.id,saveddoc.documentname, $index) -->
+                            <a href tabindex="48" ng-click="deleteDoc($index,saveddoc.id,field.attachedFiles)">
+                                <i class="fa fa-times" title="Delete"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="!field.attachedFiles.length">
+                        <td class="tg-yw4l" align="center" colspan="4">No files added</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- </div> -->
+    <md-input-container class="form-group text-area-depart" ng-switch-when="textarea" ng-if="field.isShow = isControlShow(field.name)">
+        <label for="{{field.labelName}}">{{field.labelName}}</label>
+        <textarea class="form-control" ng-model="field.value" rows="2" name="textarea_{{$index}}" id="textarea_{{$index}}"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            id="{{field.name.replace(' ','_')  + field.id}}" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" newmodel="field.changedValue"
+            convert-stars-dynamic="{{getFieldSettingPar('Mask Data',field).value}}" ng-if="getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Enable Google Maps',field).value"></textarea>
+        <textarea class="form-control" ng-model="field.value" rows="2" name="textarea_{{$index}}" id="textarea_{{$index}}"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            id="{{field.name.replace(' ','_')  + field.id}}" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-if="!getFieldSettingPar('Mask Data',field).value && !getFieldSettingPar('Enable Google Maps',field).value"></textarea>
+        <textarea class="form-control gplace" ng-model="field.value" rows="2" name="textarea_{{$index}}" id="textarea_{{$index}}"
+            maxlength="{{getFieldSettingPar('Max Length',field).value}}" md-maxlength="{{getFieldSettingPar('Max Length',field).value}}"
+            id="{{field.name.replace(' ','_')  + field.id}}" ng-required="getFieldSettingPar('Required',field).value"
+            ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl" newmodel="field.changedValue"
+            ng-autocomplete ng-if="getFieldSettingPar('Enable Google Maps',field).value && !getFieldSettingPar('Mask Data',field).value" currentfield="field" allfields="formFields" options="usaAddressOptions"></textarea>
+        <div ng-if="(submitted && dynWebForm['textarea_'+$index].$untouched) || dynWebForm['textarea_'+$index].$touched"
+            ng-messages="dynWebForm['textarea_'+$index].$error" role="alert">
+            <div ng-message="required">This is required</div>
+        </div>
+
+    </md-input-container>
+
+    <div class="form-group" ng-switch-when="devider" ng-class="field.Active ? 'active-field' : '' " style="padding:10px 0px 23px 0px;width: 98%;">
+
+        <div class="divider-div-line"></div>
+    </div>
+    <div class="form-group" ng-switch-when="emptyspace" ng-class="field.Active ? 'active-field' : '' " style="padding:10px 0px 12px 0px">
+
+        <div class="divider-div-line"></div>
+    </div>
+    <div class="form-group header" ng-switch-when="header" ng-class="field.Active ? 'active-field' : '' " ng-if="field.isShow = isControlShow(field.name)">
+
+
+        <p class="header-div" ng-style="{'font-size':getFieldSettingPar('Font Size',field).value + 'px' ,'font-family':getFieldSettingPar('Font-Family',field).value}">{{field.labelName}}</p>
+    </div>
+    <div class="form-group" ng-switch-when="button" ng-class="field.Active ? 'active-field' : '' ">
+        <md-button class="md-primary md-raised">{{field.labelName}}</md-button>
+
+
+    </div>
+    <div class="form-group  check-box-depart" ng-switch-when="checkbox" ng-class="field.Active ? 'active-field' : '' " ng-if="field.isShow = isControlShow(field.name)">
+        <md-checkbox ng-model="field.value"  aria-label="{{field.value}}" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl">
+            {{field.labelName}}
+        </md-checkbox>
+
+
+
+    </div>
+    <!-- <div class="form-group radio-depart"  ng-switch-when="radio" ng-class="field.Active ? 'active-field' : '' ">
+        <span class="input-as-label">{{field.labelName}}</span>
+        <span ng-if="getFieldSettingPar('Required',field).value" class="orange-txt">*</span>
+        
+    
+    
+     <md-radio-group ng-model="set.value" layout="{{(getFieldSettingPar('Radio Align Options',field).value == 'Align Vertical' ? 'column': 'row')}}" layout-align="start start">
+        <md-radio-button class="my-radio" ng-repeat="op in  getFieldSettingPar('Radio Choice',field).Possiblevalue"
+            style="outline:none;" value="{{op.value}}"  >
+            <span> {{op.name}} </span>
+        </md-radio-button>
+    </md-radio-group>   
+</div> -->
+    <!-- (field.value ? field.value : (getFieldSettingPar('Radio Choice',field).Possiblevalue[0].value)) -->
+    <md-input-container class="form-group" ng-switch-when="radio" style="margin:4px 0 15px 0" ng-if="field.isShow = isControlShow(field.name)">
+        <label for="{{field.labelName}}" style="position:relative;" ng-class="{'md-required': (getFieldSettingPar('Required',field).value)}">{{field.labelName}}</label>
+        <md-radio-group ng-model="field.value" name="radio_{{$index}}" id="radio_{{$index}}" layout="{{(getFieldSettingPar('Radio Align Options',field).value == 'Align Vertical' ? 'column': 'row')}}"
+            layout-align="start start" ng-required="getFieldSettingPar('Required',field).value" ng-disabled="getFieldSettingPar('Readonly',field).value || isDisabledControl"
+            ng-init="field.value = field.value ? field.value : getFieldSettingPar('Radio Choice', field).Possiblevalue[0].value " >
+            <md-radio-button class="my-radio" ng-repeat="op in  getFieldSettingPar('Radio Choice',field).Possiblevalue"
+                style="outline:none;" value="{{op.value}}">
+                <span> {{op.name}} </span>
+            </md-radio-button>
+        </md-radio-group>
+        <div ng-if="(submitted && dynWebForm['radio_'+$index].$untouched) || dynWebForm['radio_'+$index].$touched"
+            ng-messages="dynWebForm['radio_'+$index].$error" role="alert">
+            <div ng-message="required">This is required</div>
+        </div>
+    </md-input-container>
+</div>

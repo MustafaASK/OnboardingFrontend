@@ -1,0 +1,18 @@
+<div flex layout="column" ng-cloak>
+    <div class="main-container">
+        <span class="header-color">Tasks</span>
+    </div>
+    <md-content class="nav-bar-color" style="overflow: inherit;">
+        <md-tabs class="md-no-animation"
+            md-selected="currentNavItem" 
+            md-dynamic-height
+            md-no-ink
+            md-center-tabs
+            aria-label="settings navigation links">
+            <md-tab ui-sref='MyTasks' label="My Tasks"></md-tab>
+            <md-tab ui-sref="TaskCalendar" label="Calendar"></md-tab>
+        </md-tabs>
+    </md-content>
+    <md-divider></md-divider>
+    <div flex layout="column" ui-view="TaskOptions"></div>    
+</div>

@@ -1,0 +1,29 @@
+[
+    {"id": "MSG001", "message": "Thanks for Signing Up with our Onboarding system. Our Sales team will be in touch with you soon."},
+    {"id": "MSG002", "message": "Please enter First Name. It can't be blank."},
+    {"id": "MSG003", "message": "Please enter Last Name. It can't be blank."},
+    {"id": "MSG004", "message": "Please enter E-Mail ID. It can't be blank."},
+    {"id": "MSG005", "message": "Format of the E-mail ID is incorrect. Please enter the valid E-mail ID."},
+    {"id": "MSG006", "message": "Please enter Phone#. It can't be blank."},
+    {"id": "MSG007", "message": "Format of the Phone# is incorrect. Please enter the valid Phone#."},
+    {"id": "MSG008", "message": "Please select Client Name. It can't be blank."},
+    {"id": "MSG009", "message": "The entered e-mail ID is already used for Signup by some other user. Please enter a new e-mail ID."},
+    {"id": "MSG010", "message": "The entered Phone# is already used for Signup by some other user. Please enter a new Phone#."},
+    {"id": "MSG011", "message": "Please enter Password. It can't be blank."},
+    {"id": "MSG012", "message": "Format of the Password is incorrect. Please enter the valid Password."},
+    {"id": "WELCOME", "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo"},
+    {"id": "MSG013", "message": "Please enter Template Name. It can't be blank."},
+    {"id": "MSG014", "message": "Please select Category. It can't be blank."},
+    {"id": "MSG015", "message": "Please enter Description. It can't be blank."},
+    {"id": "MSG016", "message": "Please enter Subject. It can't be blank."},
+    {"id": "MSG017", "message": "Please enter Task Description. It can't be blank."},
+    {"id": "MSG018", "message": "Format of the Task Description is incorrect. Please enter the valid description."},
+    {"id": "MSG019", "message": "Please enter Task Name. It can't be blank."},
+    {"id": "MSG020", "message": "Format of the Task Name is incorrect. Please enter the valid name."},
+    {"id": "MSG019", "message": "Please assign user. It can't be blank."},
+    {"id": "MSG020", "message": "Format of the Task Name is incorrect. Please enter the valid name."},
+    {"id": "MSG021", "message": "Please select Completion Date. It can't be blank."}
+]
+
+
+

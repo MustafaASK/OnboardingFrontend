@@ -1,0 +1,89 @@
+<div layout="row" layout-align="start start" class="dyn-webform-area" style="height:100%;overflow:hidden" flex ng-cloak>
+    <div  style="height:100%;" layout="column" flex ng-class="{'div55':toggleLayout, 'div100':!toggleLayout}">
+        <div layout="column" layout-align="start start" style="margin: 5px 0 0 10px;">
+            <a ui-sref="Settings.Documents" tabindex="1" style="display:table;">
+                <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_left" md-menu-align-target>
+                </ng-md-icon>
+                <span style="font-size:12px;color:#1b2c3c;margin-top:5px;">Documents</span>
+            </a>
+        </div>
+        <div class="child-page-header ng-binding" style="padding: 10px 0;font-weight: bold;">Edit Web Form</div>
+        <!-- <div class="arrow-icon-right" ng-show="!toggleLayout" ng-click="toggleLayout = !toggleLayout" role="button" tabindex="0" aria-hidden="false">
+                <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_left" md-menu-align-target>
+                    </ng-md-icon><ng-md-icon class="md-mini backIconIntroPages" icon="chevron_left" md-menu-align-target>
+                        </ng-md-icon>
+        </div> -->
+        <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-body" id="dropZone" layout="row" style="padding: 0 15px;">
+            <dynamic-web-form allfields="formFields" style="display:contents;" frompage="documentPage" isnewhire="false" typecommonfields="3"></dynamic-web-form>
+        </div>
+
+    </div>
+    <div class="min-layout" ng-show="!toggleLayout">
+        <span class="arrow-icon-left"  ng-click="toggleLayout = !toggleLayout">
+            <ng-md-icon class="md-mini" icon="chevron_left" md-menu-align-target></ng-md-icon>
+            <ng-md-icon class="md-mini" icon="chevron_left" md-menu-align-target style="left:0;"></ng-md-icon>
+        </span>
+        <span class="cust-heading">Layout</span>
+    </div>
+    <div class="dyn-webform-dropzone-area dyn-webform-dropzone-area-drag" layout-padding flex style="padding:0;" ng-show="toggleLayout">
+        <div md-force-height="15" style="background: #f4f4f4;padding: 18px 0 18px 32px;">
+            <span class="arrow-icon-left"  ng-show="toggleLayout" ng-click="toggleLayout = !toggleLayout">
+            <ng-md-icon class="md-mini backIconIntroPages" icon="chevron_right" md-menu-align-target>
+                </ng-md-icon><ng-md-icon class="md-mini backIconIntroPages" icon="chevron_right" md-menu-align-target>
+                    </ng-md-icon>
+        </span>
+            <span class="cust-heading">Layout</span>
+        </div>
+        <md-divider style="padding: 0;"></md-divider>
+        <!-- <md-input-container class="md-block" flex="50">
+        </md-input-container> -->
+        <md-content style="overflow-x: hidden;padding: 15px 18px 15px 14px;background: #fff;min-height: 356px;" ng-style="{'height': vm.docFieldsBoxHeight, 'margin-top': vm.docFieldsTableMarginTop}">
+
+            <div ng-model="dragElements" class="sortable-stdFields">
+                <div draggable="true" class="dragElement-wrapper" ng-repeat="ele in dragElements" element-draggable data-index="{{$index}}">
+                    <div class="drag-element" ng-click="addElement(ele)">
+                        <md-icon md-svg-icon="images/icons/{{ele.inputType}}_icon.svg" class="drag-svg-ico"></md-icon>{{ele.name}}
+                    </div>
+                </div>
+            </div>
+            <div class="drag-drop-area-img">
+                <md-icon md-svg-icon="images/icons/drag-drop-svg.svg" class="drag-drop-area-img-svg"></md-icon>
+            </div>
+
+            <!-- <div class="tab-content" id="sidebar-tab-content">
+              
+                <md-card class="component-card">
+                    <md-card-title>
+                      <md-card-title-text>
+                        <span class="md-headline">Fields</span>
+                      </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="row" layout-align="space-between">
+                      <div class="card-media">
+                            <ul  ng-model="dragElements" class="sortable-stdFields">
+                                    <li draggable="true" class="dragElement-wrapper" ng-repeat="ele in dragElements" element-draggable data-index="{{$index}}">
+                                        <div class="drag-element" ng-click="addElement(ele)" >
+                                            {{ele.name}}
+                                        </div>
+                                    </li>
+                                </ul>
+                        
+                      </div>
+            
+                    </md-card-content>
+                  </md-card>
+            </div> -->
+        </md-content>
+        <div layout="row" layout-align="end center" style="border-top: 1px solid #d6d6d6;background: #fff;" flex ng-show="toggleLayout">
+            <md-button class='md-primary md-raised' tabindex="1" ng-click="vm.updateJsonDocumentLibrary();vm.postFieldMapping();">Save
+            </md-button>
+            <md-button class='md-secondary' tabindex="2" ng-click="goback()">Cancel
+            </md-button>
+        </div>
+        <div loader="" class="LoaderDiv" ng-show="loading">
+            <div class="spinner">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+</div>

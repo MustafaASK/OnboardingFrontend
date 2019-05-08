@@ -1,0 +1,168 @@
+<div class="initiate-candidate" layout="column" ng-style="{'height': vm.heightforCommonDetails}"  ng-cloak class="md-inline-form">
+    <md-content style="overflow-y:auto;overflow-x:hidden;height:100%" >
+        <div layout="column" class="new-hire-personal-info-div" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <div style="padding-top:10px;">
+                        <form name="eeoForm">
+                            <h3 style="text-align:center;font-weight:bold">Invitation to Applicants for Voluntary Inclusion in ASK Staffing Affirmative Action and EEO Program</h3>
+                            <p>ASK Staffing is committed to a policy of equal opportunity in accordance with all applicable Equal Employment Opportunity/Affirmative Action laws and regulations at the federal, state and local levels. Our organization must
+                                keep records of the gender and race/ethnic status of applicants for equal employment opportunity and reporting purposes. Please help us fulfill these commitments by providing the information requested below. Providing this
+                                information is voluntary. Refusal to provide this information will not result in any adverse treatment. The information provided will be kept in strict confidence except that government officials investigating affirmative
+                                action program compliance may have access to reported information.
+                            </p>
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Name</label>
+                                    <input ng-model="fullnameUpdated" type="text" spellcheck="false" tabindex="1" name="Name" ng-pattern="/^\b[A-Za-z0-9 ]+$/" readonly required ob-autofocus>
+                                    <div ng-messages="eeoForm.Name.$error" role="alert">
+                                        <div ng-message="required">Please enter Name. It can't be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Name is incorrect. Please enter the valid Name.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="input-fields">Position Applied For</label>
+                                    <input ng-model="vm.EEODetails.jobtitle" type="text" tabindex="2" name="positionAppliedFor" required maxlength="100" md-maxlength="100" readonly>
+                                    <div ng-messages="eeoForm.positionAppliedFor.$error" role="alert">
+                                        <div ng-message="required">Please enter Position Applied For. It can't be blank</div>
+                                        <div ng-message-exp="['pattern']">
+                                            Format of the Position Applied For is incorrect. Please enter the valid Position Applied For.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" class="md-block" flex-gt-sm>
+                                <span style="text-transform: none;font-size: 14px;padding-left:4px;font-weight:bold">Gender * : </span>
+                                <md-radio-group layout="row" name="gender" class="md-block" ng-model="vm.EEODetails.gender" style="margin-left:20px;" required tabindex="3" disabled>
+                                    <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="2">
+                                        <span> Female </span>
+                                    </md-radio-button>
+                                    <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="1">
+                                        <span> Male </span>
+                                    </md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <div ng-if="(submitted && eeoForm.gender.$untouched) || eeoForm.gender.$touched" ng-messages="eeoForm.gender.$error" role="alert">
+                                <div ng-message="required" style="font-size: 12px;color: rgb(221,44,0);">Please Select Gender. It can't be blank</div>
+                            </div>
+                            <div layout="column" class="md-block" flex-gt-sm>
+                                <span style="text-transform: none;font-size: 14px;padding-left:4px;margin-top:15px;font-weight:bold">Race / Ethnic * :</span>
+                                <md-radio-group layout="column" name="race" style="padding-top: 10px;display:block;" ng-model="vm.EEODetails.race" required tabindex="4">
+                                    <div layout="row" class="md-block" flex-gt-sm>
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="1">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">White</b> — (Not Hispanic or Latino) — All persons having origins in any of the
+                                            original peoples of Europe, North Africa, or the Middle East. </span>
+                                    </div>
+                                    <div layout="row" class="md-block" flex-gt-sm>
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="2">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">Black or African American</b> — (Not Hispanic or Latino) — All persons having
+                                            origins in any of the Black racial groups of Africa. </span>
+                                    </div>
+                                    <div layout="row" class="md-block" flex-gt-sm>
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="3">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">Hispanic or Latino</b> — All persons of Mexican, Puerto Rican, Cuban, Central
+                                            or South American, or other Spanish culture or origin, regardless of race.
+                                        </span>
+                                    </div>
+                                    <div layout="row" class="md-block" flex-gt-sm style="margin-bottom: 15px;">
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="4">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">Native Hawaiian or other Pacific Islander</b> — (Not Hispanic or Latino) — All
+                                            persons having origins in any of the original peoples of Hawaii, Guam, Tonga,
+                                            Samoa or other Pacific Islands. Far East, southeast Asia, the Indian subcontinent,
+                                            or the pacific islands. This area includes, for example, China, India, Japan,
+                                            Korea, the Philippine Islands, and Samoa. </span>
+                                    </div>
+                                    <div layout="row" class="md-block" flex-gt-sm style="margin-bottom: 15px;">
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="5">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">Asian</b> — (Not Hispanic or Latino) — A person having origins in any of the
+                                            original peoples of the Far East, Southeast Asia or the Indian Subcontinent,
+                                            including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan,
+                                            the Philippine Islands, Thailand and Vietnam.
+                                        </span>
+                                    </div>
+                                    <div layout="row" class="md-block" flex-gt-sm style="margin-bottom: 15px;">
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="6">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">American Indian or Alaskan Native</b> — All persons having orgins in any of the
+                                            original peoples of North and South America (Including Central America), and
+                                            who maintain tribal affiliation or community attachment. </span>
+                                    </div>
+                                    <div layout="row" class="md-block" flex-gt-sm>
+                                        <md-radio-button class="my-radio" style="transform:scale(.8);outline:none" value="7">
+                                        </md-radio-button>
+                                        <span>
+                                            <b style="font-weight:bold">Two or More Races (Not Hispanic or Latino)</b> — All persons who identify with
+                                            more than one of the above races. </span>
+                                    </div>
+                                    <div layout-gt-sm="row" class="md-block" flex-gt-sm style="margin-bottom:10px">
+                                        <span style="text-transform: none;font-size: 14px;padding-left:4px;margin-top:5px;font-weight:bold">Decline to Answer :</span>
+                                        <div layout-gt-sm="row" class="md-block" flex-gt-sm style="margin-top:6px">
+                                            <md-radio-button class="my-radio" style="transform:scale(.8);margin-bottom:5px;margin-left:20px;outline:none" value="8">
+                                            </md-radio-button>
+                                            <span style="font-weight:bold">(Please check if you do not wish to participate)</span>
+                                        </div>
+                                    </div>
+                                </md-radio-group>
+                            </div>
+                            <div ng-if="(submitted && eeoForm.race.$untouched) || eeoForm.race.$touched" ng-messages="eeoForm.race.$error" role="alert">
+                                <div ng-message="required" style="font-size: 12px;color: rgb(221,44,0);">Please Select Race/Ethnic. It can't be blank</div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-content>
+
+</div>
+<md-divider></md-divider>
+<div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:0 20px" ng-style="{'height': vm.heightforCommonDetailsFooter}">
+    <div layout="row" layout-align="space-between center" flex>
+        <div>
+                <!-- ng-disabled="vm.disablePrevious" -->
+            <md-button class="addPageBtn primary" ng-click="vm.navigatePrevious()" style="color: white;" aria-label="Previous">
+                <ng-md-icon icon="arrow_back" tabindex="5" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <span>&nbsp; Previous</span>
+        </div>
+        <div>
+            <span>Skip &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.navigateNext()" style="color: white;" aria-label="Next">
+                <ng-md-icon icon="skip_next" tabindex="6" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+        </div>
+        <div ng-if="vm.checkCandidateSign">
+            <span>Submit & Sign &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.submitAndSign(eeoForm.$valid)" style="color: white;" aria-label="Skip">
+                <md-icon md-svg-icon="images/icons/signature_icon.svg" style="fill: white !important;margin: -5px 0 0 -6px;" class="signatureIconSvg"></md-icon>
+                <!-- <ng-md-icon icon="subdirectory_arrow_right" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon> -->
+            </md-button>
+        </div>
+        <div>
+            <span>Next &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.saveEEOForm(eeoForm.$valid)" style="color: white;" aria-label="Next">
+                <ng-md-icon icon="arrow_forward" tabindex="7" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+        </div>
+    </div>
+</div>
+<div class="LoaderDiv"  id="loader" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div> 

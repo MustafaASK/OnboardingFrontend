@@ -1,0 +1,23 @@
+<div flex>
+    <div flex layout="row" layout-xs="column" 
+        style="background-color:white;" 
+        layout-align="start start" ng-cloak>
+            <div layout="row" layout-xs="column" layout-align="start center" layout-padding style="margin-bottom: -13px;">
+                <span class="header-color">Reports</span>
+            </div>
+    </div>
+    <md-content md-center-tabs="true" class="nav-bar-color" style="overflow:inherit">
+    <md-tabs md-no-ink
+    md-dynamic-height=""
+    md-no-select-click
+    md-selected="currentNavItem"
+    aria-label="settings navigation links"
+    md-center-tabs="true" >
+    <md-tab ui-sref="Reports.Static"  label="Static"></md-tab>
+    <md-tab ui-sref="Reports.Dynamic"  label="Dynamic"></md-tab>
+    <!-- <md-tab ng-if="vm.isAdmin" ui-sref="Branding" label="Branding"></md-tab> -->
+</md-tabs>
+<md-divider></md-divider>
+</md-content>
+<div class="reports" flex layout="column" ui-view style="height: 80%;"></div>
+</div>

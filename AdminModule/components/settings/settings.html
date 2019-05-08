@@ -1,0 +1,50 @@
+<div flex layout="column" ng-cloak="">
+    <div class="main-container">
+        <span class="header-color">Settings</span>
+    </div>
+    <md-content class="nav-bar-color" style="overflow:inherit">
+        <!-- <md-nav-bar class="md-no-animation"
+            md-ink-ripple="false"
+            md-selected-nav-item="currentNavItem"
+            nav-bar-aria-label="settings navigation links" >
+            <md-nav-item md-nav-sref='GeneralSettings' name="GeneralSettings">
+                General Settings
+            </md-nav-item>
+            <md-nav-item md-nav-sref="ManageUsers" name="ManageUsers">
+                Users
+            </md-nav-item>
+            <md-nav-item md-nav-sref="Documents" name="Documents">
+                Documents
+            </md-nav-item>
+            <md-nav-item md-nav-sref="Folders" name="Folders">
+                Folders
+            </md-nav-item>
+            <md-nav-item md-nav-sref="EmailTemplates" name="EmailTemplates">
+                Email Templates
+            </md-nav-item>
+            <md-nav-item md-nav-sref="IntroPage" name="IntroPage">
+                Intro Page
+            </md-nav-item>
+            <md-nav-item md-nav-sref="Branding" name="Branding">
+                Branding
+            </md-nav-item>
+
+        </md-nav-bar> -->
+        <md-tabs md-no-ink
+            md-dynamic-height=""
+            md-no-select-click
+            md-selected="currentNavItem"
+            aria-label="settings navigation links" >
+            <md-tab ng-if="vm.isAdmin" ui-sref='Settings.GeneralSettings' label="General Settings"></md-tab>
+            <md-tab ng-if="vm.isAdmin" ui-sref="Settings.ManageUsers" label="Users"></md-tab>
+            <md-tab ui-sref="Settings.Documents" label="Documents"></md-tab>
+            <md-tab ui-sref="Settings.Folders" label="Folders"></md-tab>
+            <md-tab ui-sref="Settings.EmailTemplates" label="Email Templates"></md-tab>
+            <md-tab ui-sref="Settings.IntroPage" label="Intro Page"></md-tab>
+            <md-tab ng-if="vm.isAdmin" ui-sref="Settings.Branding" label="Branding"></md-tab>
+            <md-tab ng-if="vm.isAdmin" ui-sref="Settings.DesignWebforms" label="Design Webforms"></md-tab>
+        </md-tabs>
+        <md-divider></md-divider>
+    </md-content>
+    <div id="settingsid" class="motherOfAll" flex layout="column" ui-view="SettingsOptions" non-drop-area-icon></div>
+</div>

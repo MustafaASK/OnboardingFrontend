@@ -1,0 +1,30 @@
+<md-dialog class="myaccount-modal comments-modal">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;" layout="row" layout-align="space-between center"
+                layout-padding layout-wrap flex>
+                <h2><span class="comments-modal-title">Comments</span> to <span>reject offer letter</span></h2>
+                <span flex></span>
+                <md-button class="md-icon-button close" ng-click="vm.cancel()">X
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-divider></md-divider>
+        <md-content layout-padding>
+                <form name="myAccountForm" id="myAccountForm"  >
+                        <div layout="row" layout-align="start start" class="desc-block" >
+                            <md-input-container class="md-block" flex  >
+                                <label class="input-fields">Please add your comments</label>
+                                <textarea rows="4" ng-model="vm.comments" required md-autofocus></textarea>
+                            </md-input-container>
+                        </div>
+            </form>
+    </md-content>
+        <md-divider></md-divider>
+        <footer class="edit-intro-footer">
+            <div layout="row" layout-align="end center" flex>
+                <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+                <md-button class="md-primary md-raised" ng-click="rejectOfferLetter()" >Submit</md-button>
+                <md-button class="md-secondary" ng-click="vm.cancel()">Cancel</md-button>
+            </div>
+        </footer>
+    </md-dialog>

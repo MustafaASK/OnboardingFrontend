@@ -1,0 +1,143 @@
+<div class="general-settings-container" layout="column" layout-padding flex ng-cloak>
+    <div flex layout-padding>
+        <div layout="row" style="padding-bottom:20px;" flex>
+        </div>
+        <span class="child-page-header">General Settings</span>
+
+        <form name="GeneralSettingsForm">
+            <div layout="row" layout-gt-sm="row" flex>
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">Drug Passport Completion SLA Hrs</label>
+                    <input type='number' 
+                        name="dpcsla" 
+                        min=0 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        ng-model="vm.generalSettings.drugPPSLA"
+                        required>
+                    <div ng-if="(submitted && GeneralSettingsForm.dpcsla.$untouched) || GeneralSettingsForm.dpcsla.$touched" ng-messages="GeneralSettingsForm.dpcsla.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG067}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG068}}</div>
+                    </div>
+                </md-input-container>
+                <div flex="5"></div>
+
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">I9 Verification Completion SLA Hrs</label>
+                    <input type='number' 
+                        name="i9sla" 
+                        min=0 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        ng-model="vm.generalSettings.i9vsla"
+                        required>
+                    <div ng-if="(submitted && GeneralSettingsForm.i9sla.$untouched) || GeneralSettingsForm.i9sla.$touched" ng-messages="GeneralSettingsForm.i9sla.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG069}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG070}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-gt-sm="row" flex>
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">No. of Years Employment to be verified</label>
+                    <input type='number' 
+                        min=0 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        name="empCount" 
+                        ng-model="vm.generalSettings.empVyears">
+                    <div ng-messages="GeneralSettingsForm.empCount.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG071}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG078}}</div>
+                    </div>
+                </md-input-container>
+                <div flex="5"></div>
+
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">No. of Years Education to be verified</label>
+                    <input type='number' 
+                        min=1
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        name="eduCount" 
+                        ng-model="vm.generalSettings.eduVyears">
+                    <div ng-messages="GeneralSettingsForm.eduCount.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG072}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG078}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-gt-sm="row" flex>
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">No. of Years Address to be verified</label>
+                    <input type='number' 
+                        min=1 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        name="addressCount" 
+                        ng-model="vm.generalSettings.addVyears">
+                    <div ng-messages="GeneralSettingsForm.addressCount.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG073}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG078}}</div>
+                    </div>
+                </md-input-container>
+                <div flex="5"></div>
+
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">No. of References to be Added</label>
+                    <input type='number' 
+                        min=1 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        name="refCount" 
+                        ng-model="vm.generalSettings.noreferences">
+                    <div ng-messages="GeneralSettingsForm.refCount.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG074}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG079}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-gt-sm="row" flex>
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">Offer letter response SLA Hrs.</label>
+                    <input type='number' 
+                        min=0 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        name="offerLetterSLA" 
+                        ng-model="vm.generalSettings.offerlettersla">
+                    <div ng-messages="GeneralSettingsForm.offerLetterSLA.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG075}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG076}}</div> 
+                    </div>
+                </md-input-container>
+                <div flex="5"></div>
+
+                <md-input-container class="md-block" flex="30">
+                    <label class="input-fields">Onboarding process completion SLA Hrs.</label>
+                    <input type='number' 
+                        min=1 
+                        max=100 
+                        ng-pattern="/^[0-9.]*$/"
+                        name="processSLA" 
+                        ng-model="vm.generalSettings.obprocessSLA">
+                    <div ng-messages="GeneralSettingsForm.processSLA.$error" role="alert">
+                        <div ng-message="required">{{errorMsgs.MSG077}}</div>
+                        <div ng-message-exp="['min', 'max', 'pattern']">{{errorMsgs.MSG101}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<md-divider></md-divider>
+<div class="edit-intro-footer-style" layout="row" layout-align="end center">
+    <md-button class="md-raised md-primary" 
+        ng-click="vm.addGeneralSettings()">Save
+    </md-button>
+    <md-button class="md-secondary" 
+    ng-click="vm.resetGeneralSettings()">Cancel
+</md-button>
+</div>

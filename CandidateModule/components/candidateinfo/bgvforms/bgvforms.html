@@ -1,0 +1,280 @@
+<div class="bgv-form" style="overflow-y: auto;" ng-style="{'height': vm.heightforCommonDetails}">
+    <md-content style="overflow-y:auto;overflow-x:hidden;" class="templatearea_bgv">
+        <div layout="column" class="new-hire-personal-info-div" ng-if="employementFlag" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Employment History</span>
+                    <span class="cust-heading" style="float:right;    padding-right: 5px;"></span>
+                    <md-button class="addPageBtn primary" ng-click="vm.openEmpForm('emp-history', null)" title="Add Employer" style="color: white;float:right; margin:0px 5px 15px 0;" aria-label="Add Report">
+                        <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                    </md-button>
+                    <table class="tg" style="margin-top:10px;">
+                        <thead>
+                            <tr ng-if="vm.employementList.length">
+                                <th class="tg-qmme" align="left">Company/Organisation</th>
+                                <th class="tg-qmme" align="left">Job Title</th>
+                                <th class="tg-qmme" align="left">Start Date</th>
+                                <th class="tg-qmme" align="left">End Date</th>
+                                <th class="tg-qmme" align="left">Reason For Leaving</th>
+                                <th class="tg-qmme" align="left"></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="emp in vm.employementList" ng-if="vm.employementList.length">
+                                <td class="tg-yw4l tdbgv empcell1" ng-bind="emp.employername" title="{{emp.employername}}" style="width:12vw; max-width: 12vw;"></td>
+                                <td class="tg-yw4l tdbgv empcell2" ng-bind="emp.jobtitle" title="{{emp.jobtitle}}" style="width:12vw; max-width: 12vw;"></td>
+                                <td class="tg-yw4l tdbgv empcell3" ng-bind="emp.strtDate.split(' ')[0] | date: 'MM/dd/yyyy'" title="{{emp.strtDate.split(' ')[0] | date: 'MM/dd/yyyy'}}" style="width:7vw; max-width: 7vw;"></td>
+                                <td class="tg-yw4l tdbgv empcell4" ng-bind="emp.enDate.split(' ')[0] | date: 'MM/dd/yyyy'" title="{{emp.enDate.split(' ')[0] | date: 'MM/dd/yyyy'}}" style="width:7vw; max-width: 7vw;"></td>
+                                <td class="tg-yw4l tdbgv empcell5" ng-bind="emp.reasonleft" title="{{emp.reasonleft}}" style="width:15vw; max-width: 15vw;"></td>
+                                <td class="tg-yw4l" style="width:5vw; max-width:5vw;text-align: right; padding-right: 10px;">
+                                    <a href>
+                                        <span>
+                                            <!-- <i class="fa fa-edit" ng-click="vm.openEmpForm('emp-history',emp)"></i> -->
+                                            <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-click="vm.openEmpForm('emp-history',emp)" class="editBtnSvgBgv"></md-icon>
+                                        </span> 
+                                        |<span>
+                                            <!-- <i class="fa fa-trash" ng-click="vm.deleteObj('emp-history',emp.employmentid)"></i> -->
+                                            <md-icon md-svg-icon="images/icons/delete_icon.svg" ng-click="vm.deleteObj('emp-history',emp.employmentid)" class="deleteBtnSvgBgv"></md-icon>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!vm.employementList.length">
+                                <td class="tg-yw4l" colspan="6" align="center">No employment details are added</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-if="educationFlag" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Education History</span>
+                    <span class="cust-heading" style="float:right;    padding-right: 5px;"></span>
+                    <md-button class="addPageBtn primary" ng-click="vm.openEmpForm('education-history', null)" title="Add Education" style="color: white;float:right; margin:0px 5px 15px 0;" aria-label="Add Report">
+                        <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                    </md-button>
+                    <table class="tg" style="margin-top:10px;">
+                        <thead>
+                            <tr ng-if="vm.educationList.length">
+                                <!-- <th class="tg-qmme" align="left">Status</th> -->
+                                <th class="tg-qmme" align="left">School/University Name</th>
+                                <th class="tg-qmme" align="left">Address</th>
+                                <th class="tg-qmme" align="left">Attended Date From</th>
+                                <th class="tg-qmme" align="left">Attended End Date</th>
+                                <th class="tg-qmme" align="left">GPA</th>
+                                <th class="tg-qmme" align="left">Graduated</th>
+                                <th class="tg-qmme" align="left"></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="edu in vm.educationList" ng-if="vm.educationList.length">
+                                <td class="tg-yw4l tdbgv" ng-bind="edu.schoolunivattedned" title="{{edu.schoolunivattedned}}" style="width:12vw; max-width:12vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="edu.address" title="{{edu.address}}" style="width:15vw; max-width:15vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="edu.strtDate.split(' ')[0] | date: 'MM/dd/yyyy'" title="{{edu.strtDate.split(' ')[0] | date: 'MM/dd/yyyy'}}" style="width:7vw; max-width: 7vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="edu.enDate.split(' ')[0] | date: 'MM/dd/yyyy'" title="{{edu.enDate.split(' ')[0] | date: 'MM/dd/yyyy'}}" style="width:7vw; max-width: 7vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="edu.gpa" title="{{edu.gpa}}" style="width:4vw; max-width: 4vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="edu.graduated == 1 ? 'Yes' : (edu.graduated == 2 ? 'No' : '')" title="{{edu.graduated == 1 ? 'Yes' : (edu.graduated == 2 ? 'No' : '')}}" style="width:75px; max-width: 75px;"></td>
+                                <td class="tg-yw4l" style="width:5vw; max-width:5vw;text-align: right; padding-right: 10px;">
+                                    <a href>
+                                        <span>
+                                            <!-- <i class="fa fa-edit" ng-click="vm.openEmpForm('education-history',edu)"></i> -->
+                                            <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-click="vm.openEmpForm('education-history',edu)" class="editBtnSvgBgv"></md-icon>
+                                        </span> 
+                                        |<span>
+                                            <md-icon md-svg-icon="images/icons/delete_icon.svg" ng-click="vm.deleteObj('education-history',edu.educationid)" class="deleteBtnSvgBgv"></md-icon>
+                                            <!-- <i class="fa fa-trash" ng-click="vm.deleteObj('education-history',edu.educationid)"></i>-->                                            
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!vm.educationList.length">
+                                <td class="tg-yw4l" colspan="7" align="center">No education details are added</td>
+                            </tr>
+                            <!-- <tr>
+                                <td class="tg-yw4l">Done</td>
+                                <td class="tg-yw4l">Oxford</td>
+                                <td class="tg-yw4l">25-12-2009</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">MBA</td>
+                                <td class="tg-yw4l">edit</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-if="addressFlag" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Previous Address History</span>
+                    <span class="cust-heading" style="float:right;    padding-right: 5px;"></span>
+                    <md-button class="addPageBtn primary" ng-click="vm.openEmpForm('emp-address', null)" title="Add Address" style="color: white;float:right; margin:0px 5px 15px 0;" aria-label="Add Report">
+                        <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                    </md-button>
+                    <table class="tg" style="margin-top:10px;">
+                        <thead>
+                            <tr ng-if="vm.addressList.length">
+                                <th class="tg-qmme" align="left">Address</th>
+                                <th class="tg-qmme" align="left">Start Date</th>
+                                <th class="tg-qmme" align="left">End Date</th>
+                                <th class="tg-qmme" align="left"></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="addr in vm.addressList" ng-if="vm.addressList.length">
+                                <td class="tg-yw4l tdbgv" ng-bind="addr.address" title="{{addr.address}}" style="width:40vw; max-width: 40vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="addr.strtDate.split(' ')[0] | date: 'MM/dd/yyyy'" title="{{addr.strtDate.split(' ')[0] | date: 'MM/dd/yyyy'}}" style="width:7vw; max-width: 7vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="addr.enDate.split(' ')[0] | date: 'MM/dd/yyyy'" title="{{addr.enDate.split(' ')[0] | date: 'MM/dd/yyyy'}}" style="width:7vw; max-width: 7vw;"></td>
+                                <td class="tg-yw4l" style="width:5vw; max-width:5vw;text-align: right; padding-right: 10px;">
+                                    <a href>
+                                        <span>
+                                            <!-- <i class="fa fa-edit" ng-click="vm.openEmpForm('emp-address',addr)"></i> -->
+                                            <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-click="vm.openEmpForm('emp-address',addr)" class="editBtnSvgBgv"></md-icon>
+                                        </span> 
+                                        |<span>
+                                            <md-icon md-svg-icon="images/icons/delete_icon.svg" ng-click="vm.deleteObj('emp-address',addr.addressid)" class="deleteBtnSvgBgv"></md-icon>
+                                            <!-- <i class="fa fa-trash" ng-click="vm.deleteObj('emp-address',addr.addressid)"></i> -->
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!vm.addressList.length">
+                                <td class="tg-yw4l" colspan="4" align="center">No address details are added</td>
+                            </tr>
+                            <!-- <tr>
+                                <td class="tg-yw4l">KPHB</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">edit</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-yw4l">New York</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">edit</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-yw4l">California</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">25-12-2011</td>
+                                <td class="tg-yw4l">edit</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-if="referencesFlag" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">References</span>
+                    <span class="cust-heading" style="float:right;padding-right: 5px;"></span>
+                    <md-button class="addPageBtn primary" ng-click="vm.openEmpForm('emp-reference', null)" title="Add Reference" style="color: white;float:right; margin:0px 5px 15px 0;" aria-label="Add Report">
+                        <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                    </md-button>
+                    <table class="tg" style="margin-top:10px;">
+                        <thead>
+                            <tr ng-if="vm.referencsList.length">
+                                <th class="tg-qmme" align="left">Name</th>
+                                <th class="tg-qmme" align="left">Company or Organisation</th>
+                                <th class="tg-qmme" align="left">Relationship</th>
+                                <th class="tg-qmme" align="left">Email</th>
+                                <th class="tg-qmme" align="left">Phone</th>
+                                <th class="tg-qmme" align="left"></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="refer in vm.referencsList" ng-if="vm.referencsList.length">
+                                <td class="tg-yw4l tdbgv" ng-bind="refer.referalname" title="{{refer.referalname}}" style="width:12vw; max-width: 12vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="refer.company" title="{{refer.company}}" style="width:12vw; max-width: 12vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="refer.relationship" title="{{refer.relationship}}" style="width:12vw; max-width: 12vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="refer.email" title="{{refer.email}}" style="width:15vw; max-width: 15vw;"></td>
+                                <td class="tg-yw4l tdbgv" ng-bind="refer.phoneno" title="{{refer.phoneno}}" style="width:8vw; max-width: 8vw;"></td>
+                                <td class="tg-yw4l" style="width:5vw; max-width:5vw;text-align: right; padding-right: 10px;">
+                                    <a href>
+                                        <span>
+                                            <!-- <i class="fa fa-edit" ng-click="vm.openEmpForm('emp-reference',refer)"></i> -->
+                                            <md-icon md-svg-icon="images/icons/edit_icon.svg" ng-click="vm.openEmpForm('emp-reference',refer)" class="editBtnSvgBgv"></md-icon>
+                                        </span> 
+                                        |<span>
+                                            <md-icon md-svg-icon="images/icons/delete_icon.svg" ng-click="vm.deleteObj('emp-reference',refer.referencesid)" class="deleteBtnSvgBgv"></md-icon>
+                                            <!-- <i class="fa fa-trash" ng-click="vm.deleteObj('emp-reference',refer.referencesid)"></i> -->
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="!vm.referencsList.length">
+                                <td class="tg-yw4l" colspan="6" align="center">No references are added</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </md-content>
+</div>
+<md-divider></md-divider>
+<!-- <div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:0 20px" ng-style="{'height': vm.heightforCommonDetailsFooter}">
+    <div layout="row" layout-align="space-between center" flex>
+        <div>
+            <md-button class="addPageBtn primary" ng-disabled="vm.disablePrevious" ng-click="vm.navigatePrevious()" style="color: white;" aria-label="Previous">
+                <ng-md-icon icon="arrow_back" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <span>&nbsp; Previous</span>
+        </div>
+        <div>
+            <span>Skip &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-disabled="vm.disableSkip" ng-click="vm.navigateNext('skip')" style="color: white;" aria-label="Skip">
+                <ng-md-icon icon="skip_next" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+        </div>
+        <div>
+            <span>Next &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.navigateNext('next')" style="color: white;" aria-label="Next">
+                <ng-md-icon icon="arrow_forward" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+        </div>
+    </div>
+</div> -->
+<div class="edit-intro-footer-style" layout="row" layout-align="start center" style="padding:0 20px" ng-style="{'height': vm.heightforCommonDetailsFooter}">
+    <div layout="row" layout-align="space-between center" flex>
+        <div>
+            <md-button class="addPageBtn primary"  ng-click="vm.navigatePrevious()" style="color: white;" aria-label="Previous">
+                <ng-md-icon icon="arrow_back" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+            <span>&nbsp; Previous</span>
+        </div>
+        <div>
+            <span>Skip &nbsp;</span>
+            <md-button class="addPageBtn primary"  ng-click="vm.navigateNext('skip')" style="color: white;" aria-label="Skip">
+                <ng-md-icon icon="skip_next" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+        </div>
+        <div ng-if="vm.checkCandidateSign">
+            <span>Submit & Sign &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.submitAndSign('next')" style="color: white;" aria-label="Skip">
+                <!-- <ng-md-icon icon="subdirectory_arrow_right" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon> -->
+                <md-icon md-svg-icon="images/icons/signature_icon.svg" style="fill: white !important;margin: -5px 0 0 -6px;" class="signatureIconSvg"></md-icon>
+            </md-button>
+        </div>
+        <div>
+            <span>Next &nbsp;</span>
+            <md-button class="addPageBtn primary" ng-click="vm.navigateNext('next')" style="color: white;" aria-label="Next">
+                <ng-md-icon icon="arrow_forward" tabindex="1" style="fill: white;margin: -2px 0 0 -5px;" size="18"></ng-md-icon>
+            </md-button>
+
+        </div>
+    </div>
+</div>
+<div class="LoaderDiv"  id="loader123" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div> 

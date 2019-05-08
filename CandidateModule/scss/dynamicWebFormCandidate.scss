@@ -1,0 +1,151 @@
+.dyn-webform-dropzone-area-body {
+            background: #fff;
+            font-size: 14px;
+            .input-contain {
+                float: left;
+                .form-group {
+                    width: 95%;
+                    margin: 7px 0 7px 0;
+                    .md-button:hover > md-icon {
+                        fill: #9e9e9e !important;
+                    }
+                    .form-control{
+                        width:95%;
+                    }
+                    .md-errors-spacer{
+                       /* width: 100%;*/
+                        /*display: none !important;*/
+                        margin-right: 10px;
+                    }
+                    .md-input-message-animation{
+                        width:100%;
+                        transition: opacity 600ms, visibility 600ms;
+                        opacity: 1;
+                        display: block;
+                        visibility: visible;
+                    }
+                    .md-input-message-animation.ng-hide{
+                        display: block !important;
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+                    .md-datepicker-input-container{
+                        width:150px;
+                        margin-left: 0px;
+                    }
+                    .header-div{
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+                    .input-as-label {
+                        font-size: 13px;
+                        text-transform: capitalize;
+                    }
+                    label {
+                        font-size: 14px;
+                        text-transform: capitalize;
+                    }
+                    .gplace::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                        opacity: 0;
+                    }
+                    .gplace::-moz-placeholder { /* Firefox 19+ */
+                        opacity: 0;
+                    }
+                    // .gplace:-ms-input-placeholder { /* IE 10+ */
+                    // }
+                    .gplace:-moz-placeholder { /* Firefox 18- */
+                        opacity: 0;
+                    }
+                    md-radio-group {
+                        padding-top: 7px;
+                        md-radio-button {
+                            .md-off,
+                            .md-on {
+                                width: 17px;
+                                height: 17px;
+                                top: 4px;
+                            }
+                            .md-label {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                }
+                .form-group._md-datepicker-floating-label label{
+                    width: calc(100% - 74px);
+                }
+                md-input-container{
+                    padding-right: 12px;
+                }
+            }
+            
+            .flex-100 {
+                width: 100%;
+                max-height: inherit;
+                .form-group {
+                    width:100%;
+                    .form-control{
+                        width:98%;
+                    }
+                    .md-errors-spacer{
+                        margin-right: 20px;
+                    }
+                
+                }
+            }
+            .flex-50 {
+                width: 50%;
+                max-height: inherit;
+                .form-group {
+                    width:97%;
+                    .form-control{
+                        width:98%;
+                    }             
+                }
+            }
+            .flex-33{
+                -webkit-box-flex: 1;
+                -webkit-flex: 1 1 100%;
+                flex: 1 1 100%;
+                width: 33.33%;
+                max-width: 33.33%;
+                max-height: inherit;
+                box-sizing: border-box;
+                .form-group {
+                    .form-control{
+                        width:98%;
+                    }             
+                }
+            }
+            .flex-25 {
+                width: 25%;
+                max-height: inherit;
+            }
+            .flex-20 {
+                width: 20%;
+                max-height: inherit;
+            }
+            .input-contain.devider{
+                width: 100%;  
+                .form-group{
+                    padding: 10px;
+                    .divider-div-line{
+                        border: 1px solid #ecf0f1;
+                        width: 100%;
+    
+                    }
+                }
+            }
+            .input-contain.emptyspace{
+                width: 100%;  
+                .form-group{
+                    padding: 10px;
+                    .divider-div-line{
+                        border: none;
+                        width: 100%;
+    
+                    }
+                }
+            }
+        }
+

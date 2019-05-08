@@ -1,0 +1,123 @@
+<div class="initiate-schedule" style="overflow-x:hidden;">
+    <md-content class="template-area" layout-padding>
+        <form name="intiateonboard" id="intiateonboard" ng-submit="doSubmitForm(intiateonboard)" novalidate>
+            <!-- <div class="onboard-headings"><label style="margin:0">Subject</label></div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex class="onboard-subject">
+                        <input ng-model="vm.schedule.subject" class="subject-box" name="subject" required >
+                     </md-input-container>
+                </div> -->
+            <div layout-gt-xs="row">
+                <div flex="10" class="text-left">
+                    <label class="input-fields-label">Subject
+                        <span>*</span>
+                    </label>
+                </div>
+                <md-divider class="sub-divider"></md-divider>
+                <md-input-container flex class="onboard-subject">
+                    <input ng-model="vm.subject" class="subject-box" id="subject" name="subject" required ob-autofocus>
+                    <!-- <div ng-if="(submitted && intiateonboard.subject.$untouched) || intiateonboard.subject.$touched" ng-messages="intiateonboard.subject.$error" role="alert" style="font-size: 11px;">
+                            <div ng-message="required">Please enter Subject. It can’t be blank.</div>
+                            <div ng-message-exp="['md-maxlength']">{{errorMsgs.MSG027}}</div>
+                        </div> -->
+                </md-input-container>
+
+            </div>
+
+            <md-divider ng-class="{'required-border': (intiateonboard.subject.$touched && !intiateonboard.subject.$pristine && intiateonboard.subject.$error.required)}"></md-divider>
+            <div ng-if="(submitted && intiateonboard.subject.$untouched) || intiateonboard.subject.$touched" ng-messages="intiateonboard.subject.$error"
+                role="alert" style="color:#dd2c00; font-size:12px;">
+                <div ng-message="required">Please enter Subject. It can’t be blank.</div>
+            </div>
+            <br>
+            <div layout-gt-xs="row">
+                <div flex="35">
+                    <md-input-container class="schedulemin md-block md-input-has-placeholder" flex="90">
+                        <label class="labelstyle">Start Date & Time</label>
+                        <input mdc-datetime-picker="" name="starttime" date="true" time="true" type="text" id="time" short-time="true" show-todays-date
+                            click-outside-to-close="true" placeholder="" auto-ok="true" required min-date="myDate" show-icon="true"
+                            max-date="dateTimeEnd" edit-input="true" ng-model="dateTimeStart" class="inputstyle">
+                        <div class="md-errors-spacer" style="float:left !important; padding-left:30px;">
+                            <div ng-if="(submitted && intiateonboard.starttime.$untouched) || intiateonboard.starttime.$touched" ng-messages="intiateonboard.starttime.$error"
+                                role="alert" style="color:#dd2c00">
+                                <div ng-message="required">Please enter Start date & time</div>
+                                <div ng-message="max">Start date should be less than End date</div>
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div flex="35" style="margin-left:-20px;">
+                    <md-input-container class="schedulemin md-block md-input-has-placeholder" flex="90">
+                        <label class="labelstyle">End Date & Time</label>
+                        <input mdc-datetime-picker="" name="endtime" date="true" time="true" type="text" id="input_1" short-time="true" show-todays-date
+                            click-outside-to-close="true" show-icon="true" placeholder="" auto-ok="true" min-date="dateTimeStart"
+                            edit-input="true" ng-model="dateTimeEnd" class="inputstyle" required>
+                        <div class="md-errors-spacer" style="float:left !important; padding-left:30px;">
+                            <div ng-if="(submitted && intiateonboard.endtime.$untouched) || intiateonboard.endtime.$touched" ng-messages="intiateonboard.endtime.$error"
+                                role="alert" style="color:#dd2c00">
+                                <div ng-message="required">Please enter End date & time</div>
+                                <div ng-message="min">End date should be greater than Start date</div>
+                            </div>
+                        </div>
+                        <!-- ng-disabled="!dateTimeStart" -->
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="class">
+                <h3 class="headingstyle">Meeting Agenda *</h3>
+            </div>
+            <br>
+            <div>
+                <!-- <ng-quill-editor required ng-model="vm.schedule.body" tabindex="5" on-editor-created="editorCreated(editor)" name="scheduleemail">
+                    <ng-quill-toolbar>
+                        <div id="ng-quill-toolbar" style="border-bottom:none;">
+                            <span class="ql-formats">
+                                <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
+                                <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
+                                <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-align" ng-attr-title="{{'Aligment'}}">
+                                    <option selected></option>
+                                    <option value="center"></option>
+                                    <option value="right"></option>
+                                    <option value="justify"></option>
+                                </select>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered" ng-attr-title="{{'Ordered'}}"></button>
+                                <button class="ql-list" value="bullet" ng-attr-title="{{'Bullet'}}"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-link" ng-attr-title="{{'Link'}}"></button>
+                                <button class="ql-image" ng-attr-title="{{'Image'}}"></button>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor> -->
+                <ng-ckeditor required ng-model="vm.schedule.body" skin="moono-lisa" name="scheduleemail" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                    remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+                <div style="font-size: 12px;color: #dd2c00;" ng-if="!vm.schedule.body && ( (submitted && intiateonboard.scheduleemail.$untouched) || (intiateonboard.scheduleemail.$touched ) )">
+                    Please enter Email Template. It can’t be blank.
+                </div>
+                <div layout="row" layout-align="end center" style="margin-top:-10px;" layout-padding>
+                    <!-- <span class="counter" style="margin-right:-15px;">{{counter()}} / 1000</span> -->
+                    <span class="counter">{{ vm.htmlToPlaintext(vm.schedule.body).length ? vm.htmlToPlaintext(vm.schedule.body).length : '0'}} / 1000</span>
+                </div>
+            </div>
+            <br>
+            <div layout="row" layout-align="end center" flex>
+                <md-button class='md-primary md-raised' tabindex="5" type="submit">Send
+                </md-button>
+                <md-button class='md-secondary' tabindex="6" ui-sref="NewHires">Cancel
+                </md-button>
+            </div>
+        </form>
+    </md-content>
+
+</div>
+<div class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

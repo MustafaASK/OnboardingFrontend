@@ -1,0 +1,229 @@
+<div style="overflow:hidden;" flex>
+    <div flex layout="row" layout-xs="column" style="background-color:white;" ng-style="{'height': vm.headerHeight}"
+        layout-align="start start" ng-cloak>
+        <div layout="column" layout-padding flex>
+            <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+                <!-- {{UserInfo.roles}} {{UserInfo.isAdmin}} -->
+                <div layout="row" flex="20">
+                    <span class="header-color">New Hires</span>
+                    <md-button class="addPageBtn primary" ui-sref="AddNewHire" aria-label="Add Report" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">
+                        <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                    </md-button>
+                </div>
+                <div layout="row" layout-align="end center" flex ng-if="vm.newHires.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)">
+                    <form name="filterbyForm" ng-submit="vm.filterNewHiresBy()" flex="25">
+                        <div layout="row" layout-align="start center" class="filterBoxNewHires">
+                            <md-icon md-svg-icon="images/icons/filter_icon.svg" class="filterIconSvg"></md-icon>
+                            <md-input-container class="md-block" style="margin: -5px -10px 0 5px;">
+                                <!-- <label class="input-fields">Filter by</label> -->
+                                <md-select name="filterby" class="md-no-underline" aria-label="filterOptions" ng-init="vm.filter = 'modifydt'"
+                                    ng-model="vm.filter" md-container-class="filterSelect">
+                                    <!-- <md-option><em>None</em></md-option> -->
+                                    <md-option ng-repeat="item in vm.filters" ng-value="item.key">{{item.value}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </form>
+                    <form name="searchForm" ng-show="vm.newHiresSearch" ng-submit="vm.searchNewHiresBy()" style="margin-left:20px"
+                        flex="65" ng-style="{'margin-top' : vm.ieMarginTopForAdvSrch}">
+                        <div layout="row" layout-align="start center" style="max-height: 30px;margin-top:5px;" flex="100">
+                            <md-select id="selectCategory" name="selectCategoryDrpDown" ng-model="vm.searchCategory"
+                                class="md-no-underline" style="border:1px solid #cbcbcb ;width:50%;border-top-left-radius: 3px;border-bottom-left-radius: 3px;max-height: 30px;padding-left:10px"
+                                flex="30">
+                                <md-option value="fullName">New Hire Name</md-option>
+                                <md-option value="clientname">Assigned Client Name</md-option>
+                                <md-option value="status">New Hire Status</md-option>
+                                <md-option value="jobtitle">Job Title</md-option>
+                            </md-select>
+                            <div layout="row" style="max-height: 30px;margin-top:-5px;border-bottom: 1px solid #cbcbcb;border-right: 1px solid #cbcbcb;border-top: 1px solid #cbcbcb;border-top-right-radius: 3px;border-bottom-right-radius: 3px"
+                                flex="70" ng-style="{'margin-top' : vm.ieMarginTopForAdvSrchText}">
+                                <md-input-container style="margin:-2px -20px -20px 5px;" flex>
+                                    <label class="input-fields"></label>
+                                    <input id="search-box" name="searchby" type="search" class="md-no-underline"
+                                        ng-pattern="/^[a-zA-Z0-9-_ ]+$/" ng-model="vm.filterby" style="border-width: 0px;height:25px;" />
+                                </md-input-container>
+                                <!-- <md-button class="md-icon-button" aria-label="Search" style="margin-top:-3px;height: 30px;padding: 0px;" flex="10">
+                                    <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg"></md-icon>
+                                </md-button> -->
+                            </div>
+                            <!-- <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;margin-top:-10px">
+                                <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+                            </div> -->
+                        </div>
+                    </form>
+                    <md-button class="md-icon-button" aria-label="Search" ng-click="vm.newHiresSearchBoxDisplay()">
+                        <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg"></md-icon>
+                    </md-button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div flex layout="row" layout-xs="column" style="overflow-y:auto;" ng-style="vm.contentHeight" layout-align="start start"
+        ng-cloak>
+        <!-- {{(vm.newHires | filter : {fullName : vm.searchbyName , clientname: vm.searchbyClient, statusName : vm.searchbyStatus , jobtitle : vm.searchbyJobTitle}).length != 0 }}{{ (UserInfo.isAdmin || vm.rolesData.viewflag)}} -->
+        <md-content layout="row" layout-align="start center" style="padding:10px;overflow:hidden;width:100%" ng-if="(vm.newHires | filter : {fullName : vm.searchbyName , clientname: vm.searchbyClient, statusName : vm.searchbyStatus , jobtitle : vm.searchbyJobTitle}).length != 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)"
+            layout-wrap>
+            <md-card class="wf-card" style="width:2.75in;height:1in;background:white;" ng-repeat="newHires in filteredNewHires =
+            (vm.newHires | filter : {fullName : vm.searchbyName , clientname: vm.searchbyClient , statusName : vm.searchbyStatus , jobtitle : vm.searchbyJobTitle}) | orderBy: vm.filter : (vm.filter == 'modifydt' || vm.filter == 'createddt' ? true : false)
+            | limitTo: newHiresPerPage : newHiresPerPage * (vm.currentPage-1)">
+                <div layout="column" title="{{newHires.stopOnboardingReason ? vm.stopOnboardingText + newHires.stopOnboardingReason : angular.noop()}}" flex>
+                    <!-- <div layout="row" layout-align="start center" style="height:100%;" layout-padding>
+                        <div class="profilePic__container__newhires">
+                            <span>{{newHires.nickname}}</span>
+                        </div>
+                    </div> -->
+                    <div layout="row" flex style="padding-top:10px;">
+                        <h3 class="md-body-1" style="font-size:18px;margin:0px;padding:10px 0px 10px 20px;" ng-if="newHires.status==1 || newHires.status == 9 || newHires.status == 4"
+                            title="{{newHires.fullName}}">{{ newHires_short_name(newHires.fullName) }}</h3>
+                        <h3 class="md-body-1" style="font-size:18px;margin:0px;padding:10px 0px 10px 20px;" ng-if="newHires.status!=1 && newHires.status != 9 && newHires.status != 4">
+                            <a href ng-click="vm.gotoinitialize(newHires)" title="{{newHires.fullName}}">{{
+                                newHires_short_name(newHires.fullName) }}</a>
+                                
+                        </h3>
+                        <div layout="row" layout-align="end start" flex>
+                            <!-- (newHires.status==1 || (vm.rolesData.edit || vm.rolesData.deleteflag)) || UserInfo.isAdmin -->
+                            <!-- (newHires.status==1 && vm.rolesData.addflag && vm.rolesData.edit) || vm.rolesData.deleteflag || UserInfo.isAdmin -->
+                            <!-- ng-if="newHires.status==1  && (vm.rolesData.deleteflag || UserInfo.isAdmin)" -->
+                            <md-menu>
+                                <md-button class="md-icon-button" style="margin: -10px -5px 0 0;" title="Options" ng-click="$mdMenu.open()">
+                                    <md-icon md-svg-icon="images/icons/more_menu_icon.svg" md-menu-origin class="moreMenuBtnSvg"
+                                        style="fill:#44b3c2;cursor:pointer;">
+                                    </md-icon>
+                                </md-button>
+                                <md-menu-content width="2.5" ng-mouseleave="$mdMenu.close()">
+                                    <md-menu-item>
+                                        <md-button class="edit-button" ng-click="vm.viewNewHire($event, newHires.newhireid)">
+                                            <md-icon md-svg-icon="images/icons/preview1_icon.svg" class="editBtnSvg"></md-icon>
+                                            View 
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="newHires.status==1 && (vm.sendOfferData.addflag || UserInfo.isAdmin)"></md-divider>
+                                    <md-menu-item ng-if="newHires.status==1 && (vm.sendOfferData.addflag || UserInfo.isAdmin)">
+                                        <md-button class="edit-button" ng-click="vm.gotoinitialize(newHires)">
+                                            <md-icon md-svg-icon="images/icons/initiate_ico.svg" class="editBtnSvg"></md-icon>
+                                            Initiate Onboard
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="newHires.status==1"></md-divider>
+                                    <md-menu-item ng-if="newHires.status==1 && (vm.rolesData.edit || UserInfo.isAdmin)">
+                                        <md-button class="edit-button" ng-click="vm.editNewHire(newHires.newhireid)">
+                                            <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="vm.rolesData.deleteflag || UserInfo.isAdmin"></md-divider>
+                                    <md-menu-item ng-if="newHires.status==1  && (vm.rolesData.deleteflag || UserInfo.isAdmin)">
+                                        <md-button class="delete-button" ng-click="vm.showDeleteConfirm($event, newHires.newhireid, newHires.fullName)">
+                                            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                                            Delete
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="newHires.status==1"></md-divider>
+                                    <md-menu-item>
+                                        <md-button class="edit-button" ng-click="vm.downloadExcel($event, newHires)">
+                                            <md-icon md-svg-icon="images/icons/xlsx_92_icon.svg" class="editBtnSvg"></md-icon>
+                                            Download Excel
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ></md-divider>
+                                    <md-menu-item ng-if="newHires.status != 1 && newHires.status != 4 && newHires.status != 9 && (vm.stopOnboardData.addflag || UserInfo.isAdmin)">
+                                        <md-button class="edit-button" ng-click="vm.stopOnboarding($event, newHires.newhireid ,newHires.fullName )">
+                                            <md-icon md-svg-icon="images/icons/stop_circle_icon.svg" class="editBtnSvg" style="fill:#d75a5a;transform: scale(1.1);"></md-icon>
+                                            Stop Onboarding
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                    </div>
+                    <div id="newHires{{newHires.newhireid}}"  style="height:100%" layout="row" layout-align="start center"
+                        flex>
+                        <div layout="column" style="height:100%;padding-left:20px;" flex>
+                            <div layout="row">
+                                <div layout="row" layout-align="start start" flex class="newhireStatusBox {{getClassByStatus(newHires)}}"
+                                    style="padding-top:2px;">
+                                    <span >{{newHires.statusName}}</span>
+                                </div>
+                                <div layout="row" layout-align="end start" style="padding-left: 25px;" flex>
+                                    <!-- <md-icon md-svg-icon="images/icons/time_icon.svg" class="timerIconSvg" style="margin:0px 0px 0px 0px;"></md-icon> -->
+                                    <span layout="row" layout-align="start start" style="margin:5px 0px 20px 0px;font-size:11px;color:#9e9e9e"
+                                        flex>{{newHires.modifyDateFormat | date: "EEE, MMM dd',' yyyy',' hh:mm a" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </md-card>
+
+        </md-content>
+        <md-content layout="row" layout-align="start center" style="padding:10px;overflow:hidden;width:100%;display:inline-block"
+            ng-if="(vm.newHires | filter : {fullName : vm.searchbyName , clientname: vm.searchbyClient, statusName : vm.searchbyStatus , jobtitle : vm.searchbyJobTitle}).length == 0 && (vm.searchbyName || vm.searchbyClient || vm.searchbyStatus || vm.searchbyJobTitle)"
+            layout-wrap flex>
+            <div layout="row" layout-align="center center" flex>
+                <div class="filter-message">
+                    <img src="images/no_results_img.png" style="padding-top: 70px;" />
+                </div>
+            </div>
+        </md-content>
+        <md-content layout="row" layout-align="start center" style="padding:10px;width:100%" ng-if="vm.newHires.length == 0 && (UserInfo.isAdmin || vm.rolesData.viewflag) && !loading"
+            layout-wrap flex>
+            <div layout="column" layout-align="center center" layout-padding flex>
+                <img src="images/workflow_img.png" />
+                <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+                <div flex="5"></div>
+                <div align="center" ng-if="vm.newHires.length == 0">
+                    <md-button ng-if="UserInfo.isAdmin || vm.rolesData.addflag" class="md-primary md-raised" ui-sref="AddNewHire"
+                        style="min-width:150px;">Create New Hire
+                    </md-button>
+                </div>
+                <div flex="5"></div>
+
+                <div class="no-workflows">
+                    <p class="pbold">No New Hires created</p>
+                    <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        ex ea commodo
+                    </p> -->
+                </div>
+            </div>
+        </md-content>
+        <md-content layout="row" layout-align="start center" style="padding:10px;" ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)"
+            layout-wrap flex>
+            <div layout="column" layout-align="center center" layout-padding flex>
+                <img src="images/workflow_img.png" style="padding-top: 70px;" />
+                <!-- <md-icon md-svg-src='images/workflow_img.svg' style="width:298px;height:223px;"></md-icon> -->
+                <div flex="5"></div>
+                <div align="center" ng-if="vm.workflows.length == 0">
+                    <md-button class="md-primary md-raised" ui-sref="AddWorkflow" style="min-width:150px;" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">Create
+                        Workflow
+                    </md-button>
+                </div>
+                <div flex="5"></div>
+
+                <div class="no-workflows">
+                    <p class="pbold">You dont have permissions to view any New Hire</p>
+                    <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo
+                    </p> -->
+                </div>
+            </div>
+        </md-content>
+    </div>
+
+</div>
+<div ng-if="totalPages((vm.newHires | filter: {fullName : vm.searchbyName , clientname: vm.searchbyClient, statusName : vm.searchbyStatus ,jobtitle : vm.searchbyJobTitle}).length) > 1 && (UserInfo.isAdmin || vm.rolesData.viewflag) "
+    layout="row" layout-xs="column">
+    <cl-paging flex cl-pages="vm.paging.total" cl-steps="6" cl-page-changed="vm.paging.onPageChanged()" cl-align="end center"
+        cl-current-page="vm.paging.current">
+    </cl-paging>
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

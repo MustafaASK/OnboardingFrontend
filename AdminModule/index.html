@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html ng-app="OnBoarding" version="1.0.0">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11"/> -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> -->
+    <title>Onboarding</title>
+
+    <!-- build:css css/styles.css -->
+    <link href="shared/directives/md-color-picker/mdColorPicker.css" rel="stylesheet" />
+    <!-- <link href="../node_modules/angular-material-event-calendar/dist/angular-material-event-calendar.css" rel="stylesheet" /> -->
+    <link href="css/fullcalendar.css" rel="stylesheet" />
+    <!-- <link href="../node_modules/quill/dist/quill.snow.css" rel="stylesheet" /> -->
+    <link href="../node_modules/angular-material/angular-material.css" rel="stylesheet" />
+    <link href="../node_modules/angular-material-time-picker/dist/md-time-picker.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../node_modules/ng-material-datetimepicker/dist/material-datetimepicker.min.css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/icon.css" rel="stylesheet"> -->
+    <link href="../node_modules/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/customizeStyles.css">
+    <link rel="stylesheet" type="text/css" href="css/candidate.css">
+    <link rel="stylesheet" type="text/css" href="css/hireInfo.css">
+    <link rel="stylesheet" type="text/css" href="css/initiateOnBoarding.css">
+    <link rel="stylesheet" type="text/css" href="css/manageAccount.css">
+    <link rel="stylesheet" type="text/css" href="css/dynamicWebForm.css">
+    <link rel="stylesheet" type="text/css" href="shared/directives/configDragAndDrop/simple.css">
+
+
+
+    <!-- endbuild -->
+    <link href="css/branding/branding.css" rel="stylesheet" />
+
+</head>
+
+<body ng-cloak layout="row">
+    <div flex="100" layout="column">
+        <div flex layout="row" class="main">
+            <md-button ng-if="UserInfo && !isCandidate" class="menu md-icon-button" hide-gt-sm ng-click="$root.isSideNavVisible = !$root.isSideNavVisible"
+                aria-label="Show Menu">
+                <ng-md-icon icon="menu"></ng-md-icon>
+            </md-button>
+            <md-sidenav id="ob-side-nav" ng-if="UserInfo && !isCandidate" class="md-whiteframe-4dp onboarding-side-nav"
+                md-is-locked-open="$mdMedia('gt-sm')" hide-print md-component-id="left" md-is-open="$root.isSideNavVisible">
+                <div id="container1" class="menu-container foo" flex layout="row" ng-controller="NavigationController as vm">
+                    <div flex class="main-menu" layout="column" class="menuColor" ng-if="UserInfo && !isCandidate">
+                        <div class="menu-header">
+                            <div ng-if="!vm.tempLogo" class="logo-and-title" layout="row" layout-align="center center">
+                                <img ng-src="{{LogoImagesURL}}" style="width:150px;height:50px;">
+                            </div>
+                            <div ng-if="vm.tempLogo" class="logo-and-title" layout="row" layout-align="center center">
+                                <img ng-src="{{vm.tempLogo}}" style="width:150px;height:50px;">
+                            </div>
+                            <!-- src="{{get_profilepic(UserInfo.ProfilePic)}}" -->
+                            <div class="profile-pic" layout="row" layout-align="center center">
+                                <md-menu md-offset="80 30">
+                                    <!-- <img id="pic-{{UserInfo.ID}}" class="nav-profile-pic" style="cursor:pointer" src='images/profile.png' onerror="this.src='images/profile.png'"
+                                        ng-click="$mdMenu.open()" /> -->
+                                    <!-- <img id="pic-{{UserInfo.ID}}" class="nav-profile-pic" style="cursor:pointer" ng-src='{{fileThumb ? fileThumb : "images/profile.png"}}' ng-error="this.src='images/profile.png'"
+                                            ng-click="$mdMenu.open()" /> -->
+
+                                    <img id="pic-{{UserInfo.ID}}" class="nav-profile-pic" style="cursor:pointer"
+                                        ngf-thumbnail="fileThumb" ng-error="this.src='images/profile.png'" ng-click="$mdMenu.open()">
+                                    <!-- <img  ng-show="fileThumb === ''" id="pic-{{UserInfo.ID}}" class="nav-profile-pic" style="cursor:pointer" ng-src="fileAnother"  ng-error="this.src='images/profile.png'" ng-click="$mdMenu.open()" > -->
+                                    <!-- <img id="pic-{{UserInfo.ID}}" ng-show="!fileThumb" class="nav-profile-pic" style="cursor:pointer" src='images/profile.png' onerror="this.src='images/profile.png'"
+                                                ng-click="$mdMenu.open()" /> -->
+                                    <md-menu-content width="2" ng-mouseleave="$mdMenu.close()" class="{{vm.profileMenuClass}}">
+                                        <md-menu-item style="margin-top:-5px;" ng-if="!UserInfo.isAdmin">
+                                            <md-button md-force-height="'15px'" ng-click="vm.showMyAccount($event)">
+                                                My Account
+                                            </md-button>
+                                        </md-menu-item>
+                                        <!-- <md-menu-item ng-if="!UserInfo.isAdmin" style="margin-top:-15px;">
+                                            <md-button md-force-height="'15px'">
+                                                Notifications
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item ng-if="UserInfo.isAdmin" style="margin-top:-5px;">
+                                            <md-button md-force-height="'15px'">
+                                                Notifications
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item style="margin-top:-15px;">
+                                            <md-button md-force-height="'15px'">
+                                                Help
+                                            </md-button>
+                                        </md-menu-item> -->
+                                        <md-divider style="margin-bottom:10px;margin-top:-5px;"></md-divider>
+                                        <md-menu-item style="margin:-15px 0 0 0;">
+                                            <md-button ng-click="vm.signOut()" md-force-height="'15px'">
+                                                <!-- <ng-md-icon icon="" class="cust-button-color"></ng-md-icon> -->
+                                                Sign Out
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <!-- <label class="user-name">{{UserInfo.FirstName}}</label> -->
+                                <label class="user-name" title="{{UserInfo.FirstName}} {{UserInfo.LastName}}">{{UserInfo.FirstName}}
+                                    {{UserInfo.LastName}}</label>
+                                <!-- <label class="user-designation"  ng-if="UserInfo.isAdmin">Administrator</label> -->
+                                <label class="user-designation" ng-if="!isAccountManager">{{UserInfo.isAdmin ?
+                                    'Administrator' : 'HR User'}}</label>
+                                <label class="user-designation" ng-if="isAccountManager">Account Manager</label>
+                            </div>
+                        </div>
+                        <ul flex layout="column" class="side-menu" ng-show="!isAccountManager">
+                            <!-- <li class="menu-item" flex ng-repeat="menu in vm.MenuItems" ui-sref-active="active" style="padding:0px">
+                                <a ui-sref="{{menu.State}}" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}" layout-align="start center"
+                                    ui-sref-opts="{reload:true}" flex>
+                                    <md-icon class="{{updateIconClass(menu.Title)}}" md-svg-icon="{{menu.Svg}}"></md-icon>
+                                    <span style="padding-left: 14px;">{{menu.Title}}</span>
+                                </a>
+                            </li> -->
+                            <li class="menu-item" flex ui-sref-active="active" style="padding:0px">
+                                <a ui-sref="Dashboard" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}"
+                                    layout-align="start center" ui-sref-opts="{reload:true}" flex>
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass('DASHBOARD')}}" md-svg-icon="images/icons/dashboard_icon.svg"></md-icon>
+                                    <span style="padding-left: 14px;">DASHBOARD</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" flex ui-sref-active="{ 'active': 'NewHires' }" style="padding:0px">
+                                <a ui-sref="NewHires" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}"
+                                    layout-align="start center" ui-sref-opts="{reload:true}" flex>
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass('NEW HIRES')}}" md-svg-icon="images/icons/newhire_icon.svg"></md-icon>
+                                    <span style="padding-left: 14px;">NEW HIRES</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" flex ui-sref-active="active" style="padding:0px">
+                                <a ui-sref="Tasks" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}"
+                                    layout-align="start center" ui-sref-opts="{reload:true}" flex>
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass('TASKS')}}" md-svg-icon="images/icons/tasks_icon.svg"></md-icon>
+                                    <span style="padding-left: 14px;">TASKS</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" flex ui-sref-active="active" style="padding:0px">
+                                <a ui-sref="Workflows" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}"
+                                    layout-align="start center" ui-sref-opts="{reload:true}" flex>
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass('WORKFLOWS')}}" md-svg-icon="images/icons/workflow_icon.svg"></md-icon>
+                                    <span style="padding-left: 14px;">WORKFLOWS</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" flex ui-sref-active="{ 'active': 'Settings' }" style="padding:0px">
+                                <a ui-sref="Settings.GeneralSettings" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}"
+                                    layout-align="start center" ui-sref-opts="{reload:true}" flex>
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass('SETTINGS')}}" md-svg-icon="images/icons/settings_icon.svg"></md-icon>
+                                    <span style="padding-left: 14px;">SETTINGS</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" flex ui-sref-active="{ 'active': 'Reports' }" style="padding:0px">
+                                <a ui-sref="Reports.Static" layout="row" style="padding-left: 20px;" ng-style="{'padding-top':vm.sideMenuPaddingTop}"
+                                    layout-align="start center" ui-sref-opts="{reload:true}" flex>
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass('REPORTS')}}" md-svg-icon="images/icons/reports_icon.svg"></md-icon>
+                                    <span style="padding-left: 14px;">REPORTS</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </md-sidenav>
+            <md-button ng-if="CandidateInfo && isCandidate" class="menu md-icon-button" hide-gt-sm ng-click="$root.isSideNavVisible = !$root.isSideNavVisible"
+                aria-label="Show Menu">
+                <ng-md-icon icon="menu"></ng-md-icon>
+            </md-button>
+            <md-sidenav id="ob-side-nav" ng-if="isCandidate && CandidateInfo" class="md-whiteframe-4dp onboarding-side-nav onboarding-candidate-side-nav"
+                md-is-locked-open="$mdMedia('gt-sm')" hide-print md-component-id="left" md-is-open="$root.isSideNavVisible">
+                <div id="container1" class="menu-container foo" flex layout="row" ng-controller="NavigationController as vm">
+
+                    <div flex class="main-menu" layout="column" class="menuColor" ng-if="isCandidate">
+                        <div class="menu-header">
+                            <div ng-if="!vm.tempLogo" class="logo-and-title" layout="row" layout-align="center center">
+                                <img ng-src="{{LogoImagesURL}}" style="width:150px;height:50px;">
+                            </div>
+                            <div ng-if="vm.tempLogo" class="logo-and-title" layout="row" layout-align="center center">
+                                <img ng-src="{{vm.tempLogo}}" style="width:150px;height:50px;">
+                            </div>
+                            <!-- src="{{get_profilepic(UserInfo.ProfilePic)}}" -->
+                            <div class="profile-pic-candidate" layout="row" layout-align="center center">
+                                <md-menu md-offset="80 30">
+                                    <img id="pic-{{UserInfo.ID}}" class="nav-profile-pic-candidate" style="cursor:pointer"
+                                        src='images/profileCandidate.png' onerror="this.src='images/profile.png'"
+                                        ng-click="$mdMenu.open()" />
+                                    <md-menu-content width="2" class="candidate-profile-menu {{vm.profileMenuClass}}">
+                                        <!-- <md-menu-item style="margin-top:-5px;">
+                                            <md-button md-force-height="'15px'">
+                                                Notifications
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item style="margin-top:-15px;">
+                                            <md-button md-force-height="'15px'">
+                                                Help
+                                            </md-button>
+                                        </md-menu-item> -->
+                                        <md-divider style="margin-bottom:10px;margin-top:-5px;"></md-divider>
+                                        <md-menu-item style="margin:-15px 0 0 0;">
+                                            <md-button ng-click="vm.candidateSignOut()" md-force-height="'15px'">
+                                                <!-- <ng-md-icon icon="" class="cust-button-color"></ng-md-icon> -->
+                                                Sign Out
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <!-- <label class="user-name">{{UserInfo.FirstName}}</label> -->
+                                <label class="user-name" title="{{vm.updatedCandName}}" ng-if="vm.updatedCandName">{{vm.updatedCandName}}</label>
+                                <label class="user-name" title="{{CandidateInfo.firstname}} {{CandidateInfo.lastname}}"
+                                    ng-if="!vm.updatedCandName">{{CandidateInfo.firstname}} {{CandidateInfo.lastname}}</label>
+                                <label class="user-designation1" ng-hide="true">
+                                    <i class="fa fa-envelope"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <ul class="side-menu" style="overflow:inherit;margin-top:50px !important">
+                            <li class="menu-item" flex ng-repeat="menu in vm.candidateMenuItems" ng-disabled="(CandidateInfo.AddressFlag && CandidateInfo.bgvAddressflag) && (CandidateInfo.Educationflag && CandidateInfo.bgvEducationflag) && (CandidateInfo.Employementflag && CandidateInfo.bgvEmployementflag) && ( CandidateInfo.Referencesflag && CandidateInfo.bgvReferencesflag )
+                             && (CandidateInfo.Ddflag && CandidateInfo.bgvPayrollflag && CandidateInfo.catgid == 1) &&  (CandidateInfo.Contractorflag && CandidateInfo.bgvContractorflag && CandidateInfo.catgid != 1) && (CandidateInfo.Eeoflag && CandidateInfo.bgvEeoflag && CandidateInfo.catgid == 1)"
+                                ui-sref-active="active">
+                                <!-- ui-sref="{{menu.State}}" ng-click="vm.goToCandidateDB()"-->
+                                <a ui-sref="{{menu.State}}" layout="row" style="padding-left: 20px;" layout-align="start center"
+                                    ui-sref-opts="{reload:true}" flex ng-class="{'disabled':((!vm.disableDashboardButton && menu.State=='candidate.dashboard') || vm.rejectedOffer)}">
+                                    <!-- <ng-md-icon ng-if="menu.Icon" icon="{{menu.Icon}}" class="{{menu.IconClasses}}"></ng-md-icon>
+                                    <img ng-if="menu.Image" src={{menu.Image}} /> -->
+                                    <md-icon class="{{updateIconClass(menu.Title)}}" md-svg-icon="{{menu.Svg}}"></md-icon>
+                                    <span style="padding-left: 14px;">{{menu.Title}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </md-sidenav>
+            <md-content layout="column" flex>
+                <div flex layout="row" ui-view style="overflow-y: auto;"></div>
+                <div id="copyrights-footer" class="copyrights-content" layout="row" layout-align="space-between center"
+                    ng-if="CopyrightsFooter" ng-controller="NavigationController as vm" style="width:100%;">
+                    <span>&copy; Copyright ASKStaffing 2019 - All Rights Reserved.</span>
+                </div>
+            </md-content>
+        </div>
+    </div>
+
+    <!-- <div loader="" class="LoaderDiv">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div> -->
+
+    <!-- ** For CK-Editor Deployement : Below script tag should be uncommented ** -->
+    <!-- <script type="text/javascript">
+	    window.CKEDITOR_BASEPATH = "/hruser/";
+	</script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="env-colors.js"></script>
+    <script src="branding-image.js"></script>
+    <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU2gtuDLdiMfEFTygfm-vCEO7UwH-AbBM&libraries=places&sensor=false"
+    type="text/javascript"></script>
+    <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDz7Ih6pqBj6yH1LKHjBU7dX-Zs3XCixnA&libraries=places&sensor=false"></script> -->
+
+    <!-- build:js js/script.js -->
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/angular-messages/angular-messages.min.js"></script>
+    <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="../node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../node_modules/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+
+    <script src="../node_modules/angular-material/angular-material.min.js"></script>
+    <script src="../node_modules/angular-material-icons/angular-material-icons.min.js"></script>
+    <!-- <script src="../node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script> -->
+    
+
+
+    
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" type="text/javascript"></script> -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.js" type="text/javascript"></script> -->
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/374704/sortable.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+      
+    <script src="env.js"></script>
+    <script src="app.js"></script>
+    <script src="app.setup.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/script-pdf-combined.js -->
+    <script src="../node_modules/pdfjs-dist/build/pdf.combined.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js js/ng-file-upload-shim.min.js -->
+    <script src="../node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/ng-file-upload.min.js -->
+    <script src="../node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/md-time-picker.js -->
+    <script src="../node_modules/angular-material-time-picker/dist/md-time-picker.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/moment.min.js -->
+    <script src="../node_modules/moment/min/moment.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/moment-timezone.min.js -->
+    <script src="../node_modules/moment-timezone/builds/moment-timezone.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/moment-timezone-with-data.min.js -->
+    <script src="../node_modules/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js js/calendar.js -->
+    <script src="shared/services/calendar.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/fullcalendar.min.js -->
+    <script src="../node_modules/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/gcal.min.js -->
+    <script src="../node_modules/fullcalendar/dist/gcal.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/angular-material-datetimepicker.min.js -->
+    <script type="text/javascript" src="../node_modules/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/angular-idle.min.js -->
+    <script src="../node_modules/ng-idle/angular-idle.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/Chart.min.js -->
+    <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/angular-chart.min.js -->
+    <script src="../node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/ckeditor.js -->
+    <script src="shared/directives/ckeditor-full/ckeditor.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/ng-ckeditor.min.js -->
+    <script src="shared/directives/ng-ckeditor/dist/ng-ckeditor.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/shim.min.js -->
+    <script type="text/javascript" src="../node_modules/xlsx/dist/shim.min.js"></script>
+    <!-- endbuild -->
+    <!-- build:js js/xlsx.full.min.js -->
+    <script type="text/javascript" src="../node_modules/xlsx/dist/xlsx.full.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js js/script-admin.js -->
+    <script src="components/navigation/navigationController.js"></script>
+    <script src="components/users/login/loginController.js"></script>
+    <script src="components/users/signup/signupController.js"></script>
+    <script src="components/users/forgot-password/forgotPasswordController.js"></script>
+
+    <script src="components/dashboard/dashboardService.js"></script>
+    <script src="components/dashboard/dashboardController.js"></script>
+    <script src="components/settings/settingsController.js"></script>
+    <script src="components/settings/intro_page/introPageService.js"></script>
+    <script src="components/settings/intro_page/introPageController.js"></script>
+    <script src="components/settings/intro_page/edit/editIntroPageController.js"></script>
+    <script src="components/settings/intro_page/edit/edit_modal/editModalIntroPageController.js"></script>
+    <script src="components/settings/general_settings/generalSettingsController.js"></script>
+    <script src="components/settings/general_settings/generalSettingsService.js"></script>
+    <script src="components/settings/design_webforms/designWebformsListController.js"></script>
+    <script src="components/settings/design_webforms/add/addDesignWebformController.js"></script>
+    <script src="components/settings/design_webforms/designWebformsService.js"></script>
+    <script src="components/settings/documents/documentsService.js"></script>
+    <script src="components/settings/documents/list/docsController.js"></script>
+    <script src="components/settings/documents/upload/uploadDocumentsController.js"></script>
+    <script src="components/settings/documents/mappingFields/mappingFieldsController.js"></script>
+    <script src="components/settings/documents/dynamicWebForms/dynamicWebFormsController.js"></script>
+    <script src="components/settings/documents/dynamicWebForms/dynamicWebFormsSetting/dynamicWebFormsSettingController.js"></script>
+    <script src="components/settings/intro_page/preview/previewIntroPageController.js"></script>
+    <script src="components/new_hires/list/newHiresListController.js"></script>
+    <script src="components/new_hires/add/addNewHireController.js"></script>
+    <script src="components/new_hires/email/sendEmailController.js"></script>
+    <script src="components/new_hires/newHiresService.js"></script>
+    <script src="components/settings/branding/brandingController.js"></script>
+    <script src="components/settings/email_templates/emailTempService.js"></script>
+    <script src="components/settings/email_templates/list/emailTemplateListController.js"></script>
+    <script src="components/settings/email_templates/edit/editEmailTemplateController.js"></script>
+    <script src="shared/directives/decimalPlaces.js"></script>
+    <script src="components/myaccount/myAccountController.js"></script>
+    <script src="components/myaccount/myAccountService.js"></script>
+    <script src="components/hire_info/hireInfoController.js"></script>
+    <script src="components/hire_info/hireInfoService.js"></script>
+    <script src="components/hire_info/initiate_onboarding/initiateOnboardingService.js"></script>
+    <script src="components/hire_info/initiate_onboarding/initiateOnboardingController.js"></script>
+    <script src="components/hire_info/review_certify/reviewCertifyService.js"></script>
+    <script src="components/hire_info/review_certify/reviewCertifyController.js"></script>
+    <script src="components/hire_info/attachDocsReview/attachDocsReviewController.js"></script>
+    <script src="components/hire_info/comments/commentsController.js"></script>
+    <script src="components/hire_info/emails/emailController.js"></script>
+    <script src="components/hire_info/emails/emailService.js"></script>
+    <script src="components/hire_info/activities/activitiesController.js"></script>
+    <script src="components/hire_info/activities/activitiesService.js"></script>
+    <script src="components/hire_info/schedule/scheduleController.js"></script>
+    <script src="components/hire_info/schedule/scheduleService.js"></script>
+    <script src="components/settings/users/hrUsersService.js"></script>
+    <script src="components/settings/folders/foldersService.js"></script>
+    <script src="components/workflows/workflowService.js"></script>
+    <script src="components/workflows/add/docDropService.js"></script>
+    <script src="components/settings/users/edit/editUserController.js"></script>
+    <script src="components/settings/users/list/usersListController.js"></script>
+    <script src="components/settings/folders/list/foldersListController.js"></script>
+    <script src="components/settings/folders/edit/editFolderController.js"></script>
+    <script src="components/workflows/list/workflowsController.js"></script>
+    <script src="components/workflows/add/addWorkflowController.js"></script>
+    <script src="components/tasks/tasksService.js"></script>
+    <script src="components/tasks/tasksController.js"></script>
+    <script src="components/tasks/mytasks/mytasksController.js"></script>
+    <script src="components/tasks/calendar/taskCalendarController.js"></script>
+    <script src="components/reports/reportsService.js"></script>
+    <script src="components/reports/reportsController.js"></script>
+    <script src="components/reports/static/staticController.js"></script>
+    <script src="components/reports/dynamic/dynamicController.js"></script>
+    <script src="components/settings/documents/documentAssociation/documentAssociationController.js"></script>
+
+    <!-- endbuild -->
+
+    <!-- build:js js/script-common.js -->
+
+    <script src="shared/interceptors/httpInterceptor.js"></script>
+    <script src="shared/directives/angular-material-paging.js"></script>
+    <script src="shared/directives/focusIf.min.js"></script>
+    <script src="shared/directives/loader.js"></script>
+    <script src="shared/directives/drag-drop.js"></script>
+    <script src="shared/directives/fileModel.js"></script>
+    <script src="shared/directives/imageUpload.js"></script>
+    <script src="shared/directives/autofocus.js"></script>
+    <script src="shared/directives/ng-pdfviewer.js"></script>
+    <script src="shared/directives/angular-ui-mask.js"></script>
+    <script src="shared/directives/chooseFile.js"></script>
+    <script src="shared/directives/place-autocomplete.js"></script>
+    <script src="shared/directives/md-color-picker/tinycolor.js"></script>
+    <script src="shared/directives/md-color-picker/mdColorPicker.js"></script>
+    <script src="shared/directives/password-compare.js"></script>
+    <script src="shared/directives/convert-stars.js"></script>
+    <script src="shared/directives/dynamicWebForm.js"></script>
+    <script src="shared/directives/configDragAndDrop/configDragandDrop.js"></script>
+    <script src="shared/services/toastrService.js"></script>
+    <script src="shared/services/dynamicWebFormService.js"></script>
+    <script src="shared/filters/breakTextToHtml.js"></script>
+    <script src="components/candidateusersService.js"></script>
+    <script src="components/navigation/navigationService.js"></script>
+    <script src="components/users/usersService.js"></script>
+    <script src="components/settings/branding/brandingService.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>

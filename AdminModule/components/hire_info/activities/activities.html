@@ -1,0 +1,41 @@
+<div class="initiate-activities" ng-init="vm.getActivityLogList()">
+    <md-content class="template-area">
+        <form   name="intiateonboard">
+            <div layout="column" style="padding-bottom:20px">
+                <div ng-repeat="item in activityDetails | orderBy : '-timestamp' " class="listone" style="padding-right:20px;">
+                    <!-- <li class="onboard-headings"> -->
+                        <!-- <h3 style="margin:0">{{item.description}}</h3> -->
+                        <div  class="onboarding-list">
+                            <div layout="row">
+                                <div layout="column" layout-align="center center" style="padding:0px 10px;border-right:1px solid lightgray;width:115px !important;" flex="none">
+                                    <!-- <img ng-src="images/icons/user_icon.svg" class="image"> -->
+                                    <!-- <img ng-src="images/candidate600.svg"  class="image"> -->
+                                    <span style="font-size:20px;text-align:center;width:100%;">{{item.newhire ? 'Candidate' : 'HR'}}</span>
+                                </div>
+                                <div layout="column" class="listColumn" style="display:inline-block;" >
+                                    <li class="onboard-headings" style="list-style:none;display:inline-block;">
+                                        <p style="margin:0;color:#555;">{{item.description}}<strong>{{item.documentname ? ' - ' + item.documentname : ''}}</strong></p>
+                                    </li>
+                                    <li style="margin:2px;color:#B8B8B8">{{item.timestamp1 | date: "EEE, MMM dd',' yyyy',' hh:mm a"}}</li>
+                                    <!-- <li style="margin:2px;color:#B8B8B8;list-style:none">{{ item.timestamp | date: "dd MMM yyyy 'at' HH:mm"}}</li> -->
+                                    <!-- <li style="margin:2px;color:#B8B8B8;list-style:none">{{item.dateVal | date: "EEE, MMM dd',' yyyy',' hh:mm a" }}</li> -->
+                                    <!-- {{item.timestamp}} -->
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </li> -->
+                </div>
+            </div>
+        </form>
+    </md-content>
+</div>
+
+
+<div ng-if="! activityDetails.length" class="review-certify">
+    <div class="no-steps-found">
+        <div class="no-attachment-text">
+            HR activities is in progress
+        </div>
+        
+    </div>
+</div>

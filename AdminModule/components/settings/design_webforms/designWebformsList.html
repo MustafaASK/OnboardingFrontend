@@ -1,0 +1,135 @@
+<div flex layout="column" layout-xs="column" style="height:100%;" layout-wrap ng-cloak>
+    <div flex layout="column" style="width:100%;" layout-padding>
+        <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+            <span class="child-page-header">Design Webforms</span>
+        </div>
+        <md-content layout="column" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container" style="max-height: none;">
+                <div class="new-hire-personal-info-area" style="padding:0px 10px;margin-bottom: 5px;">
+                    <div class="new-hire-personal-info-area" layout="column" style="padding:0px 5px;margin:12px 0px"
+                        layout-align="start start" ng-repeat="childWebformsList in vm.webformsList" ng-if="$index < 6">
+                        <div layout="row" style="width:100%;">
+                            <div layout="row" flex style="margin-top: 7px;">
+                                <md-button class="leftChevronBtn primary" ng-disabled="true" aria-label="Add Report"
+                                    style="margin: 2px 10px 0px 4px;" ng-style="{'background-color': ! (childWebformsList.isCommForm || childWebformsList.isNewHireForm ) && !childWebformsList.isRestored ? 'lightgray' : '#d75a5a'}">
+                                    <ng-md-icon icon="chevron_right" ng-if="childWebformsList.webFormId != 3 || (childWebformsList.webFormId == 3 && (! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored))" style="fill: white;margin: -13px 0 0 -9px;transform: scale(0.9);"
+                                        size="24"></ng-md-icon>
+                                    <ng-md-icon icon="expand_more" ng-if="childWebformsList.webFormId == 3 && !(! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored)" style="fill: white;margin: -13px 0 0 -9px;transform: scale(0.9);"
+                                        size="24"></ng-md-icon>
+                                </md-button>
+                                <span style="white-space: nowrap;text-overflow: ellipsis;width: 90%;overflow: hidden;font-size:16px"
+                                    ng-style="{'color': ! (childWebformsList.isCommForm || childWebformsList.isNewHireForm ) && !childWebformsList.isRestored ? 'lightgray' : '#1b2c3c'}">{{childWebformsList.webFormName}}</span>
+                            </div>
+                            <div layout="row" layout-align="end center" style="padding-right: 5px;">
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Preview & Validate"
+                                    ng-click="vm.previewWebForm($event, childWebformsList.webFormId, 'webForm')" ng-if="!(!(childWebformsList.isCommForm || childWebformsList.isNewHireForm ) && !childWebformsList.isRestored ) && ! (childWebformsList.subWebForms.length > 0)">
+                                    <md-icon md-svg-icon="images/icons/preview-form.svg" class="editBtnSvg" style="transform:scale(0.75);"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Edit"
+                                    ng-click="vm.editDesignWebform(childWebformsList.webFormId)" ng-if="!(!(childWebformsList.isCommForm || childWebformsList.isNewHireForm || childWebformsList.subWebForms.length > 0) && !childWebformsList.isRestored )&& ! (childWebformsList.subWebForms.length > 0)">
+                                    <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Delete"
+                                    ng-if="(! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && childWebformsList.isRestored)"
+                                    ng-click="vm.showDeleteConfirm($event, childWebformsList)">
+                                    <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Restore"
+                                    ng-if="(! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored)"
+                                    ng-click="vm.restoreWebform(childWebformsList.webFormId)">
+                                    <md-icon md-svg-icon="images/icons/restore_icon.svg" style="height:30px;width:30px;transform: scale(0.85);margin-left: -4px;"
+                                        class="editBtnSvg"></md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                        <div class="new-hire-personal-info-area" flex layout="row" ng-if="childWebformsList.subWebForms && childWebformsList.subWebForms.length > 0"
+                            style="padding:0px 5px;margin:5px 11px;width: 98%;" ng-repeat="subChildWebform in childWebformsList.subWebForms"
+                            layout-align="start center">
+                            <div layout="row" flex>
+                                <md-button class="leftChevronBtn primary" ng-disabled="true" aria-label="Add Report"
+                                    style="margin: 2px 10px 0px 4px;" ng-style="{'background-color':  !subChildWebform.isRestored ? 'lightgray' : '#d75a5a'}">
+                                    <ng-md-icon icon="chevron_right" style="fill: white;margin: -13px 0 0 -9px;transform: scale(0.9);"
+                                        size="24"></ng-md-icon>
+                                </md-button>
+                                <span style="white-space: nowrap;text-overflow: ellipsis;width: 90%;overflow: hidden;font-size:16px"
+                                    ng-style="{'color': !subChildWebform.isRestored ? 'lightgray' : '#1b2c3c'}">{{subChildWebform.webFormName}}</span>
+                            </div>
+                            <div layout="row" layout-align="end center" style="padding-right: 20px;">
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Preview & Validate"
+                                    ng-click="vm.previewWebForm($event, subChildWebform.webFormId, 'webForm')" ng-if="!( !subChildWebform.isRestored)">
+                                    <!-- <ng-md-icon icon="remove_red_eye" style="margin:-5px 0 0 -5px" size="24"></ng-md-icon> -->
+                                    <md-icon md-svg-icon="images/icons/preview-form.svg" class="editBtnSvg" style="transform:scale(0.75);"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Edit"
+                                    ng-click="vm.editDesignWebform(subChildWebform.webFormId)" ng-if="!(!subChildWebform.isRestored )">
+                                    <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Delete"
+                                    ng-if="subChildWebform.isRestored" ng-click="vm.showDeleteConfirm($event, subChildWebform)">
+                                    <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Restore"
+                                    ng-if="!subChildWebform.isRestored" ng-click="vm.restoreWebform(subChildWebform.webFormId)">
+                                    <md-icon md-svg-icon="images/icons/restore_icon.svg" style="height:30px;width:30px;transform: scale(0.85);margin-left: -4px;"
+                                        class="editBtnSvg"></md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px;margin-bottom: 5px;" layout="column"
+                    layout-align="start start">
+                    <div layout="row" style="padding:5px 5px;">
+                        <span class="header-color-design-webforms">Custom Webforms</span>
+                        <md-button class="addPageBtn primary" title="Add" style="margin: 4px 10px;" aria-label="Add Report"
+                            ui-sref="Settings.AddDesignWebform">
+                            <ng-md-icon icon="add" style="fill: white;margin:-2px 0 0 -5px" size="18"></ng-md-icon>
+                        </md-button>
+                    </div>
+                    <div class="new-hire-personal-info-area" layout="row" style="padding:0px 5px;margin:12px 0px 0px 0px;width:100%;"
+                        layout-align="start center" ng-repeat="childWebformsList in vm.customWebformsList | orderBy : '-modifyDate'" >
+                        <!-- ng-show="$index != 0" -->
+                        <div layout="row" flex>
+                            <md-button class="leftChevronBtn primary" ng-disabled="true" aria-label="Add Report" style="margin: 2px 10px 0px 4px;"
+                                ng-style="{'background-color': ! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored ? 'lightgray' : '#d75a5a'}">
+                                <ng-md-icon icon="chevron_right" style="fill: white;margin:-9px 0 0 -7px;margin: -13px 0 0 -9px;transform: scale(0.9);"
+                                    size="24"></ng-md-icon>
+                            </md-button>
+                            <span style="white-space: nowrap;text-overflow: ellipsis;width: 90%;overflow: hidden;font-size:16px"
+                                ng-style="{'color': ! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored ? 'lightgray' : '#1b2c3c'}">{{childWebformsList.webFormName}}</span>
+                        </div>
+                        <div layout="row" layout-align="end center">
+                            <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Preview"
+                                ng-click="vm.previewWebForm($event, childWebformsList.webFormId, 'webForm')" ng-if="!(!(childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored)">
+                                <!-- <ng-md-icon icon="remove_red_eye" style="margin:-5px 0 0 -5px" size="24"></ng-md-icon> -->
+                                <md-icon md-svg-icon="images/icons/preview-form.svg" class="editBtnSvg" style="transform:scale(0.75);"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Edit"
+                                ng-click="vm.editDesignWebform(childWebformsList.webFormId)" ng-if="!(!(childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored)">
+                                <md-icon md-svg-icon="images/icons/edit_icon.svg" class="editBtnSvg"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Permanent Delete"
+                                ng-if="! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && childWebformsList.isRestored"
+                                ng-click="vm.showDeleteConfirm($event, childWebformsList)">
+                                <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" style="margin: 0 0px;transform: scale(0.8);width:30px;" title="Restore"
+                                ng-if="! (childWebformsList.isCommForm || childWebformsList.isNewHireForm) && !childWebformsList.isRestored"
+                                ng-click="vm.restoreWebform(childWebformsList.webFormId)">
+                                <md-icon md-svg-icon="images/icons/restore_icon.svg" style="height:30px;width:30px;transform: scale(0.85);margin-left: -4px;"
+                                    class="editBtnSvg"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </div>
+    <div loader="" class="LoaderDiv" ng-show="loading">
+        <div class="spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</div>

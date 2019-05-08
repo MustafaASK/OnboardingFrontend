@@ -1,0 +1,124 @@
+<div layout="row" flex layout-gt-xs class="initiate-onboarding">
+    <!-- <md-content layout-padding flex="25" class="left-panel-info" style="overflow-x:hidden;">
+        <form>
+            <div>
+                <div layout-gt-sm="row" class="">
+                    <div class="profile-info">
+                        <div>
+                            <h2 class="profile-text" title="{{vm.hiredInfo.firstname}} {{vm.hiredInfo.lastname}}">{{vm.hiredInfo.firstname}} {{vm.hiredInfo.lastname}}</h2>
+                        </div>
+                        <div class="profile-tab">
+                            <span class=" {{getClassByStatus()}}" ng-bind="vm.statusName"></span>
+                        </div>
+                    </div>
+                </div>
+                <div laout-padding>
+                    <p class="pers-info-head">Personal Info</p>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex>
+                        <label class="input-fields">Email</label>
+                        <input ng-model="vm.hiredInfo.emailid" name="emailid" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex>
+                        <label class="input-fields">Phone</label>
+                        <input ng-model="vm.hiredInfo.phoneno" name="phoneno" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex>
+                        <label class="input-fields">Job Id</label>
+                        <input ng-model="vm.hiredInfo.jobid" name="jobid" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label class="input-fields">Hire Category</label>
+                        <input ng-model="vm.catName" name="catgid" readonly>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label class="input-fields">Work Location</label>
+                        <input ng-model="vm.worklocation" name="worklocation" readonly>
+                    </md-input-container>
+                </div>
+
+                <div laout-padding>
+                    <p class="pers-info-head">Compensation Details</p>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex>
+                        <label class="input-fields">Pay Rate</label>
+                        <input type="text" ng-model="vm.hiredInfo.payrate" name="payrate" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex>
+                        <label class="input-fields">Bill Rate</label>
+                        <input type="text" ng-model="vm.hiredInfo.billrate" name="billrate" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row" ng-if="vm.hiredInfo.doubleOTrate">
+                    <md-input-container flex>
+                        <label class="input-fields">Double Time Rate</label>
+                        <input type="text" ng-model="vm.hiredInfo.doubleOTrate" name="doubletimerate" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row" ng-if="vm.hiredInfo.doubleOTbillrate">
+                    <md-input-container flex>
+                        <label class="input-fields">Double Time Bill Rate</label>
+                        <input type="text" ng-model="vm.hiredInfo.doubleOTbillrate" name="doubletimebillrate" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row" ng-if="vm.hiredInfo.otrate">
+                    <md-input-container flex>
+                        <label class="input-fields">OT Pay Rate</label>
+                        <input type="text" ng-model="vm.hiredInfo.otrate" name="otrate" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row" ng-if="vm.hiredInfo.otbillrate">
+                    <md-input-container flex>
+                        <label class="input-fields">OT Bill Rate</label>
+                        <input type="text" ng-model="vm.hiredInfo.otbillrate" name="otbillrate" readonly>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container flex>
+                        <label class="input-fields">Notes</label>
+                        <textarea ng-model="vm.hiredInfo.notes" name="notes" md-auto-grow readonly></textarea>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <table class="tg" style="border: 0px solid #eaeaea;table-layout:fixed;" flex>
+                        <thead>
+                            <th class="tg-qmme" align="left" style="background-color: #eaeaea;font-size:16px;">Attachments</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="doc in vm.hiredInfo.document" >
+                                <td class="tg-yw4l" align="left" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><a target="_blank" href="{{NewHireDocsURL}}{{doc.documentid}}.{{checkDocExtension(doc.documentname)}}" class="md-caption ng-binding md-truncate hyperlink"
+                                    style="white-space:nowrap;" title="{{doc.documentname}}">{{doc.documentname}}</a></td>
+                            </tr>
+                            <tr ng-if="!vm.hiredInfo.document.length">
+                                <td class="tg-yw4l" align="left">No Attachments</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+    </md-content> -->
+    <div flex class="right-tab-info" style="overflow-y: hidden">
+        <md-content class="md-padding menu-tab">
+            <md-tabs md-no-ink md-dynamic-height md-selected="currentNavItem" aria-label="settings navigation links">
+                <md-tab ui-sref='hire-info.initiate-onboarding'  label="Initiate Onboarding" ng-disabled="vm.isIntiated"></md-tab>
+                <md-tab ui-sref="hire-info.emails" label="Emails"  ng-disabled="!vm.isIntiated"></md-tab>
+                <md-tab ui-sref="hire-info.review-certify"  label="Review & Certify" ng-disabled="!vm.isIntiated"></md-tab>
+                <md-tab ui-sref="hire-info.schedule"  label="Schedule" ng-disabled="!vm.isIntiated"></md-tab>
+                <md-tab ui-sref="hire-info.activities"  label="Activities" ng-disabled="!vm.isIntiated"></md-tab>
+            </md-tabs>
+        </md-content>
+        <div class="onboard-intial" flex layout="column" ui-view></div>
+    </div>
+</div>

@@ -1,0 +1,300 @@
+<div flex ui-view="AllDocsView" ng-cloak>
+    <div flex layout="row" layout-xs="column" style="height:100%;" layout-align="start top" layout-wrap>
+        <div layout="column" layout-padding flex style="height:100%;width:67%">
+            <div layout="row" layout-xs="column" layout-align="start center" layout-padding>
+                <span class="child-page-header">Documents</span>
+                <div layout="row" layout-align="end center" flex>
+                    <!-- Search and Filter elements -->
+                    <div id="upload-doc-btn" layout="row" layout-align="end center" flex>
+                        <div md-force-height="10" class="uploadDocsBtn" layout="row" layout-align="start center"
+                            ng-click="vm.showUploadDocsDialog($event)" aria-label="upload docs" ng-if="UserInfo.isAdmin || vm.rolesData.addflag">
+                            <md-icon md-svg-src="images/icons/upload_icon.svg" class="uploadBtnSvg" style="fill:#f1a94e;"></md-icon>
+                            <span class="md-caption uploadDocsBtnTxt">Upload</span>
+                        </div>
+
+                        <md-button class="md-icon-button" aria-label="Search" ng-click="vm.docSearchDisplay()" ng-if="((UserInfo.isAdmin || vm.rolesData.viewflag) && totalPages(vm.docs.length) > 0) ">
+                            <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg">
+                            </md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <!-- removed search input ng pattern ="/^[a-zA-Z0-9-_ ]+$/" -->
+            <form name="searchForm" ng-show="vm.docSearch" ng-submit="search()">
+                <md-input-container style="margin:-20px 0 -20px 5px;min-width:97%;">
+                    <label class="input-fields"></label>
+                    <input id="search-box" name="searchby" type="search" style="border: 1px solid #44b3c2;border-radius: 2px;"
+                        class="md-no-underline" ng-model="vm.query" placeholder="Search documents by their name" />
+                </md-input-container>
+                <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                    <div style="color:red" ng-message="pattern">Special chars are not allowed.</div>
+                </div>
+            </form>
+
+            <!-- Documents Display -->
+            <md-content layout="row" layout-xs="column" layout-align="{{layoutAlign}}" style="overflow-y:auto;margin-left:30px;"
+                ng-style="{'height' : vm.heightForChromeLowVersion}" ui-view="DocumentsView" layout-wrap flex ng-if="vm.docs.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)">
+                <md-card class="documents-card" ng-repeat="doc in pagedItems[currentPage? currentPage-1 : 0]">
+
+
+                    <div id="div{{doc.docid}}" ng-init="vm.addCanvasToCard(doc.docid)">
+                        <canvas id="canvas{{doc.docid}}" ng-click="vm.update_sidenav_card(doc.docid)">
+                        </canvas>
+                    </div>
+                    <md-divider></md-divider>
+
+                    <div layout="row" class="documents-card-area" layout-align="space-between center" flex>
+                        <div layout="row" layout-align="start start">
+                            <md-icon md-svg-src="images/pdf.svg" class="docsPdfIconSvg"></md-icon>
+                            <p id="docname{{doc.docid}}" class="docName" title="{{doc.docname}}">{{doc.docname}}</p>
+                            <!-- <p> </p> -->
+
+                            <md-icon md-svg-icon="images/icons/webform.svg" class="editBtnSvg webform-icon" ng-if="doc.settings.indexOf(16) != -1"></md-icon>
+                        </div>
+                        <!-- <div class="webform-div" ng-if="doc.settings.indexOf(16) != -1"></div> -->
+                        <md-card-actions style="margin-left:0;">
+                            <md-menu>
+                                <md-icon md-svg-icon="images/icons/more_menu_icon.svg" md-menu-origin ng-click="$mdMenu.open($event)"
+                                    class="moreMenuBtnSvg" style="fill:#44b3c2;cursor:pointer;">
+                                </md-icon>
+                                <md-menu-content>
+                                    <md-menu-item>
+                                        <md-button class="edit-button" ng-click="vm.showUploadDocsDialog($event, doc.docid)">
+                                            <!-- <ng-md-icon icon="description" md-menu-align-target></ng-md-icon> -->
+                                            <md-icon md-svg-icon="images/icons/new_doc1_icon.svg" class="editBtnSvg"></md-icon>
+                                            Upload New Version
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider></md-divider>
+                                    <md-menu-item ng-if="docSettingsCheck(doc)">
+                                        <md-button class="edit-button" ui-sref="Settings.MapFields({id: {{doc.docid}}, source: 'Documents', sourceid: 0})">
+                                            <md-icon md-svg-icon="images/icons/mapping1_icon.svg" class="editBtnSvg"></md-icon>
+                                            Map Fields
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="UserInfo.isAdmin || vm.rolesData.viewflag"></md-divider>
+                                    <md-menu-item ng-if="docSettingsCheckForWebForm(doc)">
+                                        <md-button class="edit-button" ui-sref="Settings.DynamicWebForm({id: {{doc.docid}}})">
+                                            <md-icon md-svg-icon="images/icons/edit_web_form.svg" class="editBtnSvg"></md-icon>
+                                            Edit Web Form
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="UserInfo.isAdmin || vm.rolesData.viewflag"></md-divider>
+                                    <md-menu-item ng-if="docSettingsCheckForWebForm(doc)">
+                                        <md-button class="edit-button" ng-click="vm.previewWebForm($event, doc.docid)">
+                                            <md-icon md-svg-icon="images/icons/preview-form.svg" class="editBtnSvg"
+                                                style="transform:scale(0.75);"></md-icon>
+                                            Validate Web Form
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="UserInfo.isAdmin || vm.rolesData.viewflag"></md-divider>
+                                    <md-menu-item ng-if="UserInfo.isAdmin || vm.rolesData.viewflag">
+                                        <md-button class="edit-button" ng-click="vm.previewDocument(doc.docid)">
+                                            <!-- <ng-md-icon icon="remove_red_eye" md-menu-align-target></ng-md-icon> -->
+                                            <md-icon md-svg-icon="images/icons/preview1_icon.svg" class="editBtnSvg"></md-icon>
+                                            Preview
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-divider ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag"></md-divider>
+                                    <md-menu-item ng-if="UserInfo.isAdmin || vm.rolesData.deleteflag">
+                                        <md-button class="delete-button" ng-click="vm.showDeleteConfirm($event,doc.docid,doc.docname)">
+                                            <md-icon md-svg-icon="images/icons/delete_icon.svg" class="deleteBtnSvg"></md-icon>
+                                            Delete
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </md-card-actions>
+
+                    </div>
+                </md-card>
+
+                <div layout="row" layout-align="center center" style="width:100%" flex ng-if="(vm.docs | filter: {docname: vm.query}).length == 0 && (vm.query || vm.query == '' )"
+                    class="filter-message">
+                    <img src="images/no_results_img.png" style="padding-top: 50px;" />
+                </div>
+
+
+            </md-content>
+            <md-content layout="row" layout-align="start center" style="padding:10px;" ng-if="(!UserInfo.isAdmin && !vm.rolesData.viewflag)"
+                layout-wrap flex>
+                <div layout="column" layout-align="center center" layout-padding flex>
+                    <img src="images/workflow_img.png" />
+
+                    <div class="no-workflows">
+                        <p class="pbold">You dont have permissions to view Documents</p>
+                        <!-- <p class="md=caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo
+                        </p> -->
+                    </div>
+                </div>
+            </md-content>
+            <div ng-if="vm.docs.length == 0 && !vm.searchby && (UserInfo.isAdmin || vm.rolesData.viewflag)" ui-view="NoDocuments"></div>
+            <div ng-if="totalPages(vm.docs.length) > 1 && (UserInfo.isAdmin || vm.rolesData.viewflag)" layout="row"
+                layout-xs="column">
+                <cl-paging flex cl-pages="vm.paging.total" cl-steps="6" cl-page-changed="vm.paging.onPageChanged()"
+                    cl-align="end center" cl-current-page="vm.paging.current">
+                </cl-paging>
+            </div>
+        </div>
+
+
+        <!-- Document View sidenav element -->
+        <div layout="column" ng-class="vm.docSettingsDisabled ? 'docSidenavAreaDisabled' : 'docSidenavArea' " style="width:33%;height:100%"
+            ng-show="vm.docs.length > 0 && (UserInfo.isAdmin || vm.rolesData.viewflag)" layout-padding>
+            <div layout="row" layout-align="start center" md-force-height="'50px'" ng-form="editdocname">
+                <span id="side-doc-name" ng-show="vm.docSettingsDisabled" flex="100" style="white-space: nowrap;text-overflow: ellipsis;text-align: left !important;height:50px"
+                    class="child-page-header" md-truncate title="{{vm.docName}}">{{vm.docName}}</span>
+                <md-input-container id="edit-doc-name" ng-hide="vm.docSettingsDisabled" class="md-block" flex="100"
+                    style="margin-top:-5px;">
+                    <input type="text" id="document-name" aria-label="DocName" maxlength="100" md-maxlength="100" name="document_name"
+                        ng-model="vm.docName" required />
+                    <div ng-if="(submitted && editdocname.doc_name.$untouched) || editdocname.document_name.$touched"
+                        ng-messages="editdocname.document_name.$error" role="alert">
+                        <div ng-message="required">Please enter the Document Name</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <md-divider></md-divider>
+            <md-content layout="column" layout-align="start start" style="background-color:white;overflow-x:hidden;"
+                ng-style="{'height': vm.heightForSidenavLowVersion }" layout-padding flex>
+                <md-card id="side-card" class="side-doc-preview-card">
+                </md-card>
+                <div layout="row" layout-align="space-between start" style="margin-left: -15px;margin-bottom:-15px;">
+                    <div layout="column" layout-align="start stcancelDocEditart" layout-padding>
+                        <span class="docDatesLabel">Date Modified:</span>
+                        <span id="doc_lm" class="docDates">{{vm.lm | date: "EEE, MMM dd',' yyyy',' hh:mm a"}}</span>
+                    </div>
+                    <div layout="column" layout-align="start start" layout-padding>
+                        <span class="docDatesLabel">Date Created:</span>
+                        <span id="doc_createdDate" class="docDates">{{vm.createdDt | date: "EEE, MMM dd',' yyyy','
+                            hh:mm a"}}</span>
+                    </div>
+                </div>
+                <div layout="column">
+                    <span>
+                        <a class="pbold" style="cursor:pointer;font-size:16px;color:#444444;">Associations</a>
+                        <ng-md-icon class="md-mini" style="padding-left:10px;outline:none;cursor:pointer;transform:scale(0.8) "
+                            icon="remove_red_eye" ng-click=" vm.foldercount == 0 && vm.workflowcount == 0 ? angular.noop() : vm.showFolderAndWfDetails() "
+                            md-menu-align-target>
+                            <md-tooltip>View Associations</md-tooltip>
+                            <!-- <a target="_blank" href="{{NewHireDocsURL}}{{vm.documentid}}.{{checkDocExtension(vm.documentname)}}"></a> -->
+                        </ng-md-icon>
+                        <!-- <i class="fa fa-eye" style="padding-left:10px;outline:none;cursor:pointer" ng-click=" vm.foldercount == 0 && vm.workflowcount == 0 ? angular.noop() : vm.showFolderAndWfDetails() "></i> -->
+                    </span>
+                    <div layout="row" layout-align="space-between start" style="margin-left: -15px;margin-bottom:-15px;margin-top:-5px">
+                        <div layout="row" layout-align="start stcancelDocEditart" layout-padding>
+                            <span class="docDatesLabel">Folders:</span>
+                            <span id="doc_fc" class="docDates" style="cursor:pointer;">
+                                <a>{{vm.foldercount}}</a>
+                            </span>
+                            <!-- {{vm.foldercount}} -->
+                        </div>
+                        <div layout="row" layout-align="start start" layout-padding>
+                            <span class="docDatesLabel">Workflows:</span>
+                            <span id="doc_wfc" class="docDates" style="cursor:pointer;">
+                                <a>{{vm.workflowcount}}</a>
+                            </span>
+                            <!-- {{vm.workflowcount}} -->
+                        </div>
+                    </div>
+                </div>
+
+                <div style="width:100%;" flex>
+                    <form name="editdocs">
+                        <div layout="row" layout-align="space-between center" style="padding-bottom: 12px;">
+                            <span class="pbold" style="font-size:16px;color:#444444;">Settings</span>
+                            <md-button class="md-icon-button" ng-click="vm.enableDocSettings()" ng-if="UserInfo.isAdmin || vm.rolesData.edit">
+                                <md-icon md-svg-icon="images/icons/edit_icon.svg" class="pencilIconSvg" ng-show="vm.docs.length > 0">
+                                </md-icon>
+                            </md-button>
+                        </div>
+
+                        <div layout="row" layout-align="start start">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <md-checkbox flex-gt-sm ng-change="vm.removeAllVal();vm.dynamicWebForm=false;vm.handSign=false;"
+                                            ng-model="vm.docSettings.rOnly" ng-checked="vm.docSettings.rOnly"
+                                            ng-true-value='1' ng-false-value='0' ng-disabled="vm.docSettingsDisabled"
+                                            aria-label="hr certification">{{vm.rOnlyName}}</md-checkbox>
+                                    </td>
+                                    <td>
+                                        <md-checkbox flex-gt-sm ng-model="vm.dynamicWebForm" tabindex="1" ng-disabled="vm.docSettingsDisabled"
+                                            ng-true-value='true' ng-false-value='false' aria-label="external agency verification"
+                                            ng-change="vm.docSettings.rOnly = false;vm.handSign=false;vm.removeAllVal();">{{vm.dynamicWebFormName}}</md-checkbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <md-checkbox flex-gt-sm ng-model="vm.handSign" tabindex="1" ng-true-value='true' ng-false-value='false' ng-disabled="vm.docSettingsDisabled"
+                                            ng-false-value='0' aria-label="hand sign" ng-change="vm.dynamicWebForm = false;vm.docSettings.rOnly = false;vm.removeAllVal();">{{vm.handSignName}}</md-checkbox>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <md-checkbox ng-model="vm.docSettings.hrc" ng-true-value='1' ng-false-value='0' ng-disabled="vm.docSettingsDisabled" aria-label="hr certification">{{vm.hrcName}}</md-checkbox> -->
+                            <!-- <md-checkbox ng-model="vm.docSettings.cso" ng-true-value='1' ng-false-value='0' ng-disabled="vm.docSettings.rOnly || vm.docSettingsDisabled"
+                                aria-label="candidate signoff">{{vm.csoName}}</md-checkbox> -->
+                            <!-- <md-checkbox ng-model="vm.docSettings.eav" ng-true-value='1' ng-false-value='0' ng-disabled="vm.docSettingsDisabled" aria-label="external agency verification">{{vm.eavName}}</md-checkbox> -->
+                        </div>
+                        <div layout="row" flex class="upload-doc-multi-opt" style="margin:0">
+                            <div class="radio-tabs" style="margin:0">
+                                <md-radio-group ng-model="vm.docSettings.hrc" ng-disabled="vm.docSettings.rOnly || vm.docSettingsDisabled">
+                                    <md-radio-button ng-value="vm.hrcId" aria-label="hrcId" ng-disabled="vm.rOnly || vm.handSign">{{vm.hrcName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.hrcUploadDocId" aria-label="hrcUploadDocId"
+                                        ng-disabled="vm.rOnly || vm.handSign">{{vm.hrcUploadDocName}}</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                        </div>
+                        <div layout="row" flex class="upload-doc-multi-opt">
+                            <div class="radio-tabs">
+                                <md-radio-group ng-model="vm.docSettings.eav" aria-label="candidate response hrs"
+                                    ng-disabled="vm.docSettings.rOnly || vm.docSettingsDisabled">
+                                    <md-radio-button ng-value="vm.eavId" aria-label="eavId" ng-disabled="vm.rOnly || vm.docSettingsDisabled || vm.handSign">{{vm.eavName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.drTestAuthId" aria-label="drTestAuthId" ng-click="vm.selectCso()"
+                                        ng-disabled="vm.rOnly || vm.docSettingsDisabled || vm.handSign">{{vm.drTestAuthName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.payrollPackageId" aria-label="payrollPackageId"
+                                        ng-disabled="vm.rOnly ||  vm.docSettingsDisabled || vm.handSign">{{vm.payrollPackageName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.eeoId" aria-label="eeoId" ng-disabled="vm.rOnly || vm.docSettingsDisabled || vm.handSign">{{vm.eeoName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.contractorId" aria-label="contractorId" ng-disabled="vm.rOnly || vm.docSettingsDisabled || vm.handSign">{{vm.contractorName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.clientSpecificationId" aria-label="clientSpecificationId"
+                                        ng-disabled="vm.rOnly || vm.handSign">{{vm.clientSpecificationName}}</md-radio-button>
+                                    <md-radio-button ng-value="vm.w4FormsId" aria-label="w4FormsId" ng-disabled="vm.rOnly || vm.handSign">{{vm.w4FormsName}}</md-radio-button>
+                                    <!-- <md-radio-button ng-value="vm.handSignId" aria-label="handSignId" ng-disabled="vm.rOnly"
+                                        ng-click="vm.docSettings.hrc = vm.hrcUploadDocId">{{vm.handSignName}}</md-radio-button> -->
+                                </md-radio-group>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-align="space-between center" style="padding: 5px 0 12px 0;">
+                            <span class="pbold" style="font-size:16px;color:#444444;">Rules</span>
+                        </div>
+
+                        <div layout="column" layout-align="start start">
+                            <md-checkbox ng-model="vm.docRules.crh" ng-true-value='1' ng-false-value='0' ng-disabled="vm.docSettingsDisabled"
+                                aria-label="candidate response hrs">{{vm.crhName}}</md-checkbox>
+                            <md-checkbox ng-model="vm.docRules.dta" ng-true-value='1' ng-false-value='0' ng-disabled="vm.docSettingsDisabled"
+                                aria-label="drug test attendance sla hrs">{{vm.dtaName}}</md-checkbox>
+                        </div>
+
+                        <div class="buttonsFooter" ng-if="!vm.docSettingsDisabled" layout="row" layout-align="start end">
+                            <md-button class="md-primary md-raised" ng-click="vm.saveEditedDoc()">Save
+                            </md-button>
+                            <md-button class="md-secondary" ng-click="vm.cancelDocEdit()">Cancel
+                            </md-button>
+                        </div>
+
+                    </form>
+                </div>
+            </md-content>
+
+        </div>
+    </div>
+
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<md-dialog style="max-height:95%;max-width:85%;overflow:hidden;">
+    <md-toolbar style="min-height: 64px;">
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+            layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+            <h2 flex>
+                Preview
+            </h2>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="vm.previewClose($event)">
+                <ng-md-icon icon="clear" size="14" style="cursor:pointer">
+                </ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content>
+        <div class="cardStyle" style="margin:20px;border: 1px solid #D3D3D3;">
+            <!-- <div class="divStyle"> <md-title><h3 class="logoStyle">Logo</h3></md-title></div> -->
+            <img ng-src="{{vm.header}}" class="imageStyle">
+            <md-divider></md-divider>
+            <!-- <img  ng-src="images/bg_image.jpg" class="imageStyle"> -->
+            <!-- <br> -->
+            <!-- <md-headline><h1 class="headingStyle"><b ng-bind-html="trustAsHtml()">{{}}</b></h1></md-headline> -->
+            <p class="paragraphStyle" ng-if="vm.heading && vm.headingEnable" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px"
+                ng-bind-html="vm.trustAsHtml()"></p>
+            <!-- <br> -->
+            <md-divider></md-divider>
+            <div ng-if=" (vm.article ||  vm.articleVideo) && vm.articleEnable" layout-gt-sm="column" class="secondDivStyle">
+                <div layout-gt-sm="row"></div>
+                <div layout-gt-sm="row">
+                    <div class="paragraphDiv">
+
+                        <div class="videoDiv">
+                            <video ng-if="vm.articleVideo" class="videoDiv" controls="true" ng-src="{{vm.articleVideo}}"
+                                width="340" height="190" type="video/*">
+                            </video>
+                        </div>
+                        <!-- <div> <h1 class="headingArticle">{{vm.clientIntro.ArticalTitle}}</h1></div> -->
+                        <div class="articleParagraph" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px"
+                            ng-bind-html="vm.trustAsHtmlForArticle()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-content>
+
+    <footer layout='row' layout-align='end start' class="uploadDocsFooter" style="min-height: 60px;" flex>
+        <md-dialog-actions>
+            <md-button class="md-secondary" tabindex="4" ng-click="vm.previewClose($event)">Cancel
+            </md-button>
+        </md-dialog-actions>
+    </footer>
+</md-dialog>

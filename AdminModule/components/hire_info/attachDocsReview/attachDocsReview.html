@@ -1,0 +1,92 @@
+<md-dialog class="myaccount-modal review-attached-modal">
+    <md-toolbar>
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;" layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+            <h2>Attached Documents</h2>
+            <span flex></span>
+            <!-- <md-button class="md-icon-button close" ng-click="cancel()">X
+            </md-button> -->
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="cancel()">
+                    <ng-md-icon icon="clear" 
+                        style="cursor:pointer;" 
+                        size="14"
+                        >
+                    </ng-md-icon>
+                </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content layout-padding style="min-height:300px;">
+        <form name="myAccountForm" id="myAccountForm">
+
+            <div layout="row" style="clear:both">
+                <table class="tg action-table">
+                    <thead>
+                        <th class="tg-qmme" align="left">Doc Name</th>
+                        <!-- <th class="tg-qmme" align="left">Candidate Comments</th>
+                        <th class="tg-qmme" align="left">HR Comments</th>
+                        <th class="tg-qmme" align="left">Action</th> -->
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="subdoc in docData" ng-init="outerIndex=$index; (subdoc.candidatedocstatus==0||subdoc.candidatedocstatus==1) ? subdoc.candidatedocstatus=2:'' ">
+                            <td class="tg-yw4l" align="left"  title="{{subdoc.candidatedocname}}"><a href="{{CandidateDocsURL}}{{subdoc.candidatedocid}}.{{subdoc.candidatedocname.split('.')[subdoc.candidatedocname.split('.').length - 1]}}" target="_blank">{{subdoc.candidatedocname}}</a></td>
+                            <!-- <td class="tg-yw4l" align="left" style="width:300px;max-width:300px;" title="{{subdoc.candidatedoccomments}}">{{subdoc.candidatedoccomments}}</td>
+                            <td class="tg-yw4l" align="left">
+                                <md-input-container class="table-container" ng-if="!allAreApproved">
+                                    <input type="text" ng-model="subdoc.hrcomments" style="width:100%" required>
+                                </md-input-container>
+                                <span ng-if="allAreApproved">{{subdoc.hrcomments}}</span>
+                            </td>
+                            <td class="tg-yw4l" align="left" style="width:100px;">
+
+                                <md-menu class="step-drpdwn">
+                                    <md-button aria-label="Open demo menu" class="md-icon-button selected-btn {{getSelectedColor(subdoc.candidatedocstatus)}} " ng-click="$mdMenu.open($event)" ng-disabled="step.workflowstepstatus == 3 || step.workflowstepstatus == 4 || allAreApproved">
+                                        <span>{{getSelectedColor(subdoc.candidatedocstatus)}}</span><span class="down-arrow" ng-if="!allAreApproved"><i class="fa fa-caret-down"></i></span>
+                                    </md-button>
+                                    <md-menu-content width="2" class="stepstatuspopup">
+                                        <md-menu-item ng-repeat="sts in docStatuses" ng-if="sts.status!=1">
+                                            <md-button class="{{sts.data}}" ng-click="changeStatus(outerIndex, sts.status)">{{sts.data}}</md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td> -->
+                            <td class="tg-yw4l"><a  href="{{CandidateDocsURL}}{{subdoc.candidatedocid}}.{{subdoc.candidatedocname.split('.')[subdoc.candidatedocname.split('.').length - 1]}}" title="view file" target="_blank"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <!-- <tr>
+                            <td class="tg-yw4l" align="left" style="width:150px;max-width:150px;">uploadeduploadeduploadeduploaded.pdf</td>
+                            <td class="tg-yw4l" align="left" style="width:300px;max-width:300px;">uploaded document</td>
+                            <td class="tg-yw4l" align="left">
+                                <md-input-container class="table-container">
+                                    <input type="text" ng-model="textfile" style="width:100%" required>
+                                </md-input-container>
+                            </td>
+                            <td class="tg-yw4l" align="left" style="width:100px;">
+
+                                <md-menu class="step-drpdwn">
+                                    <md-button aria-label="Open demo menu" class="md-icon-button selected-btn completed " ng-click="$mdMenu.open($event)" ng-disabled="step.workflowstepstatus == 3 || step.workflowstepstatus == 4 || disableAll">
+                                        <span>Completed</span><span class="down-arrow"><i class="fa fa-caret-down"></i></span>
+                                    </md-button>
+                                    <md-menu-content width="2" class="stepstatuspopup">
+                                        <md-menu-item ng-repeat="sts in stepStatuses" ng-if="sts.status!=1">
+                                            <md-button class="{{sts.data}}" ng-click="showUploadDocsDialog($event, step, sts.data, 'step', step.newHireWorkFlowId)"> {{sts.data}} </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </md-content>
+    <md-divider></md-divider>
+    <footer class="edit-intro-footer">
+        <div layout="row" layout-align="end center" flex>
+            <div class="errorMsg" ng-if="vm.noChangesError">There are no changes made to update the HR profile</div>
+            <!-- <md-button class="md-primary md-raised" ng-click="submit(myAccountForm.$valid)" ng-if="!allAreApproved">Save</md-button>
+            <md-button class="md-secondary" ng-click="cancel()" ng-if="!allAreApproved">Cancel</md-button> -->
+            <md-button class="md-primary md-raised" ng-click="cancel()" >Close</md-button>
+        </div>
+    </footer>
+</md-dialog>

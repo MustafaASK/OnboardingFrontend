@@ -1,0 +1,414 @@
+<md-dialog class="candidate-letter-modal" style="height:95%;min-height:95%;width:71%;">
+    <md-toolbar style="    min-height: 64px;">
+        <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;padding-right: 20px;"
+            layout="row" layout-align="space-between center" layout-padding layout-wrap flex>
+            <h2>
+                <span class="comments-modal-title">View Hire Details</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="closeDeleteModal()">
+                <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                </ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-divider></md-divider>
+    <md-content class="letter-body-start" layout-padding style="background-color: rgb(250,250,250);">
+        <div layout="column" class="new-hire-personal-info-div" style="display:block" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Personal Info</span>
+                    <div style="padding-top:10px;">
+                        <div layout-gt-xs="row">
+                            <div layout="column" flex-gt-sm>
+                                <label style="text-transform: none;font-size: 10px;color:#688081;">Hire Category</label>
+                                <md-radio-group layout="row" class="md-block" style="padding-top: 10px;" ng-model="vm.newHire.catgid"
+                                    ng-if="vm.categoryList.length" readonly>
+                                    <md-radio-button class="my-radio" tabindex="4" ng-repeat="category in vm.categoryList"
+                                        style="transform:scale(.8);outline:none;" value="{{category.catgid}}" disabled>
+                                        <span> {{category.catgname}} </span>
+                                    </md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <md-input-container class="md-block" style="margin-left:20px;" flex-gt-sm>
+                                <label class="input-fields">Source</label>
+                                <input ng-model="vm.source" type="text" tabindex="5" readonly>
+
+                            </md-input-container>
+                            <!-- <md-input-container class="md-block" style="margin-left:20px;" flex-gt-sm>
+                                                <label class="input-fields">Source *</label>
+                                                <md-select ng-init="vm.newHire.sourceid = 1" tabindex="5" ng-model="vm.newHire.sourceid" disabled>
+                                                    <md-option ng-repeat="source in vm.sourceProfile.SourceProfiles" value="{{source.sourceid}}">
+                                                        {{source.sourcename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container> -->
+                        </div>
+                        <div layout-gt-sm="row" ng-if="vm.newHire.catgid == 2 || vm.newHire.catgid == 3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Sub Vendor Name</label>
+                                <input ng-model="vm.newHire.subvendorname" type="text" tabindex="6" readonly>
+
+                            </md-input-container>
+                            <md-input-container ng-if=" vm.newHire.catgid !=  3" class="md-block" flex-gt-sm>
+                                <label class="input-fields">Sub Vendor Email</label>
+                                <input ng-model="vm.newHire.subvendoremail" readonly>
+
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">First Name</label>
+                                <input ng-model="vm.newHire.firstname" type="text" readonly>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Middle Name</label>
+                                <input ng-model="vm.newHire.middlename" readonly>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Last Name</label>
+                                <input ng-model="vm.newHire.lastname" readonly>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Email Id</label>
+                                <input type="email" ng-model="vm.newHire.emailid" readonly>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Phone</label>
+                                <input type="tel" name="phone" ng-model="vm.newHire.phoneno" ui-mask="999-999-9999" ui-mask-placeholder ui-options={addDefaultPlaceholder:false}
+                                    tabindex="12" readonly>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Citizenship</label>
+                                <input type="text" ng-model="vm.newHire.citizenshipid" readonly>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm ng-if="vm.newHire.citizenshipid == 'Others'">
+                                <label class="input-fields">Enter the Citizenship</label>
+                                <input ng-model="vm.newHire.citizenship" type="text" readonly>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Job Category</label>
+                                <input ng-model="vm.jobCategory" type="text" tabindex="13" readonly>
+
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Job Title</label>
+                                <input type="text" name="jobtitle" ng-model="vm.newHire.jobtitile" tabindex="14"
+                                    readonly>
+
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Job ID</label>
+                                <input type="text" name="jobid" ng-model="vm.newHire.jobid" tabindex="15" ng-pattern="/^$|^[^-\s][A-Za-z0-9-]+$/"
+                                    readonly>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+
+
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container flex-gt-sm>
+                                <label class="input-fields">Account Manager Name</label>
+                                <input ng-model="vm.newHire.accmngr" type="text" tabindex="23" name="AccountManagerName"
+                                    ng-pattern="/^\b[A-Za-z0-9 ]+$/" readonly>
+
+                            </md-input-container>
+                            <md-input-container flex-gt-sm>
+                                <label class="input-fields">Account Manager Email</label>
+                                <input type="email" ng-model="vm.newHire.accemail" ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                                    name="accmangremail" tabindex="24" readonly>
+
+                            </md-input-container>
+                            <md-input-container flex-gt-sm>
+                                <label class="input-fields">Recruiter Name</label>
+                                <input ng-model="vm.newHire.recrname" type="text" name="RecruiterName" ng-pattern="/^\b[A-Za-z0-9 ]+$/"
+                                    tabindex="25" readonly>
+
+                            </md-input-container>
+                            <md-input-container flex-gt-sm>
+                                <label class="input-fields">Recruiter Email</label>
+                                <input type="email" ng-model="vm.newHire.recremail" ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                                    name="recremail" tabindex="26" readonly>
+
+                            </md-input-container>
+                        </div>
+
+                        <span style="padding-left: 2px;">Notes</span>
+                        <md-input-container class="md-block" style="margin-top:-5px;">
+                            <textarea ng-model="vm.newHire.notes" rows="vm.notesRows" aria-label="Notes"
+                                md-select-on-focus readonly></textarea>
+                        </md-input-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" style="display:block;" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Client Details</span>
+                    <div layout-gt-sm="row" style="margin-top:10px;">
+                        <md-input-container class="md-block" flex="25">
+                            <label class="input-fields">Client Name</label>
+                            <input ng-model="vm.clientName" type="text" tabindex="16" readonly>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label class="input-fields">Duration of Contract (in Months)</label>
+                            <input type="text" step="any" min="1" tabindex="20" name="duration" ng-model="vm.newHire.durationofthecontract"
+                                readonly>
+                        </md-input-container>
+                        <div layout="column" flex>
+                            <md-input-container ng-style="{'padding-right':vm.datePickerpadright}">
+                                <label class="input-fields" ng-style="{'left':vm.datePickerNgMessage,'width':vm.datePickerLabelwidth}">Tentative
+                                    Start Date</label>
+                                <input type="text" tabindex="20" name="duration" ng-model="vm.newHire.tentstartdate"
+                                    readonly>
+
+                            </md-input-container>
+                        </div>
+                        <div layout="column" flex>
+                            <md-input-container ng-style="{'padding-right':vm.datePickerpadright}">
+                                <label class="input-fields" ng-style="{'left':vm.datePickerNgMessage,'width':vm.datePickerLabelwidth}">Tentative
+                                    End Date</label>
+                                <input type="text" tabindex="20" name="duration" ng-model="vm.newHire.tentenddate"
+                                    readonly>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex="40">
+                            <label class="input-fields">Client Street Address</label>
+                            <textarea ng-model="vm.newHire.cstreetaddress" type="text" md-no-autogrow rows="1" name="clientstreetaddress"
+                                readonly autocomplete="off"></textarea>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="20">
+                            <label class="input-fields">APT/STE #</label>
+                            <input type="text" name="apartmentsuitenumber" ng-model="vm.newHire.apartmentsuitenumber"
+                                readonly autocomplete="off">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="20">
+                            <label class="input-fields">Client City</label>
+                            <input ng-model="vm.newHire.city" type="text" tabindex="17" readonly>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="=20">
+                            <label class="input-fields">Client State</label>
+                            <input ng-model="vm.newHire.worklocation" type="text" tabindex="18" readonly>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" style="display:block;" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Compensation Details</span>
+                    <div>
+                        <!-- <form name="newhirePersonalInfoForm"> -->
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Pay Rate</label>
+                                <input type="text" step="any" tabindex="28" name="payrate" ng-model="vm.newHire.payrate"
+                                    decimal-places readonly>
+
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">Bill Rate</label>
+                                <input type="text" step="any" tabindex="29" name="billrate" ng-model="vm.newHire.billrate"
+                                    decimal-places readonly>
+
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">OT Pay Rate</label>
+                                <input type="text" step="any" tabindex="30" name="otrate" ng-model="vm.newHire.otrate"
+                                    decimal-places readonly>
+                                <!-- ng-required="vm.newHire.otbillrate != null" -->
+                                <div ng-messages="newhirePersonalInfoForm.otrate.$error" role="alert">
+                                    <div ng-message-exp="['min']">
+                                        OT Pay Rate should be greater than Pay Rate
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="input-fields">OT Bill Rate</label>
+                                <input type="text" step="any" tabindex="31" name="otbillrate" ng-model="vm.newHire.otbillrate"
+                                    decimal-places readonly>
+
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row" style="padding-left:2px;" ng-if="vm.newHire.perdiem">
+                            <div flex-gt-sm="50">
+                                <md-checkbox ng-init="false" ng-model="vm.newHire.perdiem" tabindex="32" aria-label="Checkbox 1"
+                                    style="margin-bottom:5px" disabled>
+                                    Per diem is applicable?
+                                </md-checkbox>
+                            </div>
+                        </div>
+                        <div layout-gt-sm="row" ng-if="vm.newHire.perdiem">
+                            <md-input-container class="md-block" flex="25">
+                                <label class="input-fields">Per diem rate</label>
+                                <input type="text" step="any" name="perdiemrate" tabindex="33" ng-model="vm.newHire.perdimrate"
+                                    readonly>
+
+                            </md-input-container>
+                        </div>
+                        <!-- <div layout-gt-sm="row">
+                                            <md-input-container class="md-block" flex="25">
+                                                <label class="input-fields">Attachment (upto size 10MB)</label>
+                                                <input ng-value="vm.files.attachment?vm.files.attachment.file.name:vm.documentname" tabindex="34" ng-readonly="true"></input>
+                                            </md-input-container>
+                                            <ng-md-icon ng-if="vm.documentname != '' || vm.files.attachment.file.name" class="md-mini" icon="close" ng-click="vm.clearAttachment()"
+                                                style="padding-top:25px;" md-menu-align-target>
+                                            </ng-md-icon>
+                                            <div class="md-block" flex="25" style="margin-top:5px;">
+                                                <choose-file>
+                                                    <md-button for="fileInput" class="md-secondary" tabindex="35" style="min-height:20px;line-height:20px;height:24px;margin-top:20px;">Browse</md-button>
+                                                    <input id="fileInput" class="model-popup-file-upload ng-hide" tabindex="vm.tabOrder++" type="file" file-model="vm.files.attachment"
+                                                        name="file_document_1" />
+                                                </choose-file>
+                                            </div>
+                                        </div>                           
+                                        <div style="margin-top: -30px;margin-bottom: 20px;">
+                                            <label>(In case of multiple files, zip all the files and upload as one)</label>
+                                        </div>
+                                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" style="padding-bottom:20px;display:block;" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <md-list>
+                        <md-list-item ng-init="vm.isUdfExpanded = false" class="folder-line">
+                            <span class="cust-heading" style="margin-left:-15px" flex>User Defined Fields</span>
+                            <md-icon class="material-icons" tabindex="36" aria-label="expandIcon" ng-keypress="vm.isUdfExpanded = !vm.isUdfExpanded">
+                                <ng-md-icon id="expand_icon" style="cursor:pointer;" icon="{{ vm.isUdfExpanded ? 'expand_less' : 'expand_more' }}"
+                                    ng-click="vm.isUdfExpanded = !vm.isUdfExpanded">
+                                </ng-md-icon>
+                            </md-icon>
+                        </md-list-item>
+                        <md-list flex ng-show="vm.isUdfExpanded">
+                            <div>
+                                <span class="subline-heading">Text Fields</span>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="input-fields">UDFT1</label>
+                                        <input type="text" name="udf5t" tabindex="37" ng-model="vm.newHire.udf4t"
+                                            readonly>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="input-fields">UDFT2</label>
+                                        <input type="text" name="udf6t" tabindex="38" ng-model="vm.newHire.udf5t"
+                                            readonly>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="input-fields">UDFT3</label>
+                                        <input type="text" name="udf7t" tabindex="39" ng-model="vm.newHire.udf6t"
+                                            readonly>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="input-fields">UDFT4</label>
+                                        <input type="text" name="udf8d" tabindex="40" ng-model="vm.newHire.udf7t"
+                                            readonly>
+                                    </md-input-container>
+                                </div>
+                                <span class="subline-heading">Numeric Fields</span>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex="25">
+                                        <label class="input-fields">UDFN1</label>
+                                        <input type="text" name="udf1n" tabindex="41" ng-model="vm.newHire.udf1n"
+                                            decimal-places readonly>
+
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex="25">
+                                        <label class="input-fields">UDFN2</label>
+                                        <input type="text" name="udf2n" tabindex="42" ng-model="vm.newHire.udf2n"
+                                            decimal-places readonly>
+
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex="25">
+                                        <label class="input-fields">UDFN3</label>
+                                        <input type="text" name="udf3n" tabindex="43" ng-model="vm.newHire.udf3n"
+                                            decimal-places readonly>
+                                    </md-input-container>
+                                </div>
+                                <span class="subline-heading">Date & Time Fields</span>
+                                <div layout-gt-sm="row">
+
+                                    <div layout="column" class="md-block" ng-style="{'margin-left':vm.datePickerdivleft}">
+                                        <md-input-container>
+                                            <label class="input-fields">UDFD1</label>
+                                            <!-- <md-datepicker name="udf8d" md-placeholder="MM/DD/YYYY" ng-model="vm.newHire.udf8d" tabindex="45" style="display: flex;"
+                                            readonly></md-datepicker> -->
+                                            <input type="text" tabindex="20" name="duration" ng-model="vm.newHire.udf8d"
+                                                readonly>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="column" class="md-block">
+                                        <md-input-container>
+                                            <label class="input-fields">UDFD2</label>
+                                            <!-- <md-datepicker name="udf2d" md-placeholder="MM/DD/YYYY" ng-model="vm.newHire.udf9d" tabindex="46" style="display: flex;"
+                                            readonly></md-datepicker> -->
+                                            <input type="text" tabindex="20" name="duration" ng-model="vm.newHire.udf9d"
+                                                readonly>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <!-- </form> -->
+                            </div>
+                        </md-list>
+                    </md-list>
+                </div>
+            </div>
+        </div>
+        <div layout="column" class="new-hire-personal-info-div" ng-if="vm.newHire.document.length" style="display:block;" flex>
+            <div flex-gt-sm="100" layout="column" flex class="new-hire-personal-info-container">
+                <div class="new-hire-personal-info-area" style="padding:10px">
+                    <span class="cust-heading">Attachment</span>
+                    <div layout-gt-xs="row" style="padding:10px;">
+
+                        <md-content layout="row" id="docs-4144" layout-align="start start" class="workflow-docs-container layout-wrap _md layout-align-start-start layout-row"
+                            layout-wrap="">
+                            <md-card id="card-4144" ng-repeat="doc in vm.newHire.document" class="workflow-doc-card layout-wrap ng-scope _md flex"
+                                layout-wrap="" flex="">
+                                <div class="wf-doc-icon-text layout-align-space-between-center layout-row flex" layout="row"
+                                    layout-align="space-between center" flex="">
+                                    <div layout="row" layout-align="start center" class="layout-align-start-center layout-row">
+                                        <!-- <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a" role="img">
+                                                <svg height="100%" viewBox="0 0 1792 1792" width="100%" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet"
+                                                    focusable="false">
+                                                    <path d="M1596 380q28 28 48 76t20 88v1152q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h896q40 0 88 20t76 48zm-444-244v376h376q-10-29-22-41l-313-313q-12-12-41-22zm384 1528v-1024h-416q-40 0-68-28t-28-68v-416h-768v1536h1280zm-514-593q33 26 84 56 59-7 117-7 147 0 177 49 16 22 2 52 0 1-1 2l-2 2v1q-6 38-71 38-48 0-115-20t-130-53q-221 24-392 83-153 262-242 262-15 0-28-7l-24-12q-1-1-6-5-10-10-6-36 9-40 56-91.5t132-96.5q14-9 23 6 2 2 2 4 52-85 107-197 68-136 104-262-24-82-30.5-159.5t6.5-127.5q11-40 42-40h22q23 0 35 15 18 21 9 68-2 6-4 8 1 3 1 8v30q-2 123-14 192 55 164 146 238zm-576 411q52-24 137-158-51 40-87.5 84t-49.5 74zm398-920q-15 42-2 132 1-7 7-44 0-3 7-43 1-4 4-8-1-1-1-2t-.5-1.5-.5-1.5q-1-22-13-36 0 1-1 2v2zm-124 661q135-54 284-81-2-1-13-9.5t-16-13.5q-76-67-127-176-27 86-83 197-30 56-45 83zm646-16q-24-24-140-24 76 28 124 28 14 0 18-1 0-1-2-3z"></path>
+                                                </svg>
+                                            </md-icon> -->
+                                        <ng-md-icon icon="attachment" style="transform:scale(.5);fill:#d75a5a">
+                                        </ng-md-icon>
+                                        <a target="_blank" href="{{NewHireDocsURL}}{{doc.documentid}}.{{checkDocExtension(doc.documentname)}}"
+                                            class="md-caption ng-binding md-truncate" style="white-space:nowrap;">{{doc.documentname}}</a>
+                                    </div>
+                                </div>
+                            </md-card>
+                            <div class="no-attachment-text" ng-if="!vm.newHire.document.length">No Attachment</div>
+                        </md-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-content>
+    <!-- <div class="LoaderDiv"  id="loader123" ng-show="loadingLoader">
+                <div class="spinner">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div> 
+            <div class="hideadoblogo" style="position: absolute;top: 0;width:30%; height: 100px;"> -->
+
+    <md-divider></md-divider>
+    <footer class="edit-intro-footer">
+        <div layout="row" layout-align="end center" flex>
+            <md-button class="md-primary md-raised" ng-click="closeDeleteModal()">Close</md-button>
+        </div>
+    </footer>
+</md-dialog>

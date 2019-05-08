@@ -1,0 +1,294 @@
+<div class="initiate-onboard" style="overflow-x: hidden;">
+
+    <md-content class="template-area" layout-padding style="overflow-x: hidden;">
+        <form name="intiateonboard">
+
+            <div class="onboard-headings" style="border-bottom: 1px solid #ccc;">
+                <h3 style="margin:0">Onboarding Notification</h3>
+            </div>
+            <!-- <div layout="row">
+                <div flex="10" class="text-left"><label class="input-fields-label">Subject <span>*</span></label></div>
+                <md-divider  class="sub-divider"></md-divider>
+                <md-input-container  flex class="onboard-subject">                    
+                    <input ng-model="initializeOnboardDetail.subject" class="subject-box" name="subject" required  ob-autofocus>
+                </md-input-container>
+
+            </div>
+            <md-divider ng-class="{'required-border': intiateonboard.subject.$error.required}"></md-divider>
+            
+            <div layout="row" layout-align="start start" class="desc-block" ng-if="!vm.bodyEditMode" ng-click="vm.bodyEditMode=!vm.bodyEditMode">
+                <p class="htmlView" ng-bind-html="initializeOnboardDetail.body"></p>              
+            </div>
+            <md-divider></md-divider>  
+            <div layout="row" layout-align="start start" class="desc-block"  ng-if="vm.bodyEditMode">
+                <md-input-container class="md-block" flex  md-no-float>
+                    <textarea rows="3" ng-model="initializeOnboardDetail.body" focus-if="vm.bodyEditMode" focus-delay="0" required placeholder="Insert text here ..." ng-blur="vm.bodyEditMode=!vm.bodyEditMode"></textarea>
+                </md-input-container>
+            </div> -->
+            <div layout="row">
+                <div class="onboard-headings" flex="30">
+                    <h3>{{hireUserInfo.catgid == 1 ? 'Offer Letter' : 'Engagement Letter'}}</h3>
+                </div>
+                <div flex="55" ng-style="{'margin-left':vm.previewleft}">
+                    <md-input-container>
+                        <md-select ng-model="vm.slectedOffer" ng-change="vm.getOfferLetterDetail()">
+                            <md-option ng-repeat="lett in vm.offerLetters track by $index" ng-value="{{lett.templateid}}">{{lett.templatename}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="preview-btn-headings" flex="15">
+                    <md-button class="md-secondary md-button md-ink-ripple preview-btn" ng-click="vm.showPreviewDailog()">
+                        <i class="fa fa-eye"></i> Preview</md-button>
+                </div>
+            </div>
+
+            <div>
+                <!-- <ng-quill-editor required ng-model="offerLetterDetail.body" tabindex="5" on-editor-created="editorCreated(editor)" name="offerLetterDetail">
+                    <ng-quill-toolbar>
+                        <div id="ng-quill-toolbar" style="border-bottom:none;">
+                            <span class="ql-formats">
+                                <button class="ql-bold" ng-attr-title="{{'Bold'}}"></button>
+                                <button class="ql-italic" ng-attr-title="{{'Italic'}}"></button>
+                                <button class="ql-underline" ng-attr-title="{{'Underline'}}"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-align" ng-attr-title="{{'Aligment'}}">
+                                    <option selected></option>
+                                    <option value="center"></option>
+                                    <option value="right"></option>
+                                    <option value="justify"></option>
+                                </select>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered" ng-attr-title="{{'Ordered'}}"></button>
+                                <button class="ql-list" value="bullet" ng-attr-title="{{'Bullet'}}"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-link" ng-attr-title="{{'Link'}}"></button>
+                                <button class="ql-image" ng-attr-title="{{'Image'}}"></button>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor> -->
+                <ng-ckeditor required ng-model="offerLetterDetail.body" skin="moono-lisa" name="offerLetterDetail" remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                    remove-plugins="iframe,flash,smiley"></ng-ckeditor>
+                <div layout="row" layout-align="end end" style="background-color: #e4e4e4;" flex>
+                    <span class="counter">{{ vm.htmlToPlaintext(offerLetterDetail.body).length ? vm.htmlToPlaintext(offerLetterDetail.body).length
+                        : '0'}} / 10000</span>
+                </div>
+            </div>
+            <div style="font-size: 12px;color: #dd2c00;" ng-if="!offerLetterDetail.body && ( (submitted && intiateonboard.offerLetterDetail.$untouched) || (intiateonboard.offerLetterDetail.$touched ) )">
+                Please enter Email Template. It can’t be blank.
+            </div>
+            <div layout="row">
+                <div class="onboard-headings" flex="30">
+                    <h3>Onboarding Workflow</h3>
+                </div>
+                <div flex>
+
+                    <md-input-container>
+                        <md-select ng-model="vm.selectedWorkFlow" ng-change="vm.getWorkFlowDetail()">
+                            <md-option ng-repeat="workflow in vm.workFlowList track by $index" ng-value="{{workflow.workflowId}}" title="{{workflow.workflowName}}">{{workflow.workflowName}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="column" class="workflow-list">
+
+                <!-- default step start-->
+                <div layout="row" layout-align="start start" style="display: -webkit-inline-box;position:relative;" class="ng-scope layout-align-start-start layout-row">
+                    <div layout="column" layout-align="center center" class="layout-align-center-center layout-column" style="height:98%;position:absolute;max-width:8%;">
+                        <button class="smallFabBtn stepNum md-button md-ink-ripple" type="button" id="4144" drop-on-me="">
+                            {{$index + 1}}
+                        </button>
+                        <div id="vline-0" class="vertical-line" style="height:95%;margin:0 28px;border-left: 1px solid #688081;"></div>
+                    </div>
+
+                    <md-card id="step-4144" class="workflow-step-card-initiate layout-wrap _md flex" drop-on-me="" layout-wrap="" flex="" style="display:block;width:92% !important;margin-left:60px;">
+                        <div id="istep-4144" layout="row" layout-align="start center" layout-padding="" flex="" class="layout-padding layout-align-start-center layout-row flex">
+
+                            <div id="drop-4144" layout="column" layout-align="start start" flex="" class="layout-align-start-start layout-column flex"
+                                style="display:block">
+                                <div layout="row" layout-align="start center" style="width:100%;" layout-wrap="" flex="" class="layout-wrap layout-align-start-center layout-row flex">
+                                    <div id="snameDiv-4144" md-force-height="'25px'" flex style="margin-top: -50px; height: 25px;">
+                                        <md-input-container class="md-block md-input-has-value flex">
+                                            <input type="text" id="editsn-4144" ng-model="vm.webformStepName" readonly="" class="ng-pristine ng-untouched ng-valid md-input ng-not-empty"
+                                                aria-invalid="false">
+                                            <div class="md-errors-spacer"></div>
+                                        </md-input-container>
+                                    </div>
+                                    
+                                    <div id="stepIcons-4144" layout="row" layout-align="end center" class="layout-align-end-center layout-row" style="height:50px">
+
+                                        <!-- <button class="md-icon-button deleteBtnSvg md-button md-ink-ripple" type="button" id="idel-4144" style="transform:scale(0.7)"
+                                            ng-click="vm.showStepDeleteConfirm($event, $index, work.stepName)">
+                                            <md-icon id="ideli-4144" md-svg-icon="images/icons/delete_icon.svg" class="ng-scope" role="img" aria-label="images/icons/delete_icon.svg">
+                                                <svg id="Layer_1_cache27" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.5 108.7" fit="" height="100%"
+                                                    width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                    <title>delete_icon</title>
+                                                    <path d="M383.4,324.3a2.9,2.9,0,0,0,2.9,2.9h73.8a2.9,2.9,0,0,0,2.9-2.9v-72H383.4v72Zm56.2-55.9h10.9v41.1H439.6Zm-21.8,0h10.9v41.1H417.8Zm-21.8,0h10.9v41.1H395.9Z"
+                                                        transform="translate(-375.5 -218.5)"></path>
+                                                    <path d="M447.7,231.9V221.4a2.9,2.9,0,0,0-2.9-2.9H401.6a2.9,2.9,0,0,0-2.9,2.9v14.1H378.4a2.9,2.9,0,0,0-2.9,2.9v7.4a2.9,2.9,0,0,0,2.9,2.9h89.7a2.9,2.9,0,0,0,2.9-2.9v-7.4a2.9,2.9,0,0,0-2.9-2.9H447.7v-3.6Zm-10.9,3H409.6v-5.5h27.2v5.5Z"
+                                                        transform="translate(-375.5 -218.5)"></path>
+                                                </svg>
+                                            </md-icon>
+                                        </button> -->
+                                    </div>
+                                </div>
+                                
+                                <div id="snameDiv-4144" md-force-height="'25px'" flex style="margin-top: -30px; height: 25px;margin-bottom:15px;font-size: 14px; ">
+                                        <md-input-container class="md-block md-input-has-value flex">
+                                            <input type="text" id="editsn-4144" ng-model="vm.webformStepDesc" readonly="" class="ng-pristine ng-untouched ng-valid md-input ng-not-empty"
+                                                aria-invalid="false">
+                                            <div class="md-errors-spacer"></div>
+                                        </md-input-container>
+                                    </div>
+
+                                <md-content layout="row" id="docs-4144" layout-align="start start" class="workflow-docs-container layout-wrap _md layout-align-start-start layout-row"
+                                    layout-wrap="" style="overflow-y: hidden;margin: 0px 0 0 0px;">
+                                    <div name="webformscheckbox" flex>
+                                        <table style="width:100%;padding:10px;">
+                                            <tr ng-repeat="masterWebform in vm.masterformsList">
+                                                <td colspan=2>
+                                                    <md-checkbox tabindex="4" ng-model="masterWebform.isChecked" aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;" ng-disabled="true">
+                                                    </md-checkbox><span>{{masterWebform.webFormName}}</span>
+                                                    <table ng-if="masterWebform.subWebForms" style="width:100%">
+                                                        <tr ng-repeat="subWebform in masterWebform.subWebForms|limitTo:Math.ceil((masterWebform.subWebForms.length)/2)"
+                                                            height="30px">
+                                                            <td style="width:50%;padding-left: 20px;">
+                                                                <md-checkbox tabindex="4" ng-model="masterWebform.subWebForms[$index*2].isChecked" ng-disabled="true"
+                                                                    aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;" ng-if="masterWebform.subWebForms[$index*2].webFormName">
+                                                                </md-checkbox><span>{{masterWebform.subWebForms[$index*2].webFormName}}</span>
+                                                            </td>
+                                                            <td style="width:50%">
+                                                                <md-checkbox tabindex="4" ng-model="masterWebform.subWebForms[$index*2+1].isChecked" ng-disabled="true"
+                                                                    aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;" ng-if="masterWebform.subWebForms[$index*2+1].webFormName">
+                                                                </md-checkbox><span>{{masterWebform.subWebForms[$index*2+1].webFormName}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="otherwebform in vm.otherMasterformsList | limitTo:Math.ceil((vm.otherMasterformsList.length)/2) ">
+                                                <td style="width:50%"  height="30px">
+                                                    <md-checkbox tabindex="4" ng-model="vm.otherMasterformsList[$index*2].isChecked" ng-disabled="true"
+                                                        aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;" ng-if="vm.otherMasterformsList[$index*2].webFormName">
+                                                    </md-checkbox><span>{{vm.otherMasterformsList[$index*2].webFormName}}</span>
+                                                </td>
+                                                <td style="width:50%"  height="30px">
+                                                    <md-checkbox tabindex="4" ng-model="vm.otherMasterformsList[$index*2+1].isChecked" ng-disabled="true"
+                                                        aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;"
+                                                        ng-if="vm.otherMasterformsList[$index*2+1].webFormName">
+                                                    </md-checkbox><span>{{vm.otherMasterformsList[$index*2+1].webFormName}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr height="40px">
+                                                <td style="font-weight: bold;font-size: 16px;">Custom Webforms</td>
+                                            </tr>
+                                            <tr ng-repeat="webform in vm.customWebformsList | orderBy : '-modifyDate' | limitTo:Math.ceil((vm.customWebformsList.length)/2) "
+                                                height="30px">
+                                                <td style="width:50%">
+                                                    <md-checkbox tabindex="4" ng-model="vm.customWebformsList[$index*2].isChecked" ng-disabled="true"
+                                                        aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;" ng-if="vm.customWebformsList[$index*2].webFormName">
+                                                    </md-checkbox><span>{{vm.customWebformsList[$index*2].webFormName}}</span>
+                                                </td>
+                                                <td style="width:50%">
+                                                    <md-checkbox tabindex="4" ng-model="vm.customWebformsList[$index*2+1].isChecked" ng-disabled="true"
+                                                        aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;"
+                                                        ng-if="vm.customWebformsList[$index*2+1].webFormName">
+                                                    </md-checkbox><span>{{vm.customWebformsList[$index*2+1].webFormName}}</span>
+                                                </td>
+                                            </tr>
+                                            <!-- For further references -->
+                                            <!-- http://embed.plnkr.co/U0xK5t/ -->
+                                        </table>
+                                    </div>
+                                </md-content>
+                            </div>
+                        </div>
+                    </md-card>
+                </div>
+                <!-- default step end-->
+                <div layout="row" layout-align="start start" style="display: -webkit-inline-box;position:relative;" ng-repeat="work in vm.workFlowDetail.steps | orderBy : 'sequencenumber' "
+                    class="ng-scope layout-align-start-start layout-row">
+                    <div layout="column" layout-align="center center" class="layout-align-center-center layout-column" flex="5" style="height:98%;position:absolute;max-width:8%;">
+                        <button class="smallFabBtn stepNum md-button md-ink-ripple" type="button" id="4144" drop-on-me="">
+                            {{$index + 2}}
+                        </button>
+                        <div class="step-line" style="height:95%;margin:0 28px;border-left: 1px solid #688081;"></div>
+                        <!-- <div class="vertical-line" ></div> -->
+                    </div>
+
+                    <md-card  class="workflow-step-card-initiate layout-wrap" drop-on-me="" layout-wrap="" flex="90" style="display:block;width:92% !important;margin-left:60px;">
+                        <div  layout="row" layout-align="start center" layout-padding="" flex="" class="layout-padding layout-align-start-center layout-row flex">
+
+                            <div layout="column" layout-align="start start" flex="" class="layout-align-start-start layout-column flex"
+                                style="display:block">
+                                <div layout="row" layout-align="start center" style="width:100%;" layout-wrap="" flex="" class="layout-wrap layout-align-start-center layout-row flex">
+                                    <div id="snameDiv-4144" md-force-height="'25px'" style="margin-top: -50px; height: 25px;" flex>
+                                        <md-input-container class="md-block md-input-has-value flex" flex="">
+                                            <input type="text" id="editsn-4144" ng-model="work.stepName" readonly="" class="ng-pristine ng-untouched ng-valid md-input ng-not-empty"
+                                                aria-invalid="false" style="text-overflow: ellipsis;overflow: hidden;">
+                                            <div class="md-errors-spacer"></div>
+                                        </md-input-container>
+                                    </div>
+                                    <div id="stepIcons-4144" layout="row" layout-align="end center" class="layout-align-end-center layout-row">
+                                        <md-button id="iedit-{{step.StepId || step.altStepId}}" class="md-icon-button stepEditBtnSvg" style="margin-right:-15px;"
+                                            ng-click="vm.editStep($event, work, work.stepName)" aria-label="edit step name" ng-show="work.isstepeditble">
+                                            <md-icon id="iediti-{{step.StepId || step.altStepId}}" md-svg-icon="images/icons/edit_icon.svg"></md-icon>
+                                        </md-button>
+                                        <button class="md-icon-button deleteBtnSvg md-button md-ink-ripple" type="button" id="idel-4144" style="transform:scale(0.7)"
+                                            ng-click="vm.showStepDeleteConfirm($event, work, work.stepName)">
+                                            <md-icon id="ideli-4144" md-svg-icon="images/icons/delete_icon.svg" class="ng-scope" role="img" aria-label="images/icons/delete_icon.svg">
+                                            </md-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <md-content layout="row" id="docs-4144" layout-align="start start" class="previewstep" layout-wrap="" style="background-color: #fff;margin-bottom: 10px;margin-left: 4px;">
+                                        <p ng-bind-html="trustAsHtml(work.stepDesc)"></p>
+                                    <!-- <p ng-bind-html="work.stepDesc| breakFilter" title="{{work.stepDesc}}" style="margin:0;text-align: justify;padding-right: 7px;padding-left: 12px;word-break: break-all;"></p> -->
+                                </md-content>
+                                <md-content layout="row" id="docs-4144" layout-align="start start" class="workflow-docs-container layout-wrap _md layout-align-start-start layout-row"
+                                    layout-wrap="" ng-if="work.documents.length" style="margin: 0px 0 0 0px;">
+                                    <md-card id="card-4144" ng-repeat="doc in work.documents" class="workflow-doc-card layout-wrap ng-scope _md flex" layout-wrap=""
+                                        flex="">
+                                        <div class="wf-doc-icon-text layout-align-space-between-center layout-row flex" layout="row" layout-align="space-between center"
+                                            flex="">
+                                            <div layout="row" layout-align="start center" class="layout-align-start-center layout-row">
+                                                <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a" role="img">
+                                                    <svg height="100%" viewBox="0 0 1792 1792" width="100%" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet"
+                                                        focusable="false">
+                                                        <path d="M1596 380q28 28 48 76t20 88v1152q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h896q40 0 88 20t76 48zm-444-244v376h376q-10-29-22-41l-313-313q-12-12-41-22zm384 1528v-1024h-416q-40 0-68-28t-28-68v-416h-768v1536h1280zm-514-593q33 26 84 56 59-7 117-7 147 0 177 49 16 22 2 52 0 1-1 2l-2 2v1q-6 38-71 38-48 0-115-20t-130-53q-221 24-392 83-153 262-242 262-15 0-28-7l-24-12q-1-1-6-5-10-10-6-36 9-40 56-91.5t132-96.5q14-9 23 6 2 2 2 4 52-85 107-197 68-136 104-262-24-82-30.5-159.5t6.5-127.5q11-40 42-40h22q23 0 35 15 18 21 9 68-2 6-4 8 1 3 1 8v30q-2 123-14 192 55 164 146 238zm-576 411q52-24 137-158-51 40-87.5 84t-49.5 74zm398-920q-15 42-2 132 1-7 7-44 0-3 7-43 1-4 4-8-1-1-1-2t-.5-1.5-.5-1.5q-1-22-13-36 0 1-1 2v2zm-124 661q135-54 284-81-2-1-13-9.5t-16-13.5q-76-67-127-176-27 86-83 197-30 56-45 83zm646-16q-24-24-140-24 76 28 124 28 14 0 18-1 0-1-2-3z"></path>
+                                                    </svg>
+                                                </md-icon>
+                                                <p class="md-caption ng-binding md-truncate" style="white-space:nowrap;margin: 0;" md-truncate="" title="{{doc.name}}">{{doc.name}}</p>
+                                            </div>
+                                        </div>
+                                    </md-card>
+                                </md-content>
+                                <!-- <md-content layout="row" id="docs-4144" layout-align="start start" class="workflow-docs-container layout-wrap _md layout-align-start-start layout-row"
+                                    layout-wrap="" ng-if="!work.documents.length" style="background-color: #fff;height: 75px;">
+                                    <p ng-bind="work.stepDesc" style="margin:0;text-align: justify;padding-right: 7px;padding-left: 12px;word-break: break-all;"></p>
+                                </md-content> -->
+                            </div>
+                        </div>
+                    </md-card>
+                </div>
+                <div class="no-steps-text" ng-if="!vm.workFlowDetail.steps.length">No Workflow Steps are available.</div>
+
+            </div>
+        </form>
+    </md-content>
+
+</div>
+<div layout="row" layout-align="end center" flex>
+    <md-button class='md-primary md-raised' tabindex="5" ng-disabled="intiateonboard.$invalid" ng-click="vm.sendEmailTemplate()">Send
+    </md-button>
+    <md-button class='md-secondary' tabindex="6" ui-sref="NewHires">Cancel
+    </md-button>
+</div>
+<div class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

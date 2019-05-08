@@ -1,0 +1,566 @@
+<div style="overflow:hidden;" ng-cloak>
+    <div style="background-color: white;">
+        <div layout="column" style="width:100%">
+            <form name="workflow">
+                <div layout="row" layout-xs="column" style="padding: 5px 0 0 10px;margin: 0" layout-align="start center"
+                    layout-padding>
+                    <md-input-container class="md-block" style="margin: 1px 0 0 10px;padding-bottom: 0; padding-top: 0;"
+                        flex="30">
+                        <label class="input-fields" style="margin-left: 5px;">Enter Workflow Name</label>
+                        <input id="workflowName" name="workflowName" type="text" tabindex="1" ng-model="wfname"
+                            maxlength="150" md-maxlength="150" ob-autofocus required />
+                        <div ng-if="(submitted && workflow.workflowName.$untouched) || workflow.workflowName.$touched"
+                            ng-messages="workflow.workflowName.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG080}}</div>
+                        </div>
+                    </md-input-container>
+            </form>
+            <div layout="row" layout-xs="column" layout-align="end center" flex>
+                <md-button class="md-primary md-raised" tabindex="7" ng-click="vm.showStepDeletionPrompt()">Save
+                </md-button>
+                <md-button class="md-secondary" tabindex="7" ng-click="vm.cancelWorkflow()">Cancel</md-button>
+            </div>
+        </div>
+    </div>
+    <md-divider />
+</div>
+
+<div layout="row" layout-xs="column" style="width:100%;margin-left:10px;">
+    <!-- Onboarding Steps -->
+    <div layout="column" layout-padding flex>
+        <span class="cust-heading">Onboarding Steps</span>
+        <!-- class="{{vm.stepDisplayClass}}" -->
+        <md-content id="cardsContent" layout="column"
+            ng-class="{'{{vm.stepDisplayClass}}': view || wsteps.length >= 0}">
+            <!-- step to have default webform settings -->
+            <div id="stepForWebForms" layout="row" layout-align="start start" style="display: -webkit-inline-box;"
+                flex="auto">
+                <div layout="column" layout-align="center center">
+                    <md-button id="seq-{{step.StepId || step.altStepId}}" class="smallFabBtn stepNum">
+                        {{ $index+1 }}
+                    </md-button>
+                    <div id="vline-{{step.sequencenumber}}" class="vertical-line"
+                        ng-style="{'height' :  vm.divVerticalLine}"></div>
+                </div>
+
+                <md-card id="step-{{step.StepId || step.altStepId}}" layout="row" layout-align="start center" drop-on-me
+                    layout-wrap layout-padding flex ng-style="{'height': vm.workflowDefaultStepHeight }"
+                    ng-style="{ 'max-height': vm.workflowDefaultStepHeight }">
+                    <div id="drop-{{step.StepId}}" layout="column" layout-align="start start" style="height:100%;" flex>
+                        <form id="editsfrm-{{step.StepId || step.altStepId}}" name="editStep"
+                            style="margin-bottom: -30px;">
+                            <div id="snameDiv-{{step.StepId || step.altStepId}}">
+                                <md-input-container class="md-block" flex>
+                                    <label class="input-fields">Step Name</label>
+                                    <input type="text" size="{{vm.stepNameSize}}" tabindex="2"
+                                        id="editsn-{{step.StepId || step.altStepId}}" ng-model="vm.webformStepName"
+                                        required readonly />
+                                </md-input-container>
+                            </div>
+                            <div id="divsd-{{step.StepId || step.altStepId}}" name="stepDesc" flex>
+                                <md-input-container id="icsd-{{step.StepId || step.altStepId}}" name="stepDesc"
+                                    class="md-block" style="margin-top: -20px;">
+                                    <label id="labelsd-{{step.StepId || step.altStepId}}" name="stepDesc"
+                                        class="input-fields">Step
+                                        Description
+                                    </label>
+                                    <textarea id="editsd-{{step.StepId || step.altStepId}}" name="stepDesc" rows="2"
+                                        tabindex="3" ng-style="{'width': vm.stepDescWidth}" md-no-autogrow
+                                        ng-model="vm.webformStepDesc" required readonly>
+
+                                    </textarea>
+                                </md-input-container>
+                            </div>
+                        </form>
+                        <div name="webformscheckbox" flex
+                            ng-style="{'margin-top': vm.marginTopForDivCb , 'width' : vm.widthDivCb}"
+                            style="width:100%">
+                            <table style="width:100%">
+                                <tr ng-repeat="masterWebform in vm.masterformsList">
+                                    <td colspan=2>
+                                        <md-checkbox tabindex="4" ng-model="masterWebform.isChecked"
+                                            aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;"
+                                            ng-disabled="masterWebform.isCommForm"
+                                            ng-checked=" masterWebform.isCommForm  ||masterWebform.subWebForms[0].isChecked || masterWebform.subWebForms[1].isChecked|| masterWebform.subWebForms[2].isChecked || masterWebform.subWebForms[3].isChecked"
+                                            ng-click="masterWebform.subWebForms ? selectChildCheckboxesOfParent(masterWebform.isChecked) :  angular.noop()">
+                                        </md-checkbox><span>{{masterWebform.webFormName}}</span>
+                                        <table ng-if="masterWebform.subWebForms" style="width:100%">
+                                            <!-- <tr>
+                                                <td ng-repeat="subWebform in masterWebform.subWebForms" colspan="2" >
+                                                    <md-checkbox tabindex="4" ng-model="subWebform.isChecked"
+                                                        aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;">
+                                                    </md-checkbox><span>{{subWebform.webFormName}}</span>
+                                                </td>
+                                            </tr> -->
+
+                                            <tr ng-repeat="subWebform in masterWebform.subWebForms|limitTo:Math.ceil((masterWebform.subWebForms.length)/2)"
+                                                height="30px">
+                                                <td style="width:50%;padding-left: 20px;">
+                                                    <md-checkbox tabindex="4"
+                                                        ng-model="masterWebform.subWebForms[$index*2].isChecked"
+                                                        aria-label="Checkbox 1"
+                                                        style="transform:scale(0.9);margin-bottom:5px;"
+                                                        ng-if="masterWebform.subWebForms[$index*2].webFormName">
+                                                    </md-checkbox>
+                                                    <span>{{masterWebform.subWebForms[$index*2].webFormName}}</span>
+                                                </td>
+                                                <td style="width:50%">
+                                                    <md-checkbox tabindex="4"
+                                                        ng-model="masterWebform.subWebForms[$index*2+1].isChecked"
+                                                        aria-label="Checkbox 1"
+                                                        style="transform:scale(0.9);margin-bottom:5px;"
+                                                        ng-if="masterWebform.subWebForms[$index*2+1].webFormName">
+                                                    </md-checkbox>
+                                                    <span>{{masterWebform.subWebForms[$index*2+1].webFormName}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="otherwebform in vm.otherMasterformsList">
+                                    <td colspan=2>
+                                        <md-checkbox tabindex="4" ng-model="otherwebform.isChecked"
+                                            aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;">
+                                        </md-checkbox><span>{{otherwebform.webFormName}}</span>
+                                    </td>
+                                </tr>
+                                <!-- // column wise set -->
+                                <!-- <tr ng-repeat="otherwebform in vm.otherMasterformsList | limitTo:Math.ceil((vm.otherMasterformsList.length)/2) ">
+                                    <td style="width:50%"  height="30px">
+                                        <md-checkbox tabindex="4" ng-model="vm.otherMasterformsList[$index*2].isChecked"
+                                            aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;">
+                                        </md-checkbox><span>{{vm.otherMasterformsList[$index*2].webFormName}}</span>
+                                    </td>
+                                    <td style="width:50%"  height="30px">
+                                        <md-checkbox tabindex="4" ng-model="vm.otherMasterformsList[$index*2+1].isChecked"
+                                            aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;"
+                                            ng-if="$index*2+1 < vm.otherMasterformsList.length">
+                                        </md-checkbox><span>{{vm.otherMasterformsList[$index*2+1].webFormName}}</span>
+                                    </td>
+                                </tr> -->
+                                <!-- <tr ng-repeat="webform in vm.webformsList" ng-if="$index > 2">
+                                    <td>
+                                        <md-checkbox tabindex="4" ng-model="webform.webFormId" aria-label="Checkbox 1"
+                                            style="transform:scale(0.9);margin-bottom:5px;">
+                                        </md-checkbox><span>{{webform.webFormName}}</span>
+                                    </td>
+                                </tr> -->
+                                <tr height="40px">
+                                    <td style="font-weight: bold;font-size: 16px;">Custom Webforms</td>
+                                </tr>
+                                <tr ng-repeat="webform in vm.customWebformsList | orderBy : '-modifyDate'  | limitTo:Math.ceil((vm.customWebformsList.length)/2) "
+                                    height="30px">
+                                    <td style="width:50%">
+                                        <md-checkbox tabindex="4" ng-model="vm.customWebformsList[$index*2].isChecked"
+                                            aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;">
+                                        </md-checkbox><span>{{vm.customWebformsList[$index*2].webFormName}}</span>
+                                    </td>
+                                    <td style="width:50%">
+                                        <md-checkbox tabindex="4" ng-model="vm.customWebformsList[$index*2+1].isChecked"
+                                            aria-label="Checkbox 1" style="transform:scale(0.9);margin-bottom:5px;"
+                                            ng-if="$index*2+1 < vm.customWebformsList.length">
+                                        </md-checkbox><span>{{vm.customWebformsList[$index*2+1].webFormName}}</span>
+                                    </td>
+                                </tr>
+                                <!-- For further references -->
+                                <!-- http://embed.plnkr.co/U0xK5t/ -->
+                                <!-- <tr ng-repeat="opt in options|limitTo:Math.ceil(options.length/2)">
+                                    <td>
+                                        <input type="checkbox" ng-model="selectedOptions[options[$index*2].value]">
+                                        {{ $index*2 }} - {{ options[$index*2].value }}-{{ options[$index*2].name }} --- {{$index}}
+                                    </td>
+                                    <td>
+                                        <span ng-if="$index*2+1 < options.length">
+                                            <input type="checkbox" ng-model="selectedOptions[options[$index*2+1].value]">
+                                            {{ $index*2 +1 }} - {{ options[$index*2+1].value }}-{{
+                                            options[$index*2+1].name }} --- {{$index}}
+                                        </span>
+                                        <span>&nbsp;</span>
+                                    </td>
+                                </tr> -->
+                            </table>
+                        </div>
+
+                    </div>
+                </md-card>
+            </div>
+            <!-- </div> -->
+
+            <!-- Removed flex to avoid overlapping of content
+                    https://stackoverflow.com/questions/37905749/flexbox-not-working-in-internet-explorer-11 -->
+            <!-- <div flex="10"></div> -->
+
+            <!-- added flex=auto as a fix to IE11 flexbug
+                https://material.angularjs.org/latest/layout/tips -->
+            <div layout="row" layout-align="start start" ng-repeat="step in wsteps | orderBy: 'sequencenumber'"
+                style="display: -webkit-inline-box;" flex="auto">
+                <div layout="column" layout-align="center center">
+                    <!-- {{ (wsteps.indexOf(step) + 1).toString() }} -->
+                    <md-button id="seq-{{step.StepId || step.altStepId}}" class="smallFabBtn stepNum">
+                        {{ $index+2 }}
+                    </md-button>
+                    <div id="vline-{{step.StepId || step.altStepId}}" class="vertical-line"></div>
+                </div>
+
+                <md-card id="step-{{step.StepId || step.altStepId}}" class="workflow-step-card" layout="row"
+                    layout-align="start center" drop-on-me layout-wrap layout-padding flex>
+                    <!-- <div id="istep-{{step.StepId || step.altStepId}}" layout="row" layout-align="start center" layout-padding flex> -->
+                    <!-- Buttons are not draggable in Firefox - https://bugzilla.mozilla.org/show_bug.cgi?id=568313 
+                            https://bugzilla.mozilla.org/show_bug.cgi?id=646823
+                            Hence removed md-button and made icon draggable! -->
+                    <!-- <md-button id="id-{{step.StepId || step.altStepId}}" 
+                            ng-show="wsteps.length > 1" 
+                            class="md-icon-button dragIconSvg" 
+                            style="margin-left:-10px;"
+                            drag-me-new> -->
+                    <ng-md-icon name="reorderIcon" icon="reorder" id="id-{{step.StepId || step.altStepId}}"
+                        class="md-icon-button" size="20"
+                        style="fill:#a0a0a0;cursor:move;transform: translate3d(0,0,0);-webkit-transform: translate3d(0,0,0);"
+                        ng-show="wsteps.length > 1" drag-me>
+                    </ng-md-icon>
+                    <!-- <md-icon id="id-{{step.StepId || step.altStepId}}" 
+                                ng-show="wsteps.length > 1" 
+                                class="md-icon-button dragIconSvg"
+                                md-svg-icon="images/icons/drag_icon.svg" drag-me-new>
+                            </md-icon> -->
+                    <!-- </md-button> -->
+
+                    <div id="drop-{{step.StepId}}" layout="column" layout-align="start start" style="height:100%;" flex>
+                        <!-- <md-input-container class="md-block" >
+                                <div class="issued-div" style="font-size: 14px;padding: 20px 18px 0px 18px;">
+                                    <span style="position: relative; top: 2px;right: 5px;">Documents editable while Initiate Onboarding?</span>
+                                    <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+                                        Checkbox 1: {{ data.cb1 }}
+                                      </md-checkbox>
+                                </div>
+                            </md-input-container> -->
+
+                        <div layout="row" style="width:100%">
+                            <div flex="60">
+                                <!-- <md-checkbox ng-model="step.isEditable" aria-label="Checkbox 1">
+                                    Documents editable while Initiate Onboarding?
+                                  </md-checkbox> -->
+                            </div>
+                            <div flex="40" style="margin-top:-10px;">
+                                <md-button id="iview-{{step.StepId || step.altStepId}}"
+                                    class="md-icon-button stepEditBtnSvg" style="margin-right:5px;" tabindex="5"
+                                    ng-click="vm.previewStep(step)" title="Preview" aria-label="edit step name">
+                                    <md-icon id="iviewi-{{step.StepId || step.altStepId}}"
+                                        md-svg-icon="images/icons/preview_icon.svg"></md-icon>
+                                </md-button>
+                                <md-button id="iedit-{{step.StepId || step.altStepId}}"
+                                    class="md-icon-button stepEditBtnSvg" style="margin-right: -2px;margin-left: -3px;"
+                                    tabindex="5" ng-click="vm.editStepName(step.StepId || step.altStepId)" title="Edit"
+                                    aria-label="edit step name">
+                                    <md-icon id="iediti-{{step.StepId || step.altStepId}}"
+                                        md-svg-icon="images/icons/edit_icon.svg"></md-icon>
+                                </md-button>
+                                <md-button id="idel-{{step.StepId || step.altStepId}}"
+                                    class="md-icon-button stepDelBtnSvg" tabindex="5"
+                                    ng-click="vm.showStepDeleteConfirm($event, step.StepId || step.altStepId, step.stepName)">
+                                    <md-icon id="ideli-{{step.StepId || step.altStepId}}" title="Delete"
+                                        md-svg-icon="images/icons/delete_icon.svg"></md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+
+
+                        <!-- <div layout="row" layout-align="start center" style="width:100%;" layout-wrap flex> -->
+                        <!-- <div id="stepIcons-{{step.StepId || step.altStepId}}" class="stepIcons" layout="row" layout-align="end end" flex>
+                                <md-button id="iedit-{{step.StepId || step.altStepId}}" class="md-icon-button stepEditBtnSvg" style="margin-right:-15px;"
+                                    tabindex="5" ng-click="vm.editStepName(step.StepId || step.altStepId)" aria-label="edit step name">
+                                    <md-icon id="iediti-{{step.StepId || step.altStepId}}" md-svg-icon="images/icons/edit_icon.svg"></md-icon>
+                                </md-button>
+                                <md-button id="idel-{{step.StepId || step.altStepId}}" class="md-icon-button stepDelBtnSvg" tabindex="5" ng-click="vm.showStepDeleteConfirm($event, step.StepId || step.altStepId, step.stepName)">
+                                    <md-icon id="ideli-{{step.StepId || step.altStepId}}" md-svg-icon="images/icons/delete_icon.svg"></md-icon>
+                                </md-button>
+                            </div> -->
+
+                        <form id="editsfrm-{{step.StepId || step.altStepId}}" name="editStep" style="width:100%">
+                            <div id="snameDiv-{{step.StepId || step.altStepId}}">
+                                <md-input-container class="md-block" flex>
+                                    <label class="input-fields">Step Name</label>
+                                    <input type="text" size="{{vm.stepNameSize}}" maxlength="100" md-maxlength="100"
+                                        tabindex="5" id="editsn-{{step.StepId || step.altStepId}}"
+                                        ng-model="step.stepName" name="stepnameedit" required readonly
+                                        style="text-overflow: ellipsis;overflow: hidden;" />
+                                    <div ng-if="(submitted && editStep.stepnameedit.$untouched) || editStep.stepnameedit.$touched"
+                                        ng-messages="editStep.stepnameedit.$error" role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG082}}</div>
+                                        <div ng-message-exp="['pattern']">{{errorMsgs.MSG114}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+
+                            <!-- </div> -->
+                            <div id="divsd-{{step.StepId || step.altStepId}}" name="stepDesc" flex
+                                style="margin-top:-10px">
+                                <label style="font-size:11px !important;text-transform:none;color:rgba(0,0,0,0.54)">Step
+                                    Description *
+                                </label>
+                                <div id="icsd-{{step.StepId || step.altStepId}}" name="stepDesc" class="md-block"
+                                    style="margin-top: -20px;">
+
+                                    <!-- <textarea id="editsd-{{step.StepId || step.altStepId}}" name="stepDesc" rows="2"
+                                        tabindex="5" ng-style="{'width': vm.stepDescWidth}" maxlength="5000"
+                                        md-maxlength="5000" md-no-autogrow ng-model="step.stepDesc" required readonly>
+
+                                    </textarea> -->
+                                    <p id="editsprevd-{{step.StepId || step.altStepId}}" class="previewstep"
+                                        name="stepDescDef" ng-bind-html="trustAsHtml(step.stepDesc)"
+                                        style="border-bottom: 1px solid lightgrey;margin-top:30px;height:50px;overflow-y:auto;margin-bottom:0px;word-wrap: break-word;">
+                                    </p>
+                                    <ng-ckeditor ng-model="step.stepDesc" skin="moono-lisa"
+                                        id="editsd-{{step.StepId || step.altStepId}}" name="stepDesc"
+                                        remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                                        remove-plugins="iframe,flash,smiley" height="150px" hidden
+                                        style="margin-top:30px"></ng-ckeditor>
+                                    <div ng-if="(submitted && editStep.stepDesc.$untouched) || editStep.stepDesc.$touched"
+                                        ng-messages="editStep.stepDesc.$error" role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG107}}</div>
+                                        <div ng-message-exp="['pattern']">{{errorMsgs.MSG115}}</div>
+                                    </div>
+                                    <span class="counter" style="float:right;padding-right:3px;">{{
+                                        vm.htmlToPlaintext(step.stepDesc).length ?
+                                        vm.htmlToPlaintext(step.stepDesc).length : '0'}} / 5000</span>
+                                </div>
+                                <md-input-container class="md-block" flex style="margin-top:0; margin-bottom:0;">
+                                    <div class="issued-div" style="font-size: 14px;">
+                                        <md-checkbox ng-model="step.isEditable" aria-label="Checkbox 1"
+                                            style="margin-left: -30px;    transform: scale(0.8);">
+                                            Documents editable while Initiate Onboarding?
+                                        </md-checkbox>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </form>
+                        <md-content layout="row" id="docs-{{step.StepId || step.altStepId}}" layout-align="start start"
+                            class="workflow-docs-container" ng-class="{showBgImage: step.documents.length == 0}"
+                            layout-wrap>
+                            <md-card id="card-{{step.StepId || step.altStepId}}" class="workflow-doc-card"
+                                ng-repeat="doc in step.documents" layout-wrap flex>
+                                <div id="doccard-{{doc.documentId}}" class="{{vm.workflowDocCardClass}}" layout="row"
+                                    layout-align="space-between center" flex style="height:100%;">
+                                    <div id="idoc-{{doc.documentId}}" layout="row" layout-align="start center">
+                                        <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a"
+                                            aria-label="pdf file">
+                                        </md-icon>
+                                        <p id="idoctxt-{{doc.documentId}}" class="md-caption stepDocName">{{ doc.name
+                                            }}
+                                        </p>
+                                        <md-tooltip>{{doc.name}}</md-tooltip>
+                                    </div>
+                                    <ng-md-icon id="iclear-{{doc.documentId}}" icon="clear" size="14"
+                                        style="margin-top:8px;cursor:pointer"
+                                        ng-click="vm.remove_doc_and_add_back_new(doc, step, step.StepId || step.altStepId)">
+                                    </ng-md-icon>
+                                </div>
+                            </md-card>
+                        </md-content>
+                    </div>
+                    <!-- </div> -->
+                </md-card>
+                <!-- Removed flex to avoid overlapping of content
+                    https://stackoverflow.com/questions/37905749/flexbox-not-working-in-internet-explorer-11 -->
+                <!-- <div flex="10"></div> -->
+            </div>
+            <!-- Add a new step -->
+            <div layout="row" layout-align="start start" flex>
+                <md-button class="smallFabBtn primary" ng-click="toggle()" tabindex="6" aria-label="Add workflow step"
+                    title="Add Step">
+                    <ng-md-icon icon={{stepIcon}} style="fill: white;margin-top:7px;" size="18"></ng-md-icon>
+                </md-button>
+                <md-card class="workflow-new-step-card" ng-if="view">
+                    <md-content style=overflow:hidden;>
+                        <div layout="row" layout-align="start center" style="padding-left:20px;" layout-padding flex>
+                            <!-- <div layout="column" layout-align="space-around start" flex> -->
+                            <form name="addStep">
+                                <div align=left flex>
+                                    <md-input-container class="md-block" flex>
+                                        <label class="input-fields">Step Name</label>
+                                        <input id="newStepName" name="step_name" type="text" tabindex="5" size="100"
+                                            md-maxlength="100" maxlength="100" ng-model="vm.newStepName"
+                                            ng-pattern="/(?!^ +$)^.+$/m" ob-autofocus required
+                                            style="text-overflow: ellipsis; overflow: hidden;" />
+                                        <div ng-if="(submitted && addStep.step_name.$untouched) || addStep.step_name.$touched"
+                                            ng-messages="addStep.step_name.$error" role="alert">
+                                            <div ng-message="required">{{errorMsgs.MSG082}}</div>
+                                            <div ng-message-exp="['pattern']">{{errorMsgs.MSG114}}</div>
+                                        </div>
+
+                                    </md-input-container>
+                                    <label
+                                        style="font-size:11px !important;text-transform:none;color:rgba(0,0,0,0.54)">Step
+                                        Description *
+                                    </label>
+                                    <md-input-container class="md-block" flex>
+                                        <!-- <label style="text-transform:none;">Step Description</label> -->
+                                        <!-- <textarea name="step_desc" rows="3" tabindex="5" maxlength="5000" md-maxlength="5000" md-no-autogrow ng-model="vm.newStepDesc"
+                                                ng-pattern="/(?!^ +$)^.+$/m" required>
+
+                                                </textarea> -->
+                                        <ng-ckeditor ng-model="vm.newStepDesc" skin="moono-lisa"
+                                            id="editsd-{{step.StepId || step.altStepId}}" name="stepDesc"
+                                            remove-buttons="Image,ImageButton,Table,Form,Checkbox,Preview,Print,NewPage,Templates,Find,Replace,Button,Anchor,Maximize,ShowBlocks,Styles,Radio,TextField,SelectAll,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Source,SpellChecker,Textarea,Select,HiddenField,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,HorizontalRule,SpecialChar,PageBreak,Scayt"
+                                            remove-plugins="iframe,flash,smiley" height="150px" style="margin-top:30px">
+                                        </ng-ckeditor>
+
+                                        <div ng-if="(submitted && addStep.step_desc.$untouched) || addStep.step_desc.$touched"
+                                            ng-messages="addStep.step_desc.$error" role="alert">
+                                            <div ng-message="required">{{errorMsgs.MSG107}}</div>
+                                            <div ng-message-exp="['pattern']">{{errorMsgs.MSG115}}</div>
+                                        </div>
+                                        <span class="counter" style="float:right;padding-right:3px;">{{
+                                            vm.htmlToPlaintext(vm.newStepDesc).length ?
+                                            vm.htmlToPlaintext(vm.newStepDesc).length : '0'}} / 5000</span>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex style="margin-top:0; margin-bottom:0;">
+                                        <div class="issued-div" style="font-size: 14px;">
+                                            <md-checkbox ng-model="vm.isEditable" aria-label="Checkbox 1"
+                                                style="margin-left: -30px;    transform: scale(0.8);">
+                                                Documents editable while Initiate Onboarding?
+                                            </md-checkbox>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+
+                                <!-- <div class="newStep-file-drop-zone" id="small-drop-zone" drop-on-me flex> -->
+                                <!-- id="dzone-{{step.altStepId}}" -->
+                                <md-content layout="row" id="small-drop-zone" layout-align="start start"
+                                    class="small-file-drop-zone newStep" layout-wrap flex drop-on-me>
+                                    <md-card id="dzone-{{doc.docid}}" class="workflow-doc-card"
+                                        ng-repeat="doc in draggedDocs" layout-wrap flex>
+                                        <div class="{{vm.workflowDocCardClass}}" layout="row" style="height:25px;"
+                                            layout-align="space-between center" flex>
+                                            <div layout="row" layout-align="start center" style="width:130px;">
+                                                <md-icon md-svg-src="images/pdf.svg"
+                                                    style="transform:scale(.5);fill:#d75a5a">
+                                                </md-icon>
+                                                <md-icon md-svg-src="images/icons/webform.svg"
+                                                    class="pdfIconSvg-folders"
+                                                    style="transform:scale(.5);    margin-left: -5px;"
+                                                    aria-label="pdf document" ng-if="doc.isDynamicDoc">
+                                                </md-icon>
+                                                <p class="md-caption stepDocName" title="{{ doc.name }}">{{ doc.name }}
+                                                </p>
+                                            </div>
+                                            <ng-md-icon icon="clear" size="14" style="margin-top:8px;cursor:pointer"
+                                                ng-click="vm.remove_doc_and_add_back(doc, draggedDocs)">
+                                            </ng-md-icon>
+                                        </div>
+                                    </md-card>
+                                </md-content>
+                                <!-- </div> -->
+                            </form>
+                            <!-- </div> -->
+                        </div>
+                        <md-card-actions layout="row" layout-align="end center" style="margin-right:30px;">
+                            <md-button class="md-primary md-raised" tabindex="5" ng-click="vm.buildNewStep()">Save
+                            </md-button>
+                            <md-button class="md-secondary" tabindex="5" ng-click="toggle()">Cancel</md-button>
+                        </md-card-actions>
+                    </md-content>
+                </md-card>
+            </div>
+        </md-content>
+    </div>
+
+    <md-sidenav class="md-sidenav-right sidenav-container" ng-class="vm.sidenavclass" layout="column"
+        md-component-id="right" md-is-locked-open="true" style="border: 1px solid #e5e5e5;overflow-x:hidden;"
+        md-whiteframe="-1">
+        <md-toolbar class="transparent">
+            <div layout="row" layout-align="start center">
+                <div class="md-toolbar-tools">
+                    <!-- <h4 style="color: black">Folders</h4> -->
+                    <span class="cust-heading">Folders</span>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <!-- <div md-force-height="15" class="uploadDocsBtn" layout="row" layout-align="center center" ng-click="vm.showUploadDocsDialog($event)"
+                            aria-label="upload docs">
+                            <md-icon md-svg-src="images/icons/upload_icon.svg" class="uploadBtnSvg" style="fill:#f1a94e"></md-icon>
+                            <span class="md-caption uploadDocsBtnTxt">Upload</span>
+                        </div> -->
+
+                    <md-button class="md-icon-button" aria-label="Search" tabindex="8"
+                        ng-click="vm.folderSearchBoxDisplay()">
+                        <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg" style="fill:#44b3c2;">
+                        </md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <form name="searchForm" ng-show="vm.folderSearch" ng-submit="vm.filterFoldersBy()">
+                <md-input-container style="margin:-5px 0 -20px 15px;min-width:96%;">
+                    <label class="input-fields"></label>
+                    <input id="search-box" name="searchby" type="search"
+                        style="border: 1px solid #44b3c2;border-radius: 2px;" class="md-no-underline" autofocus
+                        tabindex="8" ng-pattern="/^[a-zA-Z0-9-_ @]+$/" ng-model="vm.filterby"
+                        placeholder="Search folders by their name" />
+                </md-input-container>
+                <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                    <div style="color:red" ng-message="pattern">{{errorMsgs.MSG108}}</div>
+                </div>
+            </form>
+        </md-toolbar>
+        <md-divider></md-divider>
+
+        <md-content flex style="overflow-x:hidden;">
+            <md-list ng-repeat="folder in vm.documents | filter: {foldername: vm.searchby}" style="cursor:move;" flex>
+                <md-list-item id="folder-{{folder.folderid}}" ng-init="folder.expanded = true" tabindex=""
+                    ng-class="{'disableit': vm.checkAllDocsDisabled(folder)}" class="folder-line" drag-me-new
+                    dissableit="{{vm.checkAllDocsDisabled(folder)}}">
+                    <md-icon style="margin-top:0;margin-bottom:0" md-svg-icon="images/icons/folder_icon.svg"
+                        class="workflowFolderIconSvg" aria-label="Folder"></md-icon>
+                    <p class="reg14px444" style="margin-left:-15px" title="{{folder.foldername}}">{{
+                        doc_name_short(folder.foldername, 20) }}
+                    </p>
+                    <md-icon style="margin-top:0;margin-bottom:0" aria-label="expandeIconAriaLabel"
+                        class="material-icons" style="cursor:pointer;" ng-if="folder.documents" tabindex="9">
+                        <ng-md-icon id="expand_icon" icon="{{ folder.expanded ? 'expand_less' : 'expand_more' }}"
+                            ng-click="folder.expanded = !folder.expanded">
+                        </ng-md-icon>
+                    </md-icon>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list style="padding-top:0;padding-bottom: 0px;" flex ng-show="folder.expanded"
+                    ng-class="{'disableit': folder.disable}">
+                    <div ng-repeat="doc in folder.documents">
+                        <md-list-item ng-class="{'disableit': doc.disable}" dissableit="{{doc.disable}}"
+                            id="fld-{{folder.folderid}}-{{doc.documentId}}" class="folder-doc-line"
+                            ng-model="doc.documentId" drag-me-new tabindex="9">
+                            <md-icon style="margin-top:0;margin-bottom:0;"
+                                ng-style="{ 'margin-right': (checkWebForm(doc.settings) ? '0px': '32px')}"
+                                md-svg-src="images/pdf.svg" class="docsPdfIconSvg" aria-label="pdf document"></md-icon>
+                            <md-icon style="margin-top:0;margin-bottom:0;margin-right:32px;"
+                                md-svg-icon="images/icons/webform.svg" class="docsPdfIconSvg"
+                                ng-if="checkWebForm(doc.settings)"></md-icon>
+                            <p id="p-{{doc.documentId}}" style="margin-left:-15px;" title="{{doc.documentName}}">{{
+                                doc_name_short(doc.documentName, 30) }}
+                            </p>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                    </div>
+                </md-list>
+                <!-- </div> -->
+
+            </md-list>
+            <div ng-if="(!vm.documents || (vm.documents | filter: {foldername: vm.searchby}).length == 0) && !innerloading"
+                class="filter-message" style="overflow-x:hidden;">
+                No folders found.
+            </div>
+            <div loader="" class="InnerLoaderDiv" ng-show="innerloading">
+                <div class="spinner">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+
+        </md-content>
+    </md-sidenav>
+
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>
+
+</div>

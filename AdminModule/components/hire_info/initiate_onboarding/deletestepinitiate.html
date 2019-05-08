@@ -1,0 +1,150 @@
+<md-dialog class="" style="max-height:95%;max-width:950px;min-width:950px;overflow:hidden;" ng-style="{'min-width':vm.minwidthforeditstep,'max-width':vm.minwidthforeditstep}">
+    <md-toolbar style="background-color: rgb(255,255,255);">
+        <div md-force-height="'50px'" style="min-height: 50px; background-color:white;color:#555555;" layout="row"
+            layout-align="space-between center" layout-padding layout-wrap flex>
+            <span align=left class="uploadDocsTxt">Edit Step</span>
+            <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="vm.closeDeleteModal()">
+                <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                </ng-md-icon>
+            </md-button>
+        </div>
+        <md-divider style="background-color: #f4f4f4" />
+    </md-toolbar>
+    <div layout="row" >
+        <div>
+            <md-card class="workflow-new-step" ng-style="{'width':vm.widthforeditstep}" style="width: 585px;height: auto;">
+                <md-content style=overflow:hidden;>
+                    <div layout="row" layout-align="start center" style="padding-left:20px;" layout-padding flex>
+                        <!-- <div layout="column" layout-align="space-around start" flex> -->
+                        <form name="addStep">
+                            <div align=left flex>
+                                <md-input-container class="md-block" flex>
+                                    <label class="input-fields">Step Name</label>
+                                    <input id="newStepName" name="step_name" type="text" tabindex="5" size="100"
+                                        ng-model="vm.stpname" ng-pattern="/(?!^ +$)^.+$/m"
+                                        readonly style="text-overflow: ellipsis; overflow: hidden;" />
+                                    <div ng-if="(submitted && addStep.step_name.$untouched) || addStep.step_name.$touched"
+                                        ng-messages="addStep.step_name.$error" role="alert">
+                                        <div ng-message="required">{{errorMsgs.MSG082}}</div>
+                                        <div ng-message-exp="['pattern']">{{errorMsgs.MSG114}}</div>
+                                    </div>
+
+                                </md-input-container>
+                                    <label style="text-transform:none;" class="md-caption">Step Description</label>
+                                    <p name="step_desc" rows="3" tabindex="5" ng-bind-html="trustAsHtml(vm.stpdsc)" style="height:80px;overflow-y:auto;outline: none;border-bottom: 1px solid rgba(0,0,0,0.12);font-size:14px;"></p>
+                            </div>
+
+                            <!-- <div class="newStep-file-drop-zone" id="small-drop-zone" drop-on-me flex> -->
+                            <!-- id="dzone-{{step.altStepId}}" -->
+                            <md-content layout="row" id="small-drop-zone" layout-align="start start" class="small-file-drop-zone-popup newStep123"
+                                layout-wrap flex drop-on-me ng-class="{showBgImage: draggedDocs.length == 0}" ng-style="{'width':vm.widthfordrop}">
+                                <md-card id="dzone-{{doc.docid}}" class="workflow-doc-card" ng-repeat="doc in draggedDocs"
+                                    layout-wrap flex>
+                                    <div class="{{vm.workflowDocCardClass}}" layout="row" layout-align="space-between center"
+                                        flex>
+                                        <div layout="row" layout-align="start center">
+                                            <md-icon md-svg-src="images/pdf.svg" style="transform:scale(.5);fill:#d75a5a"
+                                                ng-style="{'margin-top': vm.marginformdicon}">
+                                            </md-icon>
+                                            <p class="md-caption stepDocName" title="{{ doc.name }}" ng-style="{'margin-top': vm.marginforp}">{{
+                                                doc.name }}</p>
+                                        </div>
+                                        <ng-md-icon icon="clear" size="14" style="margin-top:8px;cursor:pointer"
+                                            ng-style="{'margin-top': vm.marginforngicon}" ng-click="vm.remove_doc_and_add_back(doc, draggedDocs)">
+                                        </ng-md-icon>
+                                    </div>
+                                </md-card>
+                            </md-content>
+                            <!-- </div> -->
+                        </form>
+                        <!-- </div> -->
+                    </div>
+                </md-content>
+
+            </md-card>
+        </div>
+        <div>
+            <md-sidenav class="md-sidenav-right" layout="column" md-component-id="right" md-is-locked-open="true" style="border: 1px solid #e5e5e5;margin-top:7px;border-radius: 3px;height: 407px;overflow-y: hidden;min-width: 340px;"
+                ng-style="{'min-width':vm.minwidthforrightnav}" md-whiteframe="-1">
+                <md-toolbar class="transparent">
+                    <div layout="row" layout-align="start center">
+                        <div class="md-toolbar-tools">
+                            <!-- <h4 style="color: black">Folders</h4> -->
+                            <span class="cust-heading">Folders</span>
+                        </div>
+                        <div layout="row" layout-align="end center">
+                            <!-- <div md-force-height="15" class="uploadDocsBtn" layout="row" layout-align="center center" ng-click="vm.showUploadDocsDialog($event)"
+                            aria-label="upload docs">
+                            <md-icon md-svg-src="images/icons/upload_icon.svg" class="uploadBtnSvg" style="fill:#f1a94e"></md-icon>
+                            <span class="md-caption uploadDocsBtnTxt">Upload</span>
+                        </div> -->
+
+                            <md-button class="md-icon-button" aria-label="Search" tabindex="8" ng-click="vm.folderSearchBoxDisplay()">
+                                <md-icon md-svg-icon="images/icons/search_icon.svg" class="searchIconSvg" style="fill:#44b3c2;"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                    <form name="searchForm" ng-show="vm.folderSearch" ng-submit="vm.filterFoldersBy()">
+                        <md-input-container style="margin:-5px 0 -20px 15px;min-width:95%;">
+                            <label class="input-fields"></label>
+                            <input id="search-box" name="searchby" type="search" style="border: 1px solid #44b3c2;border-radius: 2px;"
+                                class="md-no-underline" autofocus tabindex="8" ng-pattern="/^[a-zA-Z0-9-_ @]+$/"
+                                ng-model="vm.filterby" placeholder="Search folders by their name" />
+                        </md-input-container>
+                        <div ng-messages="searchForm.searchby.$error" role="alert" style="padding-left:12px;">
+                            <div style="color:red" ng-message="pattern">{{errorMsgs.MSG108}}</div>
+                        </div>
+                    </form>
+                </md-toolbar>
+                <md-divider></md-divider>
+
+                <md-content flex style="cursor:move;overflow-x:hidden;">
+                    <md-list ng-repeat="folder in vm.documents | filter: {foldername: vm.searchby}" flex>
+                        <md-list-item id="folder-{{folder.folderid}}" ng-init="folder.expanded = true" tabindex=""
+                            ng-class="{'disableit': vm.checkAllDocsDisabled(folder)}" class="folder-line" drag-me-new
+                            dissableit="{{vm.checkAllDocsDisabled(folder)}}">
+                            <md-icon style="margin-top:0;margin-bottom:0;" md-svg-icon="images/icons/folder_icon.svg"
+                                class="workflowFolderIconSvg" aria-label="Folder"></md-icon>
+                            <p class="reg14px444" style="margin-left:-15px">{{ doc_name_short(folder.foldername, 20) }}
+                            </p>
+                            <md-icon style="margin-top:0;margin-bottom:0" class="material-icons" style="cursor:pointer;"
+                                ng-if="folder.documents" tabindex="9">
+                                <ng-md-icon id="expand_icon" icon="{{ folder.expanded ? 'expand_less' : 'expand_more' }}"
+                                    ng-click="folder.expanded = !folder.expanded">
+                                </ng-md-icon>
+                            </md-icon>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <md-list style="padding-top:0;padding-bottom: 0px;" flex ng-show="folder.expanded" ng-class="{'disableit': folder.disable}">
+                            <div ng-repeat="doc in folder.documents">
+                                <md-list-item ng-class="{'disableit': doc.disable}" dissableit="{{doc.disable}}" id="fld-{{folder.folderid}}-{{doc.documentId}}"
+                                    class="folder-doc-line" ng-model="doc.documentId" drag-me-new tabindex="9">
+                                    <md-icon style="margin-top:0;margin-bottom:0" md-svg-src="images/pdf.svg" class="docsPdfIconSvg"
+                                        aria-label="pdf document"></md-icon>
+                                    <p id="p-{{doc.documentId}}" style="margin-left:-15px;font-size: 14px;" title="{{doc.documentName}}">{{
+                                        doc_name_short(doc.documentName, 30) }}
+                                    </p>
+                                </md-list-item>
+                                <md-divider></md-divider>
+                            </div>
+                        </md-list>
+                        <!-- </div> -->
+
+                    </md-list>
+
+                    <div ng-if="!vm.documents || (vm.documents | filter: {foldername: vm.searchby}).length == 0" class="filter-message"
+                        style="overflow-x:hidden;">
+                        No folders found.
+                    </div>
+
+                </md-content>
+            </md-sidenav>
+        </div>
+
+
+    </div>
+    <md-card-actions layout="row" layout-align="end center" style="margin-right:30px;">
+        <md-button class="md-primary md-raised" tabindex="5" ng-click="vm.buildNewStep()">Save</md-button>
+        <md-button class="md-secondary" tabindex="5" ng-click="vm.closeDeleteModal()">Cancel</md-button>
+    </md-card-actions>
+</md-dialog>

@@ -1,0 +1,39 @@
+OnBoarding FrontEnd (UI) deployment instructions for Tomcat 8
+-------------------------------------------------------------
+
+1) Download Tomcat 8.0.x
+2) Extract the tomcat files from zip files to a folder ... ex: tomcat-8-instance1
+3) By default, tomcat server will run on 8080 port. Since OnBoarding API is deployed on this port, UI can be deployed on a different port.
+4) Open server.xml file which is under the folder 'conf', where tomcat is installed.
+5) Look for the following line ...
+   <Server port="8001" shutdown="_SHUTDOWN_COMMAND_" debug="0">
+   Change port to 8002 ...
+6) Look for the following line ...
+   <Connector port="8080" protocol="HTTP/1.1" ...
+   Change port to 9100 ...
+7) Save server.xml file
+8) Set environment variable CATALINA_HOME to the folder tomcat-8-instance1, using following line.
+   SET CATALINA_HOME="D:\tomcat-8-instance1"
+9) Run startup.bat to start the server
+10) Create a directory 'onboarding' under webapps directory
+11) Place the OnBoarding UI distribution files under this directory
+12) Now in the browser address bar enter http://localhost:9100/onboarding/# to bring up the onboarding UI.
+
+Steps to create OnBoarding UI distribution
+------------------------------------------
+
+1) Open env.js file in visual studio code editor
+2) Look for below line ...
+   window.__env.FrontEndURL = 'http://localhost:3000/#';
+   Change the value to 'http://192.168.1.197:9100/onboarding/#'
+3) Look for below line ...
+   window.__env.rootUrl = '';
+   Change the value to '/onboarding'
+4) Save env.js
+5) From terminal in visual studio execute the following command
+   gulp build
+6) This will crate a 'dist' folder. This folder contains the distribution files. 
+   Caution: Sometimes, this process might corrupt the generated css/js files. This will be evident when you bring up the UI and login, after deployment process is complete. In which case, execute the generation of distribution once again.
+7) Copy the contents of the 'dist' folder to the <tomcat-instance>/webapps/onboarding directory.
+8) Now in the browser address bar enter http://localhost:9100/onboarding/# to bring up the onboarding UI.
+

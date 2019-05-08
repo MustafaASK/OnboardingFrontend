@@ -1,0 +1,100 @@
+<md-content id="masterDiv" layout="column" stytle="overflow-y:auto;" layout-padding flex ng-cloak>
+    <div layout="row" layout-padding>
+        <span class="child-page-header">Branding</span>
+    </div>
+    <!-- Document drag and drop feature -->
+    <div layout="row" layout-padding style="margin-top:-15px;">
+        <div layout="column" layout-padding style="padding:0px 20px 0px 10px;width:50%">
+            <span style="font-size:16px;padding-left:0px;">Logo (upto size 500kB)</span>
+            <form id="uploadDocs" style="background-color: white;box-shadow:0px 0px 1px 1px rgba(0, 0, 0, 0.1);">
+                <div layout="row" layout-align="start center" layout-padding>
+                    <div class="small-file-drop-zone docUpload" id="file-drop-zone-logo" ngf-drop ngf-select ng-model="file" accept="image/*"
+                        style="margin: 18px;" flex>
+                        <md-card class="upload-doc-card-branding" ng-if="file" style="margin-top: 20px;" layout-wrap flex>
+                            <div class="{{vm.ImageDocCardClass}}" layout="row" layout-align="space-between center" flex>
+                                <div layout="row" layout-align="start center" style="max-width:95% !important;">
+                                    <ng-md-icon icon="photo" style="transform:scale(.5);fill:#d75a5a">
+                                    </ng-md-icon>
+                                    <p class="md-caption" style="white-space:nowrap;max-width:90% !important;" md-truncate>{{ file.name }}</p>
+                                </div>
+                                <!-- <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer" ng-click="this.parentElement.parentElement.remove()">
+                                </ng-md-icon> -->
+                                <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer" ng-click="vm.clearLogo()">
+                                </ng-md-icon>
+                            </div>
+                        </md-card>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div layout="column" layout-padding style="padding:0px 20px 0px 10px;width:50%">
+            <span style="font-size:16px;padding-left:0px;">Background Image (upto size 1MB)</span>
+            <form id="uploadDocs" style="background-color: white;box-shadow:0px 0px 1px 1px rgba(0, 0, 0, 0.1);">
+                <div layout="row" layout-align="start center" layout-padding>
+                    <div class="small-file-drop-zone docUpload" id="file-drop-zone-background" ngf-drop ngf-select ng-model="backgroundFile" accept="image/*"
+                        style="margin: 18px;" flex>
+
+                        <md-card class="upload-doc-card-branding" ng-if="backgroundFile" style="margin-top: 20px;" layout-wrap flex>
+                            <div class="{{vm.ImageDocCardClass}}"
+                                layout="row" 
+                                layout-align="space-between center" 
+                                flex>
+                                <div layout="row" layout-align="start center" style="max-width:95% !important;">
+                                    <ng-md-icon icon="photo" style="transform:scale(.5);fill:#d75a5a">
+                                    </ng-md-icon>
+                                    <p class="md-caption" style="white-space:nowrap;;max-width:90% !important;" md-truncate>{{ backgroundFile.name }}</p>
+                                </div>
+                                <ng-md-icon icon="clear" size="14" style="margin-top:12px;cursor:pointer" ng-click="vm.clearBackground()">
+                                </ng-md-icon>
+                            </div>
+                        </md-card>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div layout="column" layout-padding>
+        <span style="font-size:16px;padding:20px 20px 0px 10px;">Color Scheme</span>
+        <div layout="row" style="padding-left: 10px;">
+            <div class="color-scheme-container" style="height:100px;width:225px;margin-right:20px;">
+                <div layout="row" style="height:25px;">
+                    <span style="padding:10px 0px 0px 10px">Primary Color</span>
+                    <div layout="row" layout-align="end center" style="padding:10px 10px 0px 0px" flex>
+                        <div md-color-picker ng-model="vm.primarycolor1"></div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center center" style="height:75px;" flex>
+                    <div layout="row" layout-align="center center" class="brandingColorBox" ng-style="{'background-color':vm.primarycolor1}"></div>
+                </div>
+            </div>
+            <div class="color-scheme-container" style="height:100px;width:225px;margin-right:20px;">
+                <div layout="row" style="height:25px;">
+                    <span style="padding:10px 0px 0px 10px">Secondary Color</span>
+                    <div layout="row" layout-align="end center" style="padding:10px 10px 0px 0px" flex>
+                        <div md-color-picker ng-model="vm.primarycolor2"></div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center center" style="height:75px;" flex>
+                    <div layout="row" layout-align="center center" class="brandingColorBox" ng-style="{'background-color':vm.primarycolor2}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</md-content>
+<md-divider></md-divider>
+<div class="edit-intro-footer-style" layout="row" layout-align="end center">
+    <md-button id="applyBtn" class="md-raised md-primary" ng-click="vm.applyBranding()">Apply
+    </md-button>
+    <md-button id="saveBtn" class="md-raised md-primary" ng-click="vm.saveBranding()">Save
+    </md-button>
+    <md-button id="cancelBtn" class="md-secondary" ng-click="vm.resetBranding()">Cancel
+    </md-button>
+</div>
+
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>    

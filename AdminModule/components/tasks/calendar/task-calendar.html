@@ -1,0 +1,14 @@
+<div style="overflow:hidden;" flex>
+    <div ui-calendar='uiConfig.calendar'
+        class="md-primary"
+        style="margin-top:10px;"
+        ng-model="eventSources" 
+        calendar="myCalendar" flex>
+    </div>
+
+</div>
+<div loader="" class="LoaderDiv" ng-show="loading">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

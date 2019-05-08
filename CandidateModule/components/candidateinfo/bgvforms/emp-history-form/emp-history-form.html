@@ -1,0 +1,680 @@
+<md-dialog class="myaccount-modal comments-modal bgv-modal">
+    <form name="employeeReference" id="employeeReference">
+        <md-toolbar>
+            <div class="md-toolbar-tools popup-header" style="background-color:white;color:#555555;    padding-right: 20px;" layout="row"
+                layout-align="space-between center" layout-padding layout-wrap flex>
+                <h2>
+                    <span class="comments-modal-title">{{title}} Details</span>
+                </h2>
+                <span flex></span>
+                <!-- <md-button class="md-icon-button close" ng-click="cancel()">X</md-button> -->
+
+                <md-button class="md-icon-button" aria-label="Cancel Upload" ng-click="cancel()">
+                    <ng-md-icon icon="clear" style="cursor:pointer;" size="14">
+                    </ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-divider></md-divider>
+        <md-content layout-padding ng-if="type === 'emp-history'">
+            <div layout-gt-sm="column" class="emphistory">
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="middlename-div" flex>
+                        <md-input-container class="middlename-input md-block">
+                            <label class="input-fields">Employer Name</label>
+                            <input name="employeename" md-maxlength="50" maxlength="50" ng-model="refer.employername" id="employeename" md-autofocus
+                                required ng-pattern="/^\b[A-Za-z0-9 ]+$/">
+                            <div ng-if="(submitted && employeeReference.employeename.$untouched) || employeeReference.employeename.$touched" ng-messages="employeeReference.employeename.$error">
+                                <div ng-message="required">Please enter Employer Name. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']" style="color: #dd2c00;font-size: 12px;">
+                                    Please enter the valid Employer Name.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="firstname-div" flex-gt-sm>
+                        <md-input-container class="md-block first-name-input">
+                            <label class="firstNameLabel input-fields">Job Title</label>
+                            <input ng-model="refer.jobtitle" required md-maxlength="50" maxlength="50" id="first" name="jobtitle" class="firstname-input" ng-pattern="/^\b[A-Za-z0-9 ]+$/">
+                            <div ng-if="(submitted && employeeReference.jobtitle.$untouched) || employeeReference.jobtitle.$touched" ng-messages="employeeReference.jobtitle.$error"
+                                md-auto-hide="true">
+                                <div ng-message="required">Please enter Job Title. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">
+                                    Please enter the valid Job Title.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="firstname-div" flex-gt-sm>
+                        <md-input-container class="md-block first-name-input">
+                            <label class="firstNameLabel input-fields">Contact Name / Department</label>
+                            <input ng-model="refer.contactnameordepartment" required md-maxlength="50" maxlength="50" id="first" name="contactname" class="firstname-input" ng-pattern="/^\b[A-Za-z0-9 ]+$/">
+                            <div ng-if="(submitted && employeeReference.contactname.$untouched) || employeeReference.contactname.$touched" ng-messages="employeeReference.contactname.$error"
+                                md-auto-hide="true">
+                                <div ng-message="required">Please enter Contact Name / Department. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">
+                                    Please enter the valid Contact Name / Department.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout-gt-sm="row" class="first-row">
+                        <div class="firstname-div" flex-gt-sm>
+                    <md-input-container class="md-block" style="margin: 8px 0 8px -32px;">
+                        <label class="datepick" style="text-transform: capitalize;font-size: 13px;">Start Date</label>
+                        <md-datepicker name="startdate" md-placeholder="mm/dd/yyyy" md-max-date="maxDateFromDate" ng-blur="validateStart()" ng-change="validateStart()" md-current-view="year" ng-model="refer.strtDate" required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.startdate.$untouched) || employeeReference.startdate.$touched" ng-messages="employeeReference.startdate.$error">
+                            <div ng-message="required">Please select Start Date. It can't be blank.</div>
+                            <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                            <div ng-message="validationError">
+                                Start Date should not be Greater than End Date
+                            </div>
+                            <div ng-message-exp="['maxdate']">
+                                Start Date should not be Future date.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    </div>
+                    <div class="firstname-div" flex-gt-sm>
+                    <md-input-container class="md-block" style="margin: 8px 0 8px -32px;">
+                        <label class="datepick" style="text-transform: capitalize;font-size: 13px;">End Date</label>
+                        <md-datepicker name="enddate" md-placeholder="mm/dd/yyyy" md-current-view="year" md-max-date="maxDateFromDate" ng-blur="validateEnd()" ng-model="refer.enDate" required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.enddate.$untouched) || employeeReference.enddate.$touched" ng-messages="employeeReference.enddate.$error">
+                            <div ng-message="required">Please select End Date. It can't be blank.</div>
+                            <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                            <div ng-message="validationError">
+                                End Date should be Greater than Start Date
+                            </div>
+                            <div ng-message-exp="['maxdate']">
+                                End Date should not be Future date.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="firstname-div" flex-gt-sm>
+                    <md-input-container class="md-block first-name-input" style="margin-left: 17px;" flex-gt-sm>
+
+                        <label class="input-fields">Phone</label>
+                        <input type="tel" name="phoneno" ng-model="refer.telephoneno" md-maxlength="12" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999"
+                            ui-mask-placeholder ui-options={addDefaultPlaceholder:false} required>
+                        <div ng-if="(submitted && employeeReference.phoneno.$untouched) || employeeReference.phoneno.$touched" ng-messages="employeeReference.phoneno.$error"
+                            md-auto-hide="true">
+                            <div ng-message="required">{{errorMsgs.MSG006}}</div>
+                            <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                {{errorMsgs.MSG007}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                    </div>
+                </div>
+                <!-- <div layout-gt-sm="row" class="first-column">
+                    <div class="firstname-div" flex-gt-sm>
+                        <md-input-container class="md-block first-name-input">
+
+                            <label class="input-fields">Phone</label>
+                            <input type="tel" name="phoneno" ng-model="refer.telephoneno" md-maxlength="12" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999" ui-mask-placeholder ui-options={addDefaultPlaceholder:false} required>
+                            <div ng-messages="employeeReference.phoneno.$error" md-auto-hide="true">
+                                <div ng-message="required">{{errorMsgs.MSG006}}</div>
+                                <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                    {{errorMsgs.MSG007}}
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                     <div class="firstname-div" flex-gt-sm>
+                        <md-input-container class="md-block first-name-input">
+                            <label class="firstNameLabel input-fields">Job Title</label>
+                            <input ng-model="refer.jobtitle" required id="first" name="jobtitle" class="firstname-input">
+                            <div ng-messages="employeeReference.jobtitle.$error" md-auto-hide="true">
+                                    <div ng-message="required">Please enter Job Title. It can't be blank.</div>
+                                </div>
+                        </md-input-container>
+                    </div>
+
+                </div> -->
+                <div layout-gt-sm="row" class="first-column">
+                        <md-input-container class="md-block first-name-input" flex="66">
+                            <label class="firstNameLabel input-fields">Address</label>
+                            <input ng-model="refer.address" md-maxlength="1000" ng-pattern="/^\b.+$/" maxlength="1000" id="address" name="address" class="firstname-input gplace" ng-autocomplete options="addrOptionsAll" details="details" othermodels="updateCityStateCountryZip(cityParam, stateParam,countryParam, zipParam)" autocomplete="off" required>
+                            <div ng-if="(submitted && employeeReference.address.$untouched) || employeeReference.address.$touched" ng-messages="employeeReference.address.$error">
+                                <div ng-message="required">Please enter Address. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the Address.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container flex="33">
+                            <label class="firstNameLabel input-fields">APT/STE #</label>
+                            <input type="text" name="apartmentsuitenumber" ng-model="refer.apartmentsuitenumber" maxlength="50" md-maxlength="50" ng-pattern="/^[A-Za-z0-9-#/\\ ]+$/" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.apartmentsuitenumber.$untouched) || employeeReference.apartmentsuitenumber.$touched" ng-messages="employeeReference.apartmentsuitenumber.$error"
+                                role="alert">
+                                <div ng-message="pattern">Please enter a valid APT/STE #.</div>
+                            </div>
+                        </md-input-container>
+                </div>
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="issued-div1" flex-gt-xs>
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">City</label>
+                            <!-- <md-select ng-model="refer.city" name="city1">
+                                <md-option ng-repeat="city in cityList" value="{{city.cityCode}}">
+                                    {{city.cityName}}
+                                </md-option>
+                            </md-select> -->
+                            <input type="text" name="city1" ng-pattern="/^\b.+$/" required ng-model="refer.city" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="options3" details="details" othermodels="updateStateCountryEmp(stateParam, countryParam)" autocomplete="off">
+                            <!-- <div ng-if="(submitted && newhirePersonalInfoForm.clientcity.$untouched) || newhirePersonalInfoForm.clientcity.$touched"
+                                ng-messages="newhirePersonalInfoForm.clientcity.$error" role="alert">
+                                <div ng-message="required">{{errorMsgs.MSG255}}</div>
+                                <div ng-message-exp="['pattern']">
+                                    {{errorMsgs.MSG256}}
+                                </div>
+                            </div> -->
+                            <div ng-if="(submitted && employeeReference.city1.$untouched) || employeeReference.city1.$touched" ng-messages="employeeReference.city1.$error">
+                                <div ng-message="required">Please enter City. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid City.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div class="issued-div1" flex-gt-xs>
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">State</label>
+                            <!-- <md-select ng-model="refer.state" name="state">
+                                <md-option ng-repeat="state in statesList" value="{{state.stateCode}}">
+                                    {{state.stateName}}
+                                </md-option>
+                            </md-select> -->
+                            <input type="text" ng-pattern="/^\b.+$/" name="state" required ng-model="refer.state" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="options2" details="details" othermodels="updateStateCountryEmp(null, countryParam)" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.state.$untouched) || employeeReference.state.$touched" ng-messages="employeeReference.state.$error">
+                                <div ng-message="required">Please enter State. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid State.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="issued-div1" flex-gt-xs>
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">Country</label>
+                            <input type="text" name="country" ng-pattern="/^\b.+$/" required ng-model="refer.country" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="prevcountry" details="details" autocomplete="off" >
+                            <div ng-if="(submitted && employeeReference.country.$untouched) || employeeReference.country.$touched" ng-messages="employeeReference.country.$error">
+                                <div ng-message="required">Please enter Country. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid Country.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div>
+                        <md-input-container md-no-float>
+                            <label class="input-fields">Zip</label>
+                            <input required name="zipcode" ng-minlength="3" maxlength="12" md-maxlength="12" ng-model="refer.zipcode" ng-pattern="/^\b[a-zA-Z0-9- ]{3,12}$/" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.zipcode.$untouched) || employeeReference.zipcode.$touched" ng-messages="employeeReference.zipcode.$error">
+                                <div ng-message="required">Please enter Zip. It can't be blank.</div>
+                                <div ng-message="pattern">Please enter a valid Zip.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="issued-div1" flex-gt-xs>
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">Reason for Left</label>
+                            <!-- <input name="reason" md-maxlength="200" maxlength="200" ng-model="refer.reasonleft" id="reason"> -->
+                            <input name="reason" rows="2" md-maxlength="500" maxlength="500" ng-model="refer.reasonleft" id="reason">
+
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <!-- <div layout-gt-sm="row" class="first-column">
+                    <div flex></div>
+                    <div class="issued-div1" flex-gt-xs flex="50" align="right" style="font-size: 12px;padding: 20px 18px 0px 18px;">
+
+                        <span style="position: relative; top: 2px;right: 5px;">Is this a current employer?</span>
+
+                        <md-radio-group ng-model="refer.contact">
+                            <md-radio-button class="my-radio" value="1" style="display:inline-block;transform: scale(.8)">Yes</md-radio-button>
+                            <md-radio-button class="my-radio" value="2" style="display:inline-block;transform: scale(.8)">No </md-radio-button>
+                        </md-radio-group>
+
+                    </div>
+
+                </div> -->
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="issued-div1" flex-gt-xs flex="50" align="left" style="font-size: 12px;padding: 20px 18px 0px 10px;">
+
+                        <span style="position: relative; top: 2px;right: 5px;">Is this a current employer?</span>
+
+                        <md-radio-group ng-model="refer.isthiscurrentemployee">
+                            <md-radio-button class="my-radio" value="1" style="display:inline-block;transform: scale(.8)">Yes</md-radio-button>
+                            <md-radio-button class="my-radio" value="2" style="display:inline-block;transform: scale(.8)">No </md-radio-button>
+                        </md-radio-group>
+
+                    </div>
+                    <div class="issued-div1" flex-gt-xs flex="50" align="left" style="font-size: 12px;padding: 20px 18px 0px 10px;">
+
+                        <span style="position: relative; top: 2px;right: 5px;">Can We Contact? * </span>
+
+                        <md-radio-group ng-model="refer.contact" name="canwecontact" required>
+                            <md-radio-button class="my-radio" value="1" style="display:inline-block;transform: scale(.8)">Yes</md-radio-button>
+                            <md-radio-button class="my-radio" value="2" style="display:inline-block;transform: scale(.8)">No </md-radio-button>
+                        </md-radio-group>
+                        <div ng-if="(submitted && employeeReference.canwecontact.$untouched) || employeeReference.canwecontact.$touched" ng-messages="employeeReference.canwecontact.$error" role="alert">
+                            <div ng-message="required" style="font-size: 12px;color: rgb(221,44,0);">Please select Can We Contact. It can't be blank</div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </md-content>
+        <md-content layout-padding ng-if="type === 'education-history'">
+            <div layout-gt-sm="column" class="first-column educationhistory">
+                <div layout-gt-sm="row" class="first-row">
+                    <md-input-container class="md-block first-name-input" flex-gt-sm>
+                        <label class="firstNameLabel input-fields">School Name / University Name</label>
+                        <input required md-maxlength="50" maxlength="50" ng-model="refer.schoolunivattedned" md-autofocus id="schoolname" name="schoolname"
+                            class="firstname-input" ng-pattern="/^\b[A-Za-z0-9 ]+$/">
+                        <div ng-if="(submitted && employeeReference.schoolname.$untouched) || employeeReference.schoolname.$touched" ng-messages="employeeReference.schoolname.$error">
+                            <div ng-message="required">Please Enter School Name / University Name. It can't be blank.</div>
+                            <div ng-message="pattern">Please enter a valid School Name / University Name.</div>                            
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block first-name-input" flex-gt-sm>
+                        <label class="firstNameLabel input-fields">Name Used In School</label>
+                        <input ng-model="refer.shortname" md-maxlength="50" maxlength="50" id="shortname" name="shortname" class="firstname-input">
+                        <div ng-messages="employeeReference.shortname.$error">
+                            <div ng-message="required"></div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="firstname-div" layout-gt-sm="row">
+                    <md-input-container class="md-block first-name-input" flex-gt-sm flex="66">
+                        <label class="firstNameLabel input-fields">Address</label>
+                        <input required md-maxlength="1000" ng-pattern="/^\b.+$/" maxlength="1000" ng-model="refer.address" id="address" name="address" class="firstname-input gplace" ng-autocomplete options="addrOptionsUS" details="details" othermodels="updateCityStateCountryZip(cityParam, stateParam,countryParam, zipParam)" autocomplete="off" required>
+                        <div ng-if="(submitted && employeeReference.address.$untouched) || employeeReference.address.$touched" ng-messages="employeeReference.address.$error">
+                            <div ng-message="required">Please enter Address. It can't be blank.</div>
+                            <div ng-message-exp="['pattern']">Please enter the valid Address.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex="33">
+                        <label class="firstNameLabel input-fields">APT/STE #</label>
+                        <input type="text" name="apartmentsuitenumber" ng-model="refer.apartmentsuitenumber" maxlength="50" md-maxlength="50" ng-pattern="/^[A-Za-z0-9-#/\\ ]+$/" autocomplete="off">
+                        <div ng-if="(submitted && employeeReference.apartmentsuitenumber.$untouched) || employeeReference.apartmentsuitenumber.$touched" ng-messages="employeeReference.apartmentsuitenumber.$error"
+                            role="alert">
+                            <div ng-message="pattern">Please enter a valid APT/STE #.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- <div class="issued-div1" layout-gt-sm="row">
+
+                </div> -->
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="issued-div1" flex-gt-xs flex="33">
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">City</label>
+                            <!-- <md-select ng-model="refer.city" name="city2">
+                                    <md-option ng-repeat="city in cityList" value="{{city.cityCode}}">
+                                        {{city.cityName}}
+                                    </md-option>
+                                </md-select> -->
+                            <input type="text" name="city2" required ng-model="refer.city" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="options1" details="details" ng-pattern="/^\b.+$/" othermodels="updateStateCountryEmp(stateParam, countryParam)" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.city2.$untouched) || employeeReference.city2.$touched" ng-messages="employeeReference.city2.$error">
+                                <div ng-message="required">Please select City. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid City.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="issued-div1" flex-gt-xs flex="33">
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">State</label>
+                            <!-- <md-select ng-model="refer.state" name="state">
+                                    <md-option ng-repeat="state in statesList" value="{{state.stateCode}}">
+                                        {{state.stateName}}
+                                    </md-option>
+                                </md-select> -->
+                            <input type="text" name="state" required ng-model="refer.state" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="options" details="details" ng-pattern="/^\b.+$/" othermodels="updateStateCountryEmp(null, countryParam)" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.state.$untouched) || employeeReference.state.$touched" ng-messages="employeeReference.state.$error">
+                                <div ng-message="required">Please enter State. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid State.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="issued-div1" flex-gt-xs flex="33">
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">Country</label>
+                            <!-- <md-select ng-model="refer.state" name="state">
+                                        <md-option ng-repeat="state in statesList" value="{{state.stateCode}}">
+                                            {{state.stateName}}
+                                        </md-option>
+                                    </md-select> -->
+                            <input type="text" name="country" required ng-model="refer.country" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="educountry" details="details" ng-pattern="/^\b.+$/" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.country.$untouched) || employeeReference.country.$touched" ng-messages="employeeReference.country.$error">
+                                <div ng-message="required">Please enter Country. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid Country.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div flex="33">
+                        <md-input-container md-no-float>
+                            <label class="input-fields">Zip</label>
+                            <input required name="zipcode" ng-minlength="3" md-maxlength="12" maxlength="12" ng-model="refer.zipcode" ng-pattern="/^\b[a-zA-Z0-9- ]{3,12}$/" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.zipcode.$untouched) || employeeReference.zipcode.$touched" ng-messages="employeeReference.zipcode.$error">
+                                <div ng-message="required">Please enter Zip. It can't be blank.</div>
+                                <div ng-message="pattern">Please enter a valid Zip.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="issued-div1" flex-gt-xs align="left" style="font-size: 12px;padding: 0px 18px 0px 10px;">
+
+                        <span style="position: relative; top: 2px;right: 5px;font-weight: bold;font-size: 14px;">Did you graduate?</span>
+
+                        <md-radio-group ng-model="refer.graduated">
+
+                            <md-radio-button class="my-radio" value="1" style="display:inline-block;transform: scale(.8)">Yes</md-radio-button>
+                            <md-radio-button class="my-radio" value="2" style="display:inline-block;transform: scale(.8)">No </md-radio-button>
+
+                        </md-radio-group>
+
+                    </div>
+
+                </div>
+                <div layout-gt-sm="row" class="first-row">
+                    <md-input-container class="md-block" flex="40" style="margin: 8px 0 8px -30px;">
+                        <label class="datepick" style="text-transform: capitalize;font-size: 13px;">Attended From Date</label>
+                        <md-datepicker name="startdate" md-placeholder="mm/dd/yyyy" md-max-date="maxDateFromDate" md-current-view="year" ng-change="attndEndDateChange()" ng-blur="validateEduStart()" ng-model="refer.strtDate"
+                            required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.startdate.$untouched) || employeeReference.startdate.$touched" ng-messages="employeeReference.startdate.$error">
+                            <div ng-message="required">Please select From Date. It can't be blank.</div>
+                            <div ng-message="valid">{{errorMsgs.MSG254}}</div>                            
+                            <div ng-message="validationError">
+                                Attended From Date should not be Greater than Attended To Date
+                            </div>                            
+                            <div ng-message-exp="['maxdate']">
+                                Attended From Date should not be Future date.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="40">
+                        <label class="datepick" style="text-transform: capitalize;font-size: 13px;">Attended To Date </label>
+                        <md-datepicker name="enDate" md-placeholder="mm/dd/yyyy" md-current-view="year" md-max-date="maxDateFromDate" ng-model="refer.enDate" ng-blur="validateEduEnd()" required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.enDate.$untouched) || employeeReference.enDate.$touched" ng-messages="employeeReference.enDate.$error">
+                            <div ng-message="required">Please select To Date. It can't be blank.</div>
+                            <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                            <div ng-message="validationError">
+                                Attended To Date should be Greater than Attended From Date
+                            </div>
+                            <div ng-message-exp="['maxdate']">
+                                Attended To Date should not be Future date.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row" class="first-row">
+                    <div flex="35" style="margin-right : 15px">
+                        <md-input-container class="md-block" flex="90" style="margin: 8px 0 0 2px;">
+
+                            <label class="datepick" style="text-transform: capitalize;font-size: 13px;">Degree Completed</label>
+                            <input ng-model="refer.degreecompleted" placeholder="Masters / Bachelors" md-maxlength="50" maxlength="50" id="degreecomplete" name="degreecomplete" class="firstname-input"
+                                required ng-pattern="/^\b[A-Za-z0-9 ]+$/">
+                            <div ng-if="(submitted && employeeReference.degreecomplete.$untouched) || employeeReference.degreecomplete.$touched" ng-messages="employeeReference.degreecomplete.$error">
+                                <div ng-message="required">Please Enter Degree Completed. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']" style="color: #dd2c00;font-size: 12px;">
+                                    Please enter valid Degree Completed.
+                                </div>
+                            </div>
+                            <!-- <md-datepicker name="completeyear" md-current-view="year" ng-model="refer.completeyear" required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.completeyear.$untouched) || employeeReference.completeyear.$touched" ng-messages="employeeReference.completeyear.$error">
+                            <div ng-message="required">Please select Degree Completed Date. It can't be blank.</div>
+                            <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                        </div> -->
+                        </md-input-container>
+                    </div>
+                    <div flex="35" style="margin-left : 30px">
+                        <md-input-container class="md-block first-name-input" flex="90">
+                            <label class="firstNameLabel input-fields">Major/Area of Study</label>
+                            <input md-maxlength="50" maxlength="50" ng-model="refer.majororsubject" id="majororsubject" name="majororsubject" class="firstname-input">
+                            <!-- <div ng-if="(submitted && employeeReference.address.$untouched) || employeeReference.address.$touched" ng-messages="employeeReference.address.$error">
+                            <div ng-message="required">Please enter Address. It can't be blank.</div>
+                        </div> -->
+                        </md-input-container>
+                    </div>
+
+
+                    <!-- <md-input-container class="md-block" flex="50">
+                        <label class="datepick" style="text-transform: capitalize;font-size: 13px;">Degree Awarded Date</label>
+                        <md-datepicker name="awardedyear"  md-current-view="year" ng-model="refer.awardedyear" required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.awardedyear.$untouched) || employeeReference.awardedyear.$touched" ng-messages="employeeReference.awardedyear.$error">
+                            <div ng-message="required">Please select Degree Awarded Date. It can't be blank.</div>
+                        </div>
+                    </md-input-container> -->
+                </div>
+                <div layout-gt-sm="row" class="first-row">
+                    <md-input-container class="md-block" flex="40" style="margin: 8px 0 8px -30px;">
+                        <!-- Degree Completed year is changed to Degree Awarded Year -->
+                        <label class="datepick" style="text-transform: capitalize;font-size: 13px;">Degree Awarded Date</label>
+                        <md-datepicker name="completeyear" md-placeholder="mm/dd/yyyy" md-current-view="year" md-max-date="maxDateFromDate" ng-blur="validateAward()" ng-model="refer.completeyear" required></md-datepicker>
+                        <div ng-if="(submitted && employeeReference.completeyear.$untouched) || employeeReference.completeyear.$touched" ng-messages="employeeReference.completeyear.$error">
+                            <div ng-message="required">Please select Degree Awarded Date. It can't be blank.</div>
+                            <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                            <div ng-message="validationError">
+                                Degree Awarded Year should be Greater than Attended From Date
+                            </div>
+                            <div ng-message-exp="['maxdate']">
+                                Degree Awarded Year should not be Future date.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <div flex="35" style="margin-left : 30px">
+                        <md-input-container class="md-block first-name-input" flex="90">
+                            <label class="firstNameLabel input-fields">GPA</label>
+                            <input type="text" ng-model="refer.gpa" id="gpa" name="gpa" class="firstname-input" ng-pattern="/^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/">
+                            <div ng-if="(submitted && employeeReference.gpa.$untouched) || employeeReference.gpa.$touched" ng-messages="employeeReference.gpa.$error">
+                                <div ng-message="required">Please Enter GPA. It can't be blank.</div>
+                                <div ng-message="pattern">Please enter a valid GPA upto 2 decimals</div>
+                            </div>
+                        </md-input-container>
+
+                    </div>
+
+                </div>
+            </div>
+        </md-content>
+        <md-content layout-padding ng-if="type === 'emp-address'">
+            <div layout-gt-sm="column" class="first-column empaddress">
+                <div class="firstname-div" layout-gt-sm="row">
+                    <md-input-container class="md-block first-name-input" flex-gt-sm flex="66">
+                        <label class="firstNameLabel input-fields">Address Line</label>
+                        <input required ng-model="refer.address" md-maxlength="1000" ng-pattern="/^\b.+$/" maxlength="1000" id="address" name="address"  class="firstname-input gplace" ng-autocomplete options="addrOptionsUS" details="details" othermodels="updateCityStateCountryZip(cityParam, stateParam,countryParam, zipParam)"
+                            required md-autofocus>
+                        <div ng-if="(submitted && employeeReference.address.$untouched) || employeeReference.address.$touched" ng-messages="employeeReference.address.$error">
+                            <div ng-message="required">Please enter Address. It can't be blank.</div>
+                            <div ng-message-exp="['pattern']">Please enter the valid Address.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex="33">
+                        <label class="firstNameLabel input-fields">APT/STE #</label>
+                        <input type="text" name="apartmentsuitenumber" ng-model="refer.apartmentsuitenumber" maxlength="50" md-maxlength="50" ng-pattern="/^[A-Za-z0-9-#/\\ ]+$/">
+                        <div ng-if="(submitted && employeeReference.apartmentsuitenumber.$untouched) || employeeReference.apartmentsuitenumber.$touched" ng-messages="employeeReference.apartmentsuitenumber.$error"
+                            role="alert">
+                            <div ng-message="pattern">Please enter a valid APT/STE #.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row" class="first-column">
+                    <div class="issued-div1" flex-gt-xs flex="25">
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">City</label>
+                            <!-- <md-select ng-model="refer.city" name="city2">
+                                <md-option ng-repeat="city in cityList" value="{{city.cityCode}}">
+                                    {{city.cityName}}
+                                </md-option>
+                            </md-select> -->
+                            <input type="text" name="city2" required ng-model="refer.city" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="options1" ng-pattern="/^\b.+$/" details="details" othermodels="updateStateCountryEmp(stateParam, countryParam)" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.city2.$untouched) || employeeReference.city2.$touched" ng-messages="employeeReference.city2.$error">
+                                <div ng-message="required">Please select City. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid City.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="issued-div1" flex-gt-xs flex="25">
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">State</label>
+                            <!-- <md-select ng-model="refer.state" name="state">
+                                <md-option ng-repeat="state in statesList" value="{{state.stateCode}}">
+                                    {{state.stateName}}
+                                </md-option>
+                            </md-select> -->
+                            <input type="text" name="state" required ng-model="refer.state" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                                options="options" ng-pattern="/^\b.+$/" details="details" othermodels="updateStateCountryEmp(null, countryParam)" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.state.$untouched) || employeeReference.state.$touched" ng-messages="employeeReference.state.$error">
+                                <div ng-message="required">Please enter State. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid State.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="issued-div1" flex-gt-xs flex="25">
+                        <md-input-container class="issued-input md-block">
+                            <label class="input-fields">Country</label>
+                            <input type="text" name="country" required ng-model="refer.country" maxlength="50" md-maxlength="50" class="gplace" ng-autocomplete
+                            options="countryoptions" ng-pattern="/^\b.+$/" details="details" autocomplete="off">
+                            <div ng-if="(submitted && employeeReference.country.$untouched) || employeeReference.country.$touched" ng-messages="employeeReference.country.$error">
+                                <div ng-message="required">Please enter Country. It can't be blank.</div>
+                                <div ng-message-exp="['pattern']">Please enter the valid Country.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div flex="25">
+                        <md-input-container md-no-float>
+                            <label class="input-fields">Zip</label>
+                            <input required name="zipcode" ng-minlength="3" md-maxlength="12" maxlength="12" ng-model="refer.zipcode" autocomplete="off" ng-pattern="/^\b[a-zA-Z0-9- ]{3,12}$/">
+                            <div ng-if="(submitted && employeeReference.zipcode.$untouched) || employeeReference.zipcode.$touched" ng-messages="employeeReference.zipcode.$error">
+                                <div ng-message="required">Please enter Zip. It can't be blank.</div>
+                                <div ng-message="pattern">Please enter a valid Zip.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout-gt-xs="row">
+                    <div flex-gt-xs class="dp-changes">
+                        <md-input-container class="md-block" style="margin-top:4px;">
+                            <label style="text-transform: none;font-size: 11px;color:#688081;padding-left:3px;">Start Date</label>
+                            <md-datepicker name="strtDate" md-placeholder="mm/dd/yyyy" md-current-view="year" md-max-date="maxDateFromDate" ng-model="refer.strtDate" required ng-blur="validatePrevStart()"></md-datepicker>
+                            <div ng-if="(submitted && employeeReference.strtDate.$untouched) || employeeReference.strtDate.$touched" ng-messages="employeeReference.strtDate.$error">
+                                <div ng-message="required">Please select Start Date. It can't be blank.</div>
+                                <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                                <div ng-message="validationError">
+                                    Start Date should not be Greater than End Date
+                                </div>
+                                <div ng-message-exp="['maxdate']">
+                                    Start Date should not be Future date.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div flex-gt-xs class="dp-changes1" style="    ">
+                        <md-input-container class="md-block" style="margin-top:4px;margin-left:-15px">
+                            <label style="text-transform: none;font-size: 11px;color:#688081;padding-left:3px;">End Date</label>
+                            <!-- <md-icon md-svg-icon="images/icons/calendar_icon.svg" class="calendarNewHireIconSvg"></md-icon> -->
+                            <md-datepicker ng-model="refer.enDate" md-placeholder="mm/dd/yyyy" md-current-view="year" md-max-date="maxDateFromDate"  name="enDate" required ng-blur="validatePrevEnd()" ></md-datepicker>
+                            <div ng-if="(submitted && employeeReference.enDate.$untouched) || employeeReference.enDate.$touched" ng-messages="employeeReference.enDate.$error"
+                                role="alert">
+                                <div ng-message="required">Please select End Date. It can't be blank.</div>
+                                <div ng-message="valid">{{errorMsgs.MSG254}}</div>
+                                <div ng-message="validationError">
+                                    End Date should be Greater than Start Date
+                                </div>
+                                <div ng-message-exp="['maxdate']">
+                                    End Date should not be Future date.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+        <md-content layout-padding ng-if="type === 'emp-reference'">
+            <div layout-gt-sm="column" class="first-column">
+                <div class="middlename-div">
+                    <md-input-container class="middlename-input md-block">
+                        <label class="input-fields">Name</label>
+                        <input name="referalname" md-maxlength="100" maxlength="100" ng-model="refer.referalname" id="referalname" md-autofocus required>
+                        <div ng-messages="employeeReference.referalname.$error">
+                            <div ng-message="required && submitted">Please enter Name. It can't be blank.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="middlename-div">
+                    <md-input-container class="middlename-input md-block">
+                        <label class="input-fields">Relationship</label>
+                        <input name="relationship" md-maxlength="50" maxlength="50" ng-model="refer.relationship" id="relationship" required>
+                        <div ng-if="(submitted && employeeReference.relationship.$untouched) || employeeReference.relationship.$touched" ng-messages="employeeReference.relationship.$error">
+                            <div ng-message="required">Please enter Relationship. It can't be blank.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="middlename-div">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="input-fields">Phone</label>
+                        <input type="tel" name="phoneno" ng-model="refer.phoneno" md-maxlength="12" ng-pattern="/^(?!0+)[0-9()-\d]*$/" ui-mask="999-999-9999"
+                            ui-mask-placeholder ui-options={addDefaultPlaceholder:false} required>
+                        <div ng-if="(submitted && employeeReference.phoneno.$untouched) || employeeReference.phoneno.$touched" ng-messages="employeeReference.phoneno.$error"
+                            md-auto-hide="true">
+                            <div ng-message="required">{{errorMsgs.MSG006}}</div>
+                            <div ng-message-exp="['pattern', 'minlength', 'maxlength','mask']">
+                                {{errorMsgs.MSG007}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="middlename-div">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="input-fields">Email Id</label>
+                        <input type="email" name="email" ng-model="refer.email" ng-pattern="/^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+                            name="email" maxlength="70" md-maxlength="70">
+                        <div ng-messages="employeeReference.email.$error" role="alert">
+                            <div ng-message="required">{{errorMsgs.MSG035}}</div>
+                            <div ng-message-exp="['minlength', 'maxlength', 'email', 'pattern']">
+                                {{errorMsgs.MSG036}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="firstname-div">
+                    <md-input-container class="md-block first-name-input">
+                        <label class="firstNameLabel input-fields">Job Title</label>
+                        <input ng-model="refer.jobtitle" md-maxlength="70" maxlength="70" id="first" name="jobtitle" class="firstname-input">
+                    </md-input-container>
+                </div>
+                <div class="lastname-div">
+                    <md-input-container class="lastname-input md-block">
+                        <label class="input-fields">Company or Organization</label>
+                        <input name="company" id="company" md-maxlength="100" maxlength="100" ng-model="refer.company">
+                    </md-input-container>
+                </div>
+            </div>
+
+        </md-content>
+        <md-divider></md-divider>
+        <footer class="edit-intro-footer">
+            <div layout="row" layout-align="end center" flex>
+                <md-button class="md-primary md-raised" ng-click="editMode? updateHistory(employeeReference.$invalid) :saveHistory(employeeReference.$invalid)">Submit</md-button>
+                <md-button class="md-secondary" ng-click="cancel()">Cancel</md-button>
+            </div>
+        </footer>
+    </form>
+</md-dialog>
+<div class="LoaderDiv" id="loader123" ng-show="loader">
+    <div class="spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

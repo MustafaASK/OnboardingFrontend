@@ -1,0 +1,45 @@
+
+<div layout="column" style="display:block;" ng-style="{'height':vm.heightForCandidateIntro}" class="offer-letter-page" flex>
+    <md-content class="templateBody" style="overflow-y:hidden;">
+      <!-- <div layout="row" class="toolbarStyle">
+        <br>
+        <label class="labelStyle">Offer Letter</label>
+        <button ng-click="vm.openLetter($event)"   class="buttonStyle">Open Letter</button>
+      </div> -->
+      <div layout="row" class="toolbarStyle" flex>
+        <div class="labelStyle" flex="20">{{CandidateInfo.catgid == 1 ? 'Offer Letter' : 'Engagement Letter'}}</div>
+        <span flex></span>
+        <!-- <div flex="20">
+          <button ng-click="vm.openLetter($event)"   class="buttonStyle">Open Letter</button>
+        </div> -->
+        <div flex="30" style="margin-right:15px;text-align:right;">
+          <!-- <span style="position: relative;top: 2px;right: 3px;"><input type="checkbox" ng-model="rejctofferenable" ng-disabled="disableReject"></span><label>Do you want reject offer letter?</label> -->
+          <!-- ng-class="{'disabled':disableReject}"  ng-disabled="disableReject || !rejctofferenable" -->
+          <button class="md-secondary md-button md-ink-ripple" style="margin-top:0;margin-bottom:0;" ng-disabled="disableLoadReject" ng-click="vm.opnRejectComments($event)">Reject</button>
+        </div>
+        <!-- <div flex="10">
+          <button class="buttonStyle" ng-class="{'disabled':disableAccept}" ng-disabled="disableAccept" ng-click="vm.goToCommonDetail()">Accept</button>
+        </div> -->
+      </div>
+      
+      <!-- <div class="offer-letter-signpage">
+          <iframe  frameborder="0" style="display: inline-block; float: left;" height="88%" width="95%"  src="https://secure.na1.echosign.com/public/apiesign?pid=CBFCIBAA3AAABLblqZhBdMXYGTh0pGLmQVkPaDRzaxBGTVOxfsgbD04nNieasOl99Sur4hKuvPXN7q1aLY2U*"></iframe>
+      </div> -->
+        <!-- <div class="spinner" id="loader">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div> -->
+      <div class="offer-letter-signpage" id="iframOfferDiv" ng-class="{'disableoffer': disableReject}">
+          <div id="results"></div>
+            <iframe ng-src="{{trustSrc(vm.offerData.redirecturl)}}" frameborder="0" id="iframOffer" ng-show="vm.offerData.redirecturl" ></iframe>
+        </div>
+    </md-content>
+  </div>
+  <div class="LoaderDiv"  id="loader123" ng-show="loading">
+      <div class="spinner">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+  </div> 
+  <div class="hideadoblogo" style="    position: absolute;top: 0;width:30%; height: 200px;">
+
+  </div>
+  

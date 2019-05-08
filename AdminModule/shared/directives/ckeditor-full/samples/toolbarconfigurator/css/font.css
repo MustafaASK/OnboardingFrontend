@@ -1,0 +1,28 @@
+﻿@font-face {  
+
+   font-family: "Lucida Handwriting";  
+
+   src: url(/ckeditor-full/samples/toolbarconfigurator/font/Lucida Handwriting Italic.ttf); /* IE */  
+
+   src: local("Lucida Handwriting"), url("/ckeditor-full/samples/toolbarconfigurator/font/Lucida Handwriting Italic.ttf") format("truetype"); /*non-IE*/  
+
+}
+@font-face {  
+
+   font-family: "Freestyle Script";  
+
+   src: url(/ckeditor-full/samples/toolbarconfigurator/font/FREESCPT.ttf); /* IE */  
+
+   src: local("Freestyle Script"), url("/ckeditor-full/samples/toolbarconfigurator/font/FREESCPT.ttf") format("truetype"); /*non-IE*/  
+
+}
+
+@font-face {  
+
+   font-family: "Brush Script MT";  
+
+   src: url(/ckeditor-full/samples/toolbarconfigurator/font/BRUSHSCI.ttf); /* IE */  
+
+   src: local("Brush Script MT"), url("/ckeditor-full/samples/toolbarconfigurator/font/BRUSHSCI.ttf") format("truetype"); /*non-IE*/  
+
+}
